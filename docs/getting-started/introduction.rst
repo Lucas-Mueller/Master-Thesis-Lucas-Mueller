@@ -63,10 +63,6 @@ The system is built on:
 - **Multi-Provider Support**: OpenAI and OpenRouter model integration
 - **Comprehensive Testing**: Unit and integration test coverage
 
-Why "Frohlich"?
----------------
-
-Norman Frohlich (1942-2007) was a pioneering researcher who conducted empirical tests of distributive justice theories. His experimental work demonstrated how real people make choices about income distribution when placed behind a "veil of ignorance." Our system extends this empirical approach to artificial agents, exploring whether AI systems exhibit similar or different patterns of moral reasoning.
 
 Next Steps
 ----------
