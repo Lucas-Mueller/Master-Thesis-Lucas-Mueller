@@ -1,0 +1,555 @@
+{
+  "experiment_title": "Justice Principle Experiment",
+  "experiment_description": "Experimento multilingüe para estudiar preferencias sobre justicia distributiva",
+  "experiment_author": "Research Team",
+  "experiment_version": "3.0",
+  "supported_languages": [
+    "English",
+    "Spanish",
+    "Mandarin"
+  ],
+  "default_language": "English",
+  "master_principle_descriptions": {
+    "maximizing_floor": "**Maximizar los ingresos mínimos**: Elegir la distribución que maximiza el ingreso más bajo de la sociedad. Este principio solo considera el bienestar del individuo más desfavorecido de la sociedad. Al juzgar entre distribuciones de ingresos, la distribución que garantiza a la persona más pobre los ingresos más altos es la más justa. Los ingresos de ninguna persona pueden aumentar a menos que aumenten los ingresos de las personas situadas en la parte más baja.",
+    "maximizing_average": "**Maximizar los ingresos promedio**: Elegir la distribución que maximiza los ingresos promedio en la sociedad. Este principio maximiza los ingresos totales de la sociedad. Para cualquier sociedad, maximizar los ingresos promedio maximiza los ingresos totales en la sociedad.",
+    "maximizing_average_floor_constraint": "**Maximizar los ingresos promedio con restricción de ingreso mínimo**: Elegir la distribución que maximiza los ingresos promedio solo después de que se garantice a todos un ingreso mínimo especificado. Un principio de este tipo garantiza que el intento de maximizar el promedio esté restringido de forma que se garantice que los individuos 'de abajo' reciban un mínimo especificado. Para elegir este principio hay que especificar el valor del piso (el ingreso más bajo).",
+    "maximizing_average_range_constraint": "**Maximizar los ingresos promedio con restricción de rango**: Elegir la distribución que intenta maximizar los ingresos promedio solo después de garantizar que la diferencia entre los individuos más pobres y los más ricos (es decir, el rango de ingresos) de la sociedad no sea superior a una cantidad especificada. Un principio de este tipo garantiza que el intento de maximizar el promedio no permita que las diferencias de ingresos entre ricos y pobres superen una cantidad especificada. Para elegir este principio hay que especificar la diferencia en dólares entre los ingresos altos y bajos."
+  },
+  "common": {
+    "principle_names": {
+      "maximizing_floor": "Maximizar los ingresos mínimos",
+      "maximizing_average": "Maximizar los ingresos promedio",
+      "maximizing_average_floor_constraint": "Maximizar los ingresos promedio con restricción de ingreso mínimo",
+      "maximizing_average_range_constraint": "Maximizar los ingresos promedio con restricción de rango"
+    },
+    "principle_descriptions": {
+      "maximizing_floor": "Elegir la distribución que maximiza el ingreso más bajo de la sociedad",
+      "maximizing_average": "Elegir la distribución que maximiza el ingreso promedio",
+      "maximizing_average_floor_constraint": "Maximizar el ingreso promedio garantizando que todos reciban al menos un mínimo especificado",
+      "maximizing_average_range_constraint": "Maximizar el ingreso promedio manteniendo la brecha entre el más rico y el más pobre dentro de un límite especificado"
+    },
+    "principle_notes": {
+      "floor_constraint": " (debe especificar la cantidad)",
+      "range_constraint": " (debe especificar la cantidad)"
+    },
+    "phase_names": {
+      "phase1": "Fase 1",
+      "phase2": "Fase 2"
+    },
+    "income_classes": {
+      "high": "Ingresos altos",
+      "medium_high": "Ingresos medios altos",
+      "medium": "Ingresos medios",
+      "medium_low": "Ingresos medios bajos",
+      "low": "Ingresos bajos"
+    },
+    "average_label": "Promedio",
+    "certainty_levels": {
+      "very_unsure": "muy inseguro",
+      "unsure": "inseguro",
+      "no_opinion": "sin opinión",
+      "sure": "seguro",
+      "very_sure": "muy seguro"
+    },
+    "yes_no": {
+      "yes": "Sí",
+      "no": "No"
+    },
+    "list_formatting": {
+      "conjunction": "y",
+      "two_items": "{first} y {second}",
+      "three_plus_items": "{items} y {last}"
+    }
+  },
+  "distributions": {
+    "income_class_header": "Clase de Ingresos",
+    "column_header": "Dist. {number}",
+    "distribution_label": "Distribución {number}",
+    "average_row_label": "Promedio"
+  },
+  "prompts": {
+    "experiment_explanation": "\nEstás participando en un experimento que estudia los principios de justicia y la distribución de la renta.\n\nEl experimento tiene dos fases principales:\n\nFase 1: Trabajarás de manera individual para aprender y aplicar cuatro principios de justicia a distintas distribuciones de ingresos. Se te pedirá que ordenes estos principios según tu preferencia y que los apliques a escenarios concretos. Tus elecciones afectarán tus ganancias.\n\nFase 2: Te unirás a una discusión grupal para llegar a un consenso sobre el principio de justicia que el grupo debería adoptar. El principio elegido por el grupo se utilizará para determinar las ganancias finales de todos. No puedes obtener más datos ni comunicarte con nadie excepto con tus compañeros participantes.\n",
+    "initial_experiment_explanation": "\nEste experimento aborda la pregunta: \"¿Qué es una distribución justa de la renta?\". Los ingresos de un individuo a lo largo de su vida son, en parte, el resultado de muchos accidentes genéticos y sociales. Los más afortunados obtienen los mayores talentos y las mayores recompensas, como estatus y riqueza. Los menos afortunados obtienen las capacidades y oportunidades más bajas y asumen los costes asociados a la pobreza. Las sociedades pueden hacer frente a estas desigualdades y riesgos adoptando políticas de redistribución de la renta. Este experimento trata la justicia de tales políticas. El experimento se divide en dos partes.\n\nEn la primera parte del experimento, cada uno de ustedes conocerá algunas teorías de la justicia. Para ello, considerarán algunos ejemplos y tomarán decisiones. Estas elecciones tendrán consecuencias monetarias reales para ti. Tu paga de la primera parte del experimento dependerá de tus elecciones. Si no aprendes el material, no podrás ganar tanto dinero como sea posible.\n\nEn la segunda parte, se les pedirá a todos, como grupo, que discutan nociones de justicia. Después de la discusión, se les pedirá que lleguen a una decisión grupal sobre cuál principio de justicia les gusta más. Su pago por la Parte II del experimento se basará en el principio que elija el grupo.\n",
+    "phase1_round0_initial_ranking": "",
+    "phase1_round_neg1_detailed_explanation": "\nTarea Actual: Aprender sobre la aplicación de principios\nSe le mostrarán ejemplos de cómo se aplicaría cada principio de justicia a distribuciones de ingresos específicas.\nEsto es con fines de aprendizaje: preste atención a cómo funciona cada principio en la práctica.\n",
+    "phase1_rounds1_4_principle_application": "",
+    "phase1_round5_final_ranking": "",
+    "utility_parser_instructions": "\nUsted es un analizador especializado para el Experimento Frohlich. Siga las instrucciones específicas proporcionadas para cada tarea de análisis y responda en el formato solicitado.\n",
+    "utility_parse_principle_choice": "\nAnalice la siguiente respuesta del participante para extraer su elección de principio de justicia:\n\nRespuesta: \"{response}\"\n\nExtraiga:\n- Qué principio eligieron\n- Cantidad de restricción (si aplica)\n- Su nivel de certeza\n- Su razonamiento\n\nDevuelva los datos analizados como un diccionario con claves: principle, constraint_amount, certainty, reasoning\n",
+    "utility_secret_ballot_request": "\nSesión de Votación - Voto Secreto\n\nPor favor, emita su voto secreto seleccionando su principio de justicia preferido:\n\n{master_principle_descriptions}\n\nImportante: Si elige un principio con restricción, Debe especificar la cantidad de restricción en dólares. Use la misma escala de ingresos que ha estado discutiendo ($12,000-$32,000) para especificar la cantidad de restricción.\n\nSu voto es completamente secreto y no será revelado a otros participantes.\n\nFormatee su respuesta como: \"Mi elección de voto es [principio] [con restricción si aplica]\"",
+    "vote_initiation_prompt": "La discusión ha progresado y puede que te sientas listo para pasar a la votación formal.\n\nSi eliges iniciar la votación:\n- Se pedirá a todos los participantes que confirmen su acuerdo (1=Sí, 0=No)\n- Si todos están de acuerdo, procederán a votaciones numéricas secretas (1-4)\n- El consenso requiere que todos los participantes seleccionen el mismo principio\n- Si se alcanza, ese principio determina las ganancias finales\n- Si no se alcanza, la discusión continúa\n- Puedes iniciar una votación una vez por ronda; si no se alcanza el consenso, no habrá consecuencias negativas\n\n¿Quieres iniciar este proceso de votación ahora?\n- 1 si quieres comenzar el proceso de votación\n- 0 si no quieres votar ahora\n\nTu respuesta (1 o 0):",
+    "vote_initiation_with_statement_prompt": "Acabas de hacer esta declaración al grupo:\n\"{agent_recent_statement}\"\n\nBasándote en tu declaración reciente y la discusión hasta ahora, ¿quieres iniciar la votación formal sobre los principios de justicia ahora?\n\nPor favor responde con:\n- 1 si quieres iniciar la votación ahora\n- 0 si no quieres votar ahora\n\nTu respuesta (1 o 0):",
+    "system_error_messages_memory_limit_exceeded": "Su memoria excede el límite de caracteres. Por favor, condense su memoria manteniendo la información más importante.",
+    "system_error_messages_invalid_principle_choice": "Se ha detectado una elección de principio no válida. Por favor, seleccione uno de los cuatro principios de justicia disponibles.",
+    "system_error_messages_missing_constraint_amount": "Ha seleccionado un principio de restricción pero no ha especificado la cantidad de restricción. Por favor, proporcione una cantidad en dólares.",
+    "system_error_messages_incomplete_ranking": "Su clasificación está incompleta. Por favor, clasifique los cuatro principios del 1 al 4.",
+    "system_error_messages_parsing_failed": "No se ha podido analizar su respuesta. Por favor, reformatee su respuesta de acuerdo con el formato especificado.",
+    "system_error_messages_consensus_not_reached": "El grupo no ha llegado a un consenso. El debate continuará.",
+    "system_success_messages_choice_accepted": "Su elección de principio ha sido aceptada y registrada.",
+    "system_success_messages_ranking_accepted": "Su clasificación de principios ha sido aceptada y registrada.",
+    "system_success_messages_consensus_reached": "¡Felicidades! El grupo ha llegado a un consenso.",
+    "phase1_counterfactual_table_header": "Esto le asigna a la siguiente clase de ingresos: {assigned_class}\n\nPara cada principio de justicia, cada miembro de esta clase de ingresos recibiría los siguientes ingresos. Recibirá un pago de $1 por cada $10,000 de ingresos.\n\nPrincipio de Justicia                    Ingresos    Pago",
+    "memory_empty_memory_placeholder": "(Vacío)",
+    "phase1_application_round": "Ronda {round_number}\n\nSi elige un principio de restricción, debe especificar la cantidad de restricción en dólares antes de que pueda decirse que ha hecho una elección bien definida.\n\nSu principio elegido determinará qué distribución se selecciona. Luego será asignado aleatoriamente a una clase de ingresos y ganará $1 por cada $10,000 de ingresos.\n\nDebe elegir entre los cuatro principios de justicia:\n\n1. **Maximizar los ingresos mínimos** - La distribución más justa es la que maximiza el ingreso más bajo\n2. **Maximizar los ingresos promedio** - La distribución más justa es la que maximiza el ingreso promedio\n3. **Maximizar los ingresos promedio con restricción de ingreso mínimo** - Maximizar promedio garantizando un ingreso mínimo (debe especificar la cantidad)\n4. **Maximizar los ingresos promedio con restricción de rango** - Maximizar promedio limitando la diferencia entre ricos y pobres (debe especificar la cantidad)\n\n{distributions_table}\n\nFormato de Respuesta:\nPor favor estructure su respuesta de la siguiente manera:\nDeclare su elección claramente: \"Elijo [nombre del principio]\"\nSi elige un principio de restricción, especifique: \"con una restricción de $[cantidad]\"\nDeclare su certeza: \"Estoy [muy inseguro/inseguro/seguro/muy seguro] sobre esta elección\"\n\nEjemplo para cada principio:\n\n\"Elijo maximizar los ingresos mínimos. Estoy seguro sobre esta elección\"\n\"Elijo maximizar los ingresos promedio. Estoy seguro sobre esta elección\"\n\"Elijo maximizar los ingresos promedio con restricción de rango con una restricción de $X. Estoy seguro sobre esta elección.\"\n\"Elijo maximizar los ingresos promedio con restricción de ingreso mínimo con una restricción de $X. Estoy seguro sobre esta elección.\"",
+    "phase2_discussion_prompt": "{group_participants}\n\nDiscusión en Grupo - Ronda {round_number} de {max_rounds}\n\nHistorial de discusión:\n{discussion_history}\n\n¿Cuál es su declaración al grupo para esta ronda?",
+    "phase2_discussion_short_prompt": "¿Cuál es su declaración al grupo para esta ronda?",
+    "phase2_secret_ballot_vote": "Voto Secreto\n\nElija UNO de los cuatro principios de justicia para que el grupo adopte:\n\n**Maximizar los ingresos mínimos**: La distribución más justa de los ingresos es la que maximiza los ingresos mínimos (o más bajos) de la sociedad. Este principio considera solo el bienestar del individuo más desfavorecido de la sociedad.\n\n**Maximizar los ingresos promedio**: La distribución más justa de los ingresos es la que maximiza los ingresos promedio en la sociedad. Para cualquier sociedad, maximizar los ingresos promedio maximiza los ingresos totales en la sociedad.\n\n**Maximizar los ingresos promedio con restricción de ingreso mínimo**: La distribución más justa de los ingresos es la que maximiza los ingresos promedio solo después de que se garantice a todos un ingreso mínimo específico. Debe especificar la cantidad de restricción en dólares.\n\n**Maximizar los ingresos promedio con restricción de rango**: La distribución más justa de los ingresos es la que intenta maximizar los ingresos promedio solo después de garantizar que la diferencia entre los individuos más pobres y más ricos no sea mayor a una cantidad específica. Debe especificar la cantidad de restricción en dólares.\n\nSu voto es completamente secreto y no será revelado a otros participantes.\n\nFormatee su respuesta como: \"Mi voto es [principio] [con restricción si aplica]\"\n\nEjemplo: \"Mi voto es maximizar los ingresos promedio con restricción de ingreso mínimo con una restricción de ingreso mínimo de $15,000\"\n\n¿Cuál es su voto?",
+    "phase2_vote_agreement": "Se ha propuesto una votación. ¿Está de acuerdo en realizar una votación ahora?\n\nResponda con solo una palabra:\n- Sí\n- No\n\nNo agregue detalles de principios (ej. \"sin restricciones\").\n\n¿Cuál es su respuesta?",
+    "utility_validator_instructions": "\nUsted es un agente validador del Experimento Frohlich.\n\nSu tarea consiste en validar las respuestas analizadas para comprobar si están completas y son correctas:\n\n1. Validación de restricciones: Si un participante elige un principio de restricción (maximizar_ingresos_promedio_restriccion_minimo o maximizar_ingresos_promedio_restriccion_rango), Debe especificar una cantidad de restricción. Acepte varios formatos de referencia:\n\n   - Nombres: restricción de piso, restricción de rango\n   - Descripciones: \"maximizar promedio con restricción de piso\", etc.\n   - Lenguaje original: \"garantizar ingreso mínimo\", \"limitar diferencias de ingresos\", etc.\n\n2. Validación de clasificación: Las clasificaciones completas deben incluir los 4 principios con rangos 1-4.\n   Acepte varios formatos de referencia de principios como se indica arriba.\n\n3. Integridad de datos: Todos los campos requeridos deben estar presentes y válidos.\n   Nota: Los campos de razonamiento ahora son opcionales.\n\n4. Reconocimiento de principios: Valide que las referencias de principios se mapean correctamente a los cuatro principios centrales:\n   - Maximizar los ingresos mínimos\n   - Maximizar los ingresos promedio\n   - Maximizar los ingresos promedio con restricción de ingreso mínimo\n   - Maximizar los ingresos promedio con restricción de rango\n\nDevuelva is_valid=True si la validación pasa, is_valid=False con errores específicos si no.\n\nSea flexible con variaciones de idioma manteniendo precisión en la identificación de principios.\n",
+    "utility_parse_principle_ranking": "\nAnalice la siguiente respuesta del participante para extraer su clasificación completa de los principios de justicia:\n\nRespuesta: \"{response}\"\n\nExtraiga una clasificación completa de los 4 principios del mejor (rango 1) al peor (rango 4).\nTambién extraiga el nivel de certeza general para toda la clasificación.\n\nDevuelva los datos analizados como un diccionario con:\n- rankings: lista de objetos {{principle, rank}} (sin niveles de certeza individuales)\n- certainty: nivel de certeza general para toda la clasificación\n",
+    "format_earnings_display_format": "Sus ganancias reales esta ronda: ${earnings:.2f}",
+    "format_total_earnings_format": "Sus ganancias totales hasta ahora: ${total_earnings:.2f}",
+    "format_bank_balance_format": "Saldo bancario: ${bank_balance:.2f}",
+    "format_round_outcome_header": "Ronda {round_num} RESULTADO:",
+    "format_current_phase_format": "Fase actual: {phase}",
+    "format_round_number_format": "Ronda: {round_number}",
+    "format_class_assignment_format": "Esto le asigna la siguiente clase de ingresos: {assigned_class}",
+    "distribution_distributions_table_header": "Distribuciones de ingresos:\n\n",
+    "distribution_distributions_table_column_header": "| Clase de Ingresos | Dist. 1 | Dist. 2 | Dist. 3 | Dist. 4 |\n",
+    "distribution_distributions_table_separator": "|--------------|---------|---------|---------|----------|\n",
+    "context_memory_section_format": "=== SU MEMORIA ===\n{memory}\n\n====================",
+    "context_memory_summary_format": "=== ASPECTOS CLAVE ===\n{memory_summary}\n=======================",
+    "context_memory_empty_placeholder": "(Vacío)",
+    "context_memory_summary_empty_placeholder": "Aún no hay conocimientos clave.",
+    "internal_reasoning_context_format": "=== SU RAZONAMIENTO INTERNO ===\n{internal_reasoning}\n\n================================",
+    "language_instruction": "Por favor responda solo en español.",
+    "phase1_round_memory_template": "Pregunta: {application_prompt}\nSu Respuesta: {text_response}\nSu Elección: {chosen_principle_display}\n\nRESULTADO Ronda {round_num}:\n{counterfactual_table}\n\nSus ganancias reales esta ronda: ${earnings:.2f}\nSus ganancias totales hasta ahora: ${total_earnings:.2f}",
+    "phase2_agent_unavailable": "{participant_name} no está disponible actualmente para proporcionar una declaración.",
+    "fallback_default_phase_instructions": "",
+    "fallback_default_agent_instruction": "Eres un participante en el Experimento de Frohlich. Responde de forma concisa.",
+    "validation_memory_limit_exceeded": "Su memoria excede el límite de caracteres. Por favor condense su memoria manteniendo la información más importante.",
+    "validation_invalid_principle_choice": "Elección de principio inválida detectada. Por favor seleccione uno de los cuatro principios de justicia disponibles.",
+    "validation_missing_constraint_amount": "Seleccionó un principio de restricción pero no especificó la cantidad de restricción. Por favor proporcione una cantidad en dólares.",
+    "validation_incomplete_ranking": "Su clasificación está incompleta. Por favor clasifique los cuatro principios del 1 al 4.",
+    "validation_parsing_failed": "Fallo al analizar su respuesta. Por favor reformate su respuesta según el formato especificado.",
+    "validation_consensus_not_reached": "El grupo no ha alcanzado consenso. La discusión continuará.",
+    "validation_experiment_timeout": "El experimento ha terminado por tiempo. Los resultados se finalizarán con los datos actuales.",
+    "system_status_messages_phase1_starting": "La Fase 1 está comenzando. Ahora aprenderá sobre y aplicará principios de justicia.",
+    "system_status_messages_phase2_starting": "La Fase 2 está comenzando. Ahora participará en discusión grupal.",
+    "system_status_messages_round_starting": "La ronda {round_number} está comenzando.",
+    "system_status_messages_earnings_update": "Sus ganancias actuales: ${amount:.2f}",
+    "system_status_messages_final_results": "Experimento completado. Ganancias finales: ${amount:.2f}",
+    "system_success_messages_memory_updated": "Su memoria ha sido actualizada exitosamente.",
+    "system_success_messages_vote_proposal_detected": "Propuesta de votación detectada y será procesada.",
+    "system_error_messages_experiment_timeout": "El experimento ha terminado por tiempo límite. Los resultados se finalizarán con datos actuales.",
+    "phase2_default_constraint_specification": "No especificado",
+    "phase2_favored_principle_unspecified": "no especificado",
+    "phase2_consensus_reached": "El grupo alcanzó consenso sobre {principle}",
+    "phase2_no_consensus": "El grupo no alcanzó consenso. Las ganancias fueron asignadas aleatoriamente.",
+    "counterfactual_insights": {
+      "maximin_payoffs_best": "- Mejor resultado bajo maximizar mínimo: Habría ganado ${best_diff:.2f} más",
+      "maximin_payoffs_worst": "- Peor resultado bajo maximizar mínimo: Habría ganado ${worst_diff:.2f} menos",
+      "floor_constraint_payoffs_best": "- Mejor resultado bajo restricción de mínimo: Habría ganado ${best_diff:.2f} más",
+      "floor_constraint_payoffs_worst": "- Peor resultado bajo restricción de mínimo: Habría ganado ${worst_diff:.2f} menos"
+    },
+    "utility_string_parser_agent_name": "Analizador de Respuestas",
+    "utility_string_validator_agent_name": "Validador de Respuestas",
+    "utility_constraint_re_prompt": "\n{participant_name}, usted eligió el principio \"{principle_name}\", pero no especificó la cantidad de restricción {constraint_type}.\n\nRecordatorio sobre el principio que eligió:\n- Restricción de ingreso mínimo: Maximiza el ingreso promedio solo después de garantizar que todos reciban al menos un ingreso mínimo especificado\n- Restricción de rango: Maximiza el ingreso promedio mientras asegura que la diferencia entre los más ricos y más pobres no exceda una cantidad especificada\n\nImportante: Por favor use la misma escala de ingresos que ha estado discutiendo ($12,000-$32,000) para especificar la cantidad de restricción.\n\nPor favor especifique la cantidad en dólares para su restricción {constraint_type}.\n\nPor ejemplo:\n- Restricción de ingreso mínimo: \"Elijo maximizar los ingresos promedio con restricción de ingreso mínimo con una restricción de ingreso mínimo de $15,000\"\n- Restricción de rango: \"Elijo maximizar los ingresos promedio con restricción de rango con una restricción de rango de $20,000\"\n",
+    "utility_format_improvement_choice": "\nLa siguiente respuesta necesita ser reformateada para una extracción clara de elección de principios:\n\nRespuesta original: \"{response}\"\n\nPor favor reescriba esto para declarar claramente:\n1. Qué principio eligieron usando:\n   - Nombre completo: \"maximizar los ingresos mínimos\", \"maximizar los ingresos promedio\", etc.\n   - Descripción: \"maximizar ingresos mínimos\", \"maximizar ingresos promedio\", etc.\n   - Lenguaje original: \"la distribución más justa que maximiza el mínimo\", etc.\n\n2. Si eligieron un principio con restricción, la cantidad específica de restricción en dólares\n\n3. Su nivel de certeza (muy_inseguro, inseguro, seguro, muy_seguro)\n\n4. Su razonamiento (opcional, ya que se han eliminado los requisitos de razonamiento explícito)\n\nLos cuatro principios para referencia:\n- Maximizar los ingresos mínimos - se enfoca en el individuo más desfavorecido\n- Maximizar los ingresos promedio - maximiza el ingreso total en la sociedad\n- Maximizar los ingresos promedio con restricción de ingreso mínimo - requiere especificación de ingreso mínimo\n- Maximizar los ingresos promedio con restricción de rango - requiere especificación de límite de brecha de ingresos\n\nFormatee como: \"Elijo [principio] [con restricción si aplica]. Estoy [nivel de certeza] sobre esta elección [razonamiento opcional].\"\n\nEjemplos:\n- \"Elijo maximizar los ingresos mínimos. Estoy seguro sobre esta elección.\"\n- \"Elijo maximizar los ingresos promedio con restricción de ingreso mínimo con una restricción de ingreso mínimo de $X. Estoy muy seguro sobre esta elección.\"\n- \"Elijo el principio que considera el bienestar de los más desfavorecidos. Estoy seguro sobre esta elección.\"\n",
+    "utility_format_improvement_ranking": "\nLa siguiente respuesta necesita ser reformateada para una extracción clara de clasificación:\n\nRespuesta original: \"{response}\"\n\nPor favor reescriba esto como una lista numerada clasificando los 4 principios del mejor (1) al peor (4):\n\n1. [nombre o descripción del principio]\n2. [nombre o descripción del principio]\n3. [nombre o descripción del principio]\n4. [nombre o descripción del principio]\n\nCerteza general: [nivel de certeza]\n\nLos principios pueden referenciarse usando:\n- Nombres cortos: maximizar mínimo, maximizar promedio, restricción de mínimo, restricción de rango\n- Descripciones completas: \"maximizar ingresos mínimos\", \"maximizar ingresos promedio con restricción de mínimo\", etc.\n- Lenguaje original del manual: \"distribución más justa que maximiza ingresos mínimos\", etc.\n\nNota: Las explicaciones de razonamiento explícito ya no son requeridas, pero pueden incluirse si se proporcionan.\n\nFormato de ejemplo:\n1. Maximizar ingresos mínimos\n2. Maximizar promedio con restricción de mínimo\n3. Maximizar ingresos promedio\n4. Maximizar promedio con restricción de rango\n\nCerteza general: seguro\n",
+    "utility_agreement_detection_enhanced": "Analice esta respuesta para determinar si el participante acepta claramente realizar una votación AHORA.\n\nRespuesta a analizar: \"{response}\"\n\nDETECTAR COMO ACUERDO - respuestas que muestran disposición clara para votar inmediatamente:\n✅ \"Sí\" / \"SÍ\" / \"Yes\" / \"Oui\" / \"是的\"\n✅ \"Estoy de acuerdo\" / \"Acepto votar\"\n✅ \"Procedamos\" / \"Hagámoslo\" / \"Votemos\"\n✅ \"Estoy listo para votar\" / \"Estamos listos\" / \"Listo para votar\"\n✅ \"Suena bien\" / \"Eso funciona\" / \"Perfecto\"\n✅ \"Creo que deberíamos votar ahora\" / \"Es hora de votar\"\n✅ \"Finalicemos esto\" / \"Sigamos adelante\"\n\nNO DETECTAR - respuestas con dudas, condiciones o demora:\n❌ \"Sí, pero...\" / \"Estoy de acuerdo, sin embargo...\" / \"Sí, aunque...\"\n❌ \"Tal vez deberíamos...\" / \"Quizás podríamos...\"\n❌ \"Creo que necesitamos más discusión\" / \"Deberíamos hablar más\"\n❌ \"Todavía no\" / \"No estoy listo\" / \"Déjame pensar\" / \"Espera\"\n❌ \"Tengo preocupaciones\" / \"No estoy seguro\" / \"Necesito considerar\"\n\nEnfóquese en la DISPOSICIÓN INMEDIATA para votar. Si hay CUALQUIER duda, condición o solicitud de demora, responda DISAGREES.\n\nResponda con exactamente una palabra:\n- \"AGREES\" si muestran disposición clara e inmediata para votar\n- \"DISAGREES\" si muestran cualquier duda, condición o solicitud de demora",
+    "utility_preference_detection": "Analice esta declaración para detectar si el participante está expresando su preferencia de principio.\n\nDeclaración: \"{statement}\"\n\nBusque declaraciones explícitas de preferencia como:\n- \"Mi preferencia es [principio]\"\n- \"Prefiero [principio]\"\n- \"Elijo [principio]\"\n- \"Apoyo [principio]\"\n- \"Preferencia: [principio]\"\n- \"Elección: [principio]\"\n\nLos principios pueden referenciarse como:\n- Nombres completos: maximizar los ingresos mínimos, maximizar los ingresos promedio, etc.\n- Nombres cortos: maximizar mínimo, maximizar promedio, etc.\n- Descripciones: el principio que maximiza los ingresos mínimos, etc.\n\nSi se declara claramente una preferencia, responda con:\nPREFERENCE_DETECTED: [extraiga la elección del principio y cualquier cantidad de restricción]\n\nSi no se declara una preferencia clara, responda con:\nNO_PREFERENCE\n\nSea conservador - solo detecte declaraciones de preferencia EXPLÍCITAS, no discusiones generales sobre principios.",
+    "utility_consensus_validation": "Analice el contenido de la discusión para validar si el consenso registrado se alinea con lo que realmente se discutió.\n\nCONTENIDO DE LA DISCUSIÓN:\n\"{discussion_content}\"\n\nCONSENSO REGISTRADO: {consensus_principle}\n\nAnalice si:\n1. El contenido de la discusión apoya consistentemente el principio de consenso registrado\n2. Los participantes expresaron preferencias que se alinean con el consenso registrado\n3. Hay contradicciones entre las preferencias declaradas y el consenso final\n\nBusque:\n- Declaraciones explícitas de preferencia por principios\n- Respaldos fuertes o recomendaciones para principios específicos\n- Patrones de acuerdo o desacuerdo\n- Declaraciones finales que sugieren dirección de consenso\n\nPonga atención especial a:\n- Principios con restricción vs sin restricción (ej. \"maximizar promedio\" vs \"maximizar promedio con restricción de mínimo\")\n- Consistencia entre preferencias individuales y consenso grupal\n- Si la discusión llevó naturalmente al consenso registrado\n\nSi el contenido de la discusión apoya el consenso registrado, responda:\nCONSENSUS_VALID: La discusión se alinea con el consenso registrado\n\nSi hay contradicciones significativas o desalineación, responda:\nCONSENSUS_MISMATCH: La discusión no apoya el consenso registrado\n\nSea objetivo y enfóquese en evidencia del contenido real de la discusión.",
+    "statement_validation_feedback": {
+      "attempt_label": "Intento {attempt_number}",
+      "issue_heading": "Problema de declaración",
+      "preview_label": "Tu declaración",
+      "too_short": {
+        "explanation": "Tu declaración necesita más detalles para aportar realmente a la discusión.",
+        "instruction": "Por favor proporciona al menos {min_required_length} caracteres explicando tu razonamiento o perspectiva.",
+        "example": "Ejemplo: Creo que deberíamos priorizar maximizar el ingreso promedio porque genera el mejor resultado general sin descuidar la equidad."
+      },
+      "empty_response": {
+        "explanation": "No se proporcionó ninguna declaración en esta ronda.",
+        "instruction": "Por favor comparte tus ideas, análisis o preferencias sobre los principios de justicia.",
+        "example": "Ejemplo: Después de analizar los resultados, pienso que la restricción de piso ofrece el equilibrio correcto entre seguridad y eficiencia."
+      },
+      "minimal_content": {
+        "explanation": "Aunque se entiende tu acuerdo, necesitamos más razonamiento para avanzar hacia un consenso.",
+        "instruction": "Por favor explica por qué estás de acuerdo e incluye tu propio análisis o perspectiva.",
+        "example": "Ejemplo: Estoy de acuerdo con usar la restricción de piso porque garantiza un mínimo digno para todos, lo cual considero esencial para la justicia distributiva."
+      }
+    },
+    "utility_llm_parse_principle_choice": "Analice esta respuesta del participante y extraiga qué principio eligieron y cualquier cantidad de restricción.\n\nRespuesta: \"{response}\"\n\n🚨 EJEMPLOS CRÍTICOS DE DESAMBIGUACIÓN (Español):\n✅ \"Mi elección de voto es maximización del ingreso mínimo\"\n   → {{\"principle\": \"maximización del ingreso mínimo\", \"constraint_amount\": null}}\n✅ \"Mi elección de voto es maximización del ingreso promedio\"\n   → {{\"principle\": \"maximización del ingreso promedio\", \"constraint_amount\": null}}\n✅ \"Mi elección de voto es maximización del promedio con restricción de ingreso mínimo de €15000\"\n   → {{\"principle\": \"maximización del ingreso promedio bajo restricción de ingreso mínimo\", \"constraint_amount\": 15000}}\n✅ \"Mi elección de voto es maximización del promedio con restricción de rango de €20000\"\n   → {{\"principle\": \"maximización del ingreso promedio bajo restricción de rango\", \"constraint_amount\": 20000}}\n\n🔑 REGLAS CRÍTICAS DE ANÁLISIS:\n- \"maximización DEL ingreso mínimo\" = maximización del ingreso mínimo (NO es principio de restricción)\n- \"maximización DEL ingreso promedio\" = maximización del ingreso promedio (NO es principio de restricción)\n- \"maximización del promedio CON restricción\" = maximización del ingreso promedio bajo restricción de ingreso mínimo (principio de restricción)\n- \"maximización del promedio CON restricción de rango\" = maximización del ingreso promedio bajo restricción de rango (principio de restricción)\n\n🚨 CRÍTICO: Frases comunes que NUNCA deben analizarse como principios de restricción:\n❌ \"maximización del ingreso mínimo\" → maximización del ingreso mínimo (NO maximización del ingreso promedio bajo restricción)\n❌ \"maximización del ingreso promedio\" → maximización del ingreso promedio (NO maximización del ingreso promedio bajo restricción)\n❌ \"elijo maximizar los ingresos mínimos\" → maximización del ingreso mínimo (NO principio de restricción)\n❌ \"prefiero maximizar el promedio\" → maximización del ingreso promedio (NO principio de restricción)\n❌ \"mi elección de voto es maximizar los ingresos mínimos\" → maximización del ingreso mínimo (NO principio de restricción)\n❌ \"mi voto es maximizar los ingresos promedio\" → maximización del ingreso promedio (NO principio de restricción)\n\n✅ Solo estos patrones indican principios de restricción:\n- \"CON restricción de ingreso mínimo\", \"CON restricción de rango\"\n- \"restricción de ingreso mínimo de €X\", \"restricción de rango de €X\"\n- \"garantizando ingreso mínimo\", \"limitando diferencias de ingresos\"\n- \"después de asegurar mínimo\", \"mientras se restringe el rango\"\n\nLos cuatro principios son:\nMaximizar ingresos mínimos - se enfoca en el individuo más desfavorecido, maximizando el ingreso más bajo\nMaximizar ingresos promedio - maximiza el ingreso total en la sociedad\nMaximizar promedio con restricción de mínimo - maximiza el promedio mientras garantiza ingreso mínimo (necesita cantidad de restricción)\nMaximizar promedio con restricción de rango - maximiza el promedio mientras limita la brecha de ingresos (necesita cantidad de restricción)\n\nLos participantes pueden referenciar principios usando:\n- Nombres completos: \"maximización del ingreso mínimo\", \"maximización del ingreso promedio\", \"maximización del ingreso promedio bajo restricción de ingreso mínimo\", \"maximización del ingreso promedio bajo restricción de rango\"\n- Lenguaje natural: \"maximizar los ingresos mínimos\", \"maximizar los ingresos promedio con restricción de ingreso mínimo\"\n- Nombres cortos: mínimo, promedio, restricción de mínimo, restricción de rango\n- Descripciones completas: \"maximiza los ingresos mínimos\", \"considera solo el bienestar de los más desfavorecidos\", \"garantiza ingreso mínimo\", \"limita diferencias de ingresos\"\n- Lenguaje original del manual: \"distribución más justa\", \"asegura individuos en la base\", \"diferencia entre más pobres y más ricos\"\n\nREGLAS CRÍTICAS:\n- Si la respuesta menciona \"restricción de mínimo\" o \"garantizar ingreso mínimo\", es \"maximización del ingreso promedio bajo restricción de ingreso mínimo\"\n- Si la respuesta menciona \"restricción de rango\" o \"limitar brecha de ingresos\", es \"maximización del ingreso promedio bajo restricción de rango\"\n- Cuando vea \"maximizar los ingresos promedio con restricción de ingreso mínimo\", es \"maximización del ingreso promedio bajo restricción de ingreso mínimo\"\n- Cuando vea \"maximizar los ingresos promedio con restricción de rango\", es \"maximización del ingreso promedio bajo restricción de rango\"\n\nDevolver SOLO JSON válido en este formato exacto:\n{{\"principle\": \"maximización del ingreso mínimo\", \"constraint_amount\": null, \"certainty\": \"sure\"}}\n\nReglas:\n- principle: debe ser exactamente \"maximización del ingreso mínimo\", \"maximización del ingreso promedio\", \"maximización del ingreso promedio bajo restricción de ingreso mínimo\", o \"maximización del ingreso promedio bajo restricción de rango\"\n- constraint_amount: número (sin $ o comas) para principios de restricción, null para principios sin restricción\n- certainty: debe ser exactamente \"very_unsure\", \"unsure\", \"sure\", o \"very_sure\"\n- Importante: Preserve cantidades exactas como se declaran - $10 significa 10, no 10000\n\nEjemplos Válidos:\n- \"Mi elección de voto es maximización del ingreso mínimo\" → {{\"principle\": \"maximización del ingreso mínimo\", \"constraint_amount\": null, \"certainty\": \"sure\"}}\n- \"Mi elección de voto es maximización del ingreso promedio\" → {{\"principle\": \"maximización del ingreso promedio\", \"constraint_amount\": null, \"certainty\": \"sure\"}}\n- \"Mi elección de boleta es maximizar los ingresos promedio con restricción de ingreso mínimo con restricción de mínimo de €13,000\" → {{\"principle\": \"maximización del ingreso promedio bajo restricción de ingreso mínimo\", \"constraint_amount\": 13000, \"certainty\": \"sure\"}}\n- \"Mi elección de boleta es maximizar los ingresos promedio con restricción de ingreso mínimo con restricción de mínimo de €15000\" → {{\"principle\": \"maximización del ingreso promedio bajo restricción de ingreso mínimo\", \"constraint_amount\": 15000, \"certainty\": \"sure\"}}\n- \"Mi elección de voto es maximización del promedio con restricción de rango de €20000\" → {{\"principle\": \"maximización del ingreso promedio bajo restricción de rango\", \"constraint_amount\": 20000, \"certainty\": \"sure\"}}\n- \"Elijo el principio que considera solo el bienestar de los más desfavorecidos\" → {{\"principle\": \"maximización del ingreso mínimo\", \"constraint_amount\": null, \"certainty\": \"sure\"}}\n- \"¿Tal vez el que maximiza los ingresos promedio?\" → {{\"principle\": \"maximización del ingreso promedio\", \"constraint_amount\": null, \"certainty\": \"unsure\"}}",
+    "utility_llm_parse_preference_statement": "Analice esta declaración del participante para detectar si están expresando una preferencia por un principio de justicia (MODO SIMPLE).\n\nDeclaración a analizar: \"{statement}\"\n\nBusque expresiones explícitas de preferencia en varias formas:\n- Directo: \"Mi preferencia es [principio]\", \"Prefiero [principio]\"\n- Elección: \"Elijo [principio]\", \"Selecciono [principio]\"\n- Apoyo: \"Apoyo [principio]\", \"Favorezco [principio]\"\n- Decisión: \"Decido [principio]\", \"Mi decisión es [principio]\"\n- Compromiso: \"Voy con [principio]\", \"Iré con [principio]\"\n\nLos principios pueden referenciarse como:\n- Nombres completos: maximizar los ingresos mínimos, maximizar los ingresos promedio, etc.\n- Nombres cortos: maximizar mínimo, maximizar promedio, restricción de mínimo, restricción de rango\n- Descripciones: ingreso mínimo más alto, mejor ingreso promedio, promedio con mínimo, promedio con límites\n- Lenguaje original del manual: \"distribución más justa\", \"bienestar de los más desfavorecidos\", \"asegura individuos en la base\", \"diferencia entre más pobres y más ricos\", \"maximiza ingreso total en sociedad\"\n\nPara principios de restricción, busque cantidades de restricción:\n- \"maximizar los ingresos promedio con restricción de ingreso mínimo con restricción de mínimo de $X\"\n- \"maximizar promedio con restricción de rango de 20000\"\n- \"el principio con restricción de rango con límite de rango de $X\"\n- \"asegurar ingreso mínimo de $X para todos\"\n- \"limitar brecha entre ricos y pobres a $X\"\n\nEjemplos de declaraciones de preferencia:\n✅ \"Mi preferencia es maximizar los ingresos mínimos\"\n✅ \"Prefiero el principio que considera solo el bienestar de los más desfavorecidos\"\n✅ \"Elijo la distribución más justa que maximiza los ingresos mínimos\"\n✅ \"Mi preferencia es maximizar promedio mientras aseguro que individuos en la base reciban $X\"\n✅ \"Apoyo el principio que garantiza ingreso mínimo con restricción de $X\"\n\nEjemplos de declaraciones NO de preferencia:\n❌ \"Creo que el principio de mínimo es interesante\" (discusión, no compromiso)\n❌ \"¿Qué tal maximizar promedio?\" (pregunta, no preferencia)\n❌ \"El enfoque de bienestar podría funcionar\" (especulación, no compromiso)\n❌ \"Aún estoy considerando las opciones\" (deliberación, no elección)\n\nSi detecta una declaración clara de preferencia, responda con:\nPREFERENCE_DETECTED: [principio y detalles]\n\nRespuestas de ejemplo:\n- \"Mi preferencia es maximizar los ingresos mínimos\" → PREFERENCE_DETECTED: maximizing_floor\n- \"Prefiero el principio que considera bienestar de más desfavorecidos\" → PREFERENCE_DETECTED: maximizing_floor\n- \"Elijo maximizar promedio con restricción de mínimo de $15,000\" → PREFERENCE_DETECTED: maximizing_average_floor_constraint with constraint of $15,000\n\nSi no se declara preferencia clara, responda con:\nNO_PREFERENCE_DETECTED\n\nSea conservador - solo detecte compromisos de preferencia explícitos, no discusión general.",
+    "utility_llm_parse_vote_intention": "Analice esta declaración del participante para detectar si expresan intención de votar o iniciar votación (MODO COMPLEJO).\n\nDeclaración a analizar: \"{statement}\"\n\nBusque intenciones explícitas de votación en varias formas:\n- Propuestas directas: \"Propongo que votemos\", \"Votemos\", \"Creo que deberíamos votar\"\n- Disposición: \"Estoy listo para votar\", \"Listo para votar\", \"Estamos listos para votar\"\n- Llamadas: \"Pedir una votación\", \"Pidamos una votación\", \"Tiempo para votar\"\n- Sugerencias: \"¿Deberíamos votar?\", \"¿Podemos votar ahora?\", \"¿Votamos?\"\n- Finalización: \"Finalicemos esto\", \"Tiempo de decidir\", \"Tomemos una decisión\"\n- Procedimental: \"Pasar a votación\", \"Proceder con voto\", \"Realizar una votación\"\n\nFrases que indican intención de voto:\n✅ \"Creo que deberíamos votar ahora\"\n✅ \"Votemos sobre esto\"\n✅ \"Listo para votar\"\n✅ \"Pedir una votación\"\n✅ \"¿Deberíamos hacer una votación?\"\n✅ \"Tiempo de votar\"\n✅ \"Propongo que procedamos con la votación\"\n✅ \"Finalicemos con una votación\"\n✅ \"Pasar a fase de votación\"\n✅ \"Estoy listo para el voto\"\n\nFrases que NO son intenciones de voto:\n❌ \"Podría votar por maximizar los ingresos mínimos\" (discutir elección de voto, no iniciar votación)\n❌ \"Votar es importante\" (discusión general sobre votar)\n❌ \"¿Por qué votarás?\" (preguntar sobre elecciones, no iniciar)\n❌ \"Necesito más tiempo para pensar\" (demorar, no iniciar)\n❌ \"Discutamos más\" (continuar discusión, no pasar a voto)\n\nEjemplos de detección de intención de voto:\n- \"Creo que deberíamos votar\" → VOTE_INTENTION_DETECTED: Participante propone voto grupal\n- \"Listo para votar sobre los principios\" → VOTE_INTENTION_DETECTED: Participante expresa disposición para votar sobre principios\n- \"Pidamos una votación sobre esto\" → VOTE_INTENTION_DETECTED: Participante pide voto\n\nSi detecta intención de voto, responda con:\nVOTE_INTENTION_DETECTED: [breve descripción de la intención de voto]\n\nSi no se detecta intención de voto, responda con:\nNO_VOTE_INTENTION\n\nSea generoso en la detección - si hay evidencia razonable de que quieren iniciar votación, detéctelo.",
+    "utility_llm_parse_constraint_amount": "Extraiga la cantidad de restricción de esta respuesta del participante sobre un principio de justicia basado en restricción.\n\nRespuesta: \"{response}\"\nTipo de principio: {principle}\n\nSu tarea es encontrar la cantidad en dólares que especificaron para su restricción. Busque varios formatos:\n\nCantidades en dólares:\n- \"$15,000\", \"$20000\", \"$25,000\"\n- \"15,000 dólares\", \"20000 USD\", \"25k dólares\"\n- \"quince mil\", \"veinte mil\", \"25k\"\n- \"$15K\", \"20K\", \"$25,000 USD\"\n\nContextos de restricción:\n- \"restricción de mínimo de $15,000\"\n- \"con un mínimo de $20,000\"\n- \"restricción de rango fijada en $25,000\"\n- \"limitar brecha a $30,000\"\n- \"ingreso mínimo de $X\"\n- \"rango máximo de $X\"\n\nIndicadores de no-restricción a ignorar:\n- \"sin restricciones\", \"sin limitaciones\", \"libre de restricciones\"\n- \"cero restricciones\", \"sin restricciones adicionales\"\n- \"sin restricción\", \"sin límites\"\n\nReglas de validación:\n- La cantidad debe estar entre $1,000 y $100,000 (rango razonable)\n- Ignorar cantidades negativas o cero\n- Convertir notación \"k\" (15k = 15,000)\n- Manejar formatos con y sin comas\n\nEjemplos:\n- \"maximizar los ingresos promedio con restricción de ingreso mínimo con restricción de mínimo de $15,000\" → CONSTRAINT_AMOUNT: 15000\n- \"maximizar promedio con restricción de rango de 25k\" → CONSTRAINT_AMOUNT: 25000\n- \"el principio con restricción de rango con límite de rango de $30,000\" → CONSTRAINT_AMOUNT: 30000\n- \"maximizar los ingresos mínimos sin restricciones\" → NO_CONSTRAINT_AMOUNT\n- \"Elijo maximizar los ingresos promedio con restricción de ingreso mínimo\" → NO_CONSTRAINT_AMOUNT (falta cantidad)\n\nSi encuentra una cantidad de restricción válida, responda con:\nCONSTRAINT_AMOUNT: [cantidad numérica]\n\nSi no se encuentra cantidad de restricción válida, responda con:\nNO_CONSTRAINT_AMOUNT\n\nExtraiga la cantidad más claramente declarada si se mencionan múltiples cantidades.",
+    "utility_voting_confirmation_request": "{initiator_name} ha solicitado votar sobre los principios de justicia.\n\n¿Está de acuerdo en participar en una sesión de votación ahora?\n\nResponda con exactamente un número:\n- Responda 1 si quiere votar ahora\n- Responda 0 si quiere continuar la discusión\n\nSu respuesta será visible para todos los participantes.",
+    "phase1_detailed_principles_explanation": "Así es como se aplicaría cada principio de justicia a distribuciones de ingresos de ejemplo:\n\nDistribuciones de Ejemplo:\n| Clase de Ingresos | Dist. 1 | Dist. 2 | Dist. 3 | Dist. 4 |\n|------------------|---------|---------|---------|----------|\n| Altos            | $32,000 | $28,000 | $31,000 | $21,000 |\n| Medios altos     | $27,000 | $22,000 | $24,000 | $20,000 |\n| Medios           | $24,000 | $20,000 | $21,000 | $19,000 |\n| Medios bajos     | $13,000 | $17,000 | $16,000 | $16,000 |\n| Bajos            | $12,000 | $13,000 | $14,000 | $15,000 |\n\nCómo elegiría cada principio:\n- **{principle_name_floor}**: Elegiría Distribución 4 (ingreso bajo más alto: $15,000)\n- **{principle_name_average}**: Elegiría Distribución 1 (promedio más alto: $21,600)\n- **{principle_name_floor_constraint} ≥ $13,000**: Elegiría Distribución 3\n- **{principle_name_floor_constraint} ≥ $14,000**: Elegiría Distribución 3\n- **{principle_name_range_constraint} ≤ $20,000**: Elegiría Distribución 1\n- **{principle_name_range_constraint} ≤ $15,000**: Elegiría Distribución 2\n\nEstudie estos ejemplos para entender cómo funciona cada principio en la práctica.",
+    "phase1_post_explanation_ranking_prompt": "Después de aprender cómo se aplica cada principio de justicia a las distribuciones de ingresos, clasifique los cuatro principios nuevamente del mejor (1) al peor (4):\n\n{master_principle_descriptions}\n\nFormato de Respuesta:\nPor favor, estructure su respuesta de la siguiente manera:\n1. [Su mejor opción]\n2. [Su segunda opción]\n3. [Su tercera opción]\n4. [Su peor opción]\n\nCerteza general: [muy inseguro/inseguro/sin opinión/seguro/muy seguro]\n\nImportante: Debe proporcionar los 4 principios clasificados como líneas numeradas, no solo una elección.\n\nProporcione su clasificación.",
+    "phase1_initial_ranking_prompt": "Esta es su primera vez clasificando estos cuatro principios de justicia:\n\n{master_principle_descriptions}\n\nPor favor clasifique los principios del mejor (1) al peor (4) basado en su comprensión inicial.\n\nFormato de Respuesta:\nPor favor, estructure su respuesta de la siguiente manera:\n1. [Su mejor opción]\n2. [Su segunda opción]\n3. [Su tercera opción]\n4. [Su peor opción]\n\nCerteza general: [muy inseguro/inseguro/sin opinión/seguro/muy seguro]\n\nImportante: Debe proporcionar los 4 principios clasificados como líneas numeradas, no solo una elección.\n\nProporcione su clasificación.",
+    "memory_memory_update_prompt": "Devuelve tu memoria completa actualizada incorporando conocimientos de la actividad reciente.\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento. Devuelve la memoria completa.\n\nTu Memoria Anterior:\n{current_memory}\n\n{experiment_explanation}\n\nActividad Reciente:\n{round_content}\n\nDevuelve: Tu memoria completa actualizada (no cambios incrementales o prefijos como 'Actualización de memoria:')",
+    "memory_narrative_update_prompt": "Devuelve tu memoria actualizada completa incorporando las percepciones de la actividad reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nRevisa la información proporcionada a continuación junto con tu memoria actual. Concéntrate en incorporar ideas que puedan influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría. Enfóquese en lo que cambió e ideas clave, no en reglas o transcripciones.\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\nActividad Reciente:\n{round_content}\n\nDEVUELVA: Su memoria completa actualizada como narrativa continua (no agregue prefijos como 'Actualización de memoria:')",
+    "memory_memory_update_prompt_no_recent_activity": "Devuelves tu memoria actualizada completa incorporando las percepciones del historial de discusión actual y tu razonamiento reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nRevisa la información proporcionada a continuación junto con tu memoria actual. Concéntrate en incorporar ideas que puedan influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\n=== HISTORIAL DE DISCUSIÓN ACTUAL ===\n{round_content}\n========================================\n\nDEVUELVA: Su memoria completa actualizada (no cambios incrementales o prefijos como 'Actualización de memoria:')",
+    "memory_narrative_update_prompt_no_recent_activity": "Devuelves tu memoria actualizada completa incorporando las percepciones del historial de discusión actual y tu razonamiento reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nRevisa la información proporcionada a continuación junto con tu memoria actual. Concéntrate en incorporar ideas que puedan influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría. Enfóquese en lo que cambió e ideas clave, no en reglas o transcripciones.\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\n=== HISTORIAL DE DISCUSIÓN ACTUAL ===\n{round_content}\n========================================\n\nDEVUELVA: Su memoria completa actualizada como narrativa continua (no agregue prefijos como 'Actualización de memoria:')",
+    "memory_compression_prompt": "Su memoria se está acercando al límite de {memory_limit} caracteres. Devuelva una memoria completa condensada que contenga las ideas y patrones más importantes de su experiencia. Enfóquese en decisiones clave, aprendizajes y cambios de estrategia. Longitud objetivo: aproximadamente {target_length} caracteres.\n\nSu Memoria Actual para Comprimir:\n{current_memory}\n\nDEVUELVA: Su memoria completa comprimida (no un resumen con prefijos)",
+    "memory_memory_update_prompt_first_round": "Devuelve tu memoria actualizada completa incorporando las percepciones de la actividad reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nAdemas de tu memoria y tu actividad reciente, recibirás el resultado de tu elección, que incluye el pago que recibiste, tu asignación de clase y los pagos que habrías recibido según cada principio. Analiza e incorpora esta información a tu memoria actualizada.\n\nConcéntrate en la información que pueda influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\nEstás en la Fase 2:\nEn esta parte del experimento, el grupo debe elegir un principio para sí mismo. Esta elección determinará el resultado que obtengan en esta parte del experimento. Sus resultados se determinarán de la siguiente manera. No es necesario que las distribuciones se parezcan a las de la Parte I.\nLO QUE ESTÁ EN JUEGO EN ESTA PARTE DEL EXPERIMENTO ES MUCHO MAYOR QUE EN LA PRIMERA.\nSu elección de principio se utilizará para elegir las distribuciones que se ajusten a su principio.\nAsí, por ejemplo, si ha elegido el principio de maximizar la renta media, estará diciendo que el grupo quiere elegir una distribución con la renta media más alta.  A cada uno de ustedes se le asignará aleatoriamente un ingreso de esa distribución. Ese es su resultado en la Parte II. El principio elegido por el grupo se aplicará entonces para determinar los ingresos finales de cada uno.\n\nCada ronda de la Fase 2 sigue este flujo:\n1. Debate\n2. Votación\n\nProceso de votación: Los participantes pueden iniciar una votación, que requiere confirmación unánime (1=Sí, 0=No). Si se confirma, se realiza una votación secreta de dos etapas: selección de principio (1-4), luego especificación de restricción para los principios 3-4. El consenso requiere que todos los participantes estén de acuerdo tanto en el principio como en el valor de la restricción (si corresponde).\n\nActividad Reciente:\n{round_content}\n\nDEVUELVA: Su memoria completa actualizada (no cambios incrementales o prefijos como 'Actualización de memoria:')",
+    "memory_memory_update_prompt_first_round_no_recent_activity": "Devuelves tu memoria actualizada completa incorporando las percepciones del historial de discusión actual y tu razonamiento reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nAdemás de tu memoria y tu historial de discusión actual, recibirás el resultado de tu elección, que incluye el pago que recibiste, tu asignación de clase y los pagos que habrías recibido según cada principio. Analiza e incorpora esta información a tu memoria actualizada.\n\nConcéntrate en la información que pueda influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\nEstás en la Fase 2:\nEn esta parte del experimento, el grupo debe elegir un principio para sí mismo. Esta elección determinará el resultado que obtengan en esta parte del experimento. Sus resultados se determinarán de la siguiente manera. No es necesario que las distribuciones se parezcan a las de la Parte I.\nLO QUE ESTÁ EN JUEGO EN ESTA PARTE DEL EXPERIMENTO ES MUCHO MAYOR QUE EN LA PRIMERA.\nSu elección de principio se utilizará para elegir las distribuciones que se ajusten a su principio.\nAsí, por ejemplo, si ha elegido el principio de maximizar la renta media, estará diciendo que el grupo quiere elegir una distribución con la renta media más alta.  A cada uno de ustedes se le asignará aleatoriamente un ingreso de esa distribución. Ese es su resultado en la Parte II. El principio elegido por el grupo se aplicará entonces para determinar los ingresos finales de cada uno.\n\nCada ronda de la Fase 2 sigue este flujo:\n1. Debate\n2. Votación\n\nProceso de votación: Los participantes pueden iniciar una votación, que requiere confirmación unánime (1=Sí, 0=No). Si se confirma, se realiza una votación secreta de dos etapas: selección de principio (1-4), luego especificación de restricción para los principios 3-4. El consenso requiere que todos los participantes estén de acuerdo tanto en el principio como en el valor de la restricción (si corresponde).\n\n=== HISTORIAL DE DISCUSIÓN ACTUAL ===\n{round_content}\n========================================\n\nDEVUELVA: Su memoria completa actualizada (no cambios incrementales o prefijos como 'Actualización de memoria:')",
+    "memory_narrative_update_prompt_first_round": "Devuelve tu memoria actualizada completa incorporando las percepciones de la actividad reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nAdemas de tu memoria y tu actividad reciente, recibirás el resultado de tu elección, que incluye el pago que recibiste, tu asignación de clase y los pagos que habrías recibido según cada principio. Analiza e incorpora esta información a tu memoria actualizada.\n\nConcéntrate en la información que pueda influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría. Enfóquese en lo que cambió e ideas clave, no en reglas o transcripciones.\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\nEstás en la Fase 2:\nEn esta parte del experimento, el grupo debe elegir un principio para sí mismo. Esta elección determinará el resultado que obtengan en esta parte del experimento. Sus resultados se determinarán de la siguiente manera. No es necesario que las distribuciones se parezcan a las de la Parte I.\nLO QUE ESTÁ EN JUEGO EN ESTA PARTE DEL EXPERIMENTO ES MUCHO MAYOR QUE EN LA PRIMERA.\nSu elección de principio se utilizará para elegir las distribuciones que se ajusten a su principio.\nAsí, por ejemplo, si ha elegido el principio de maximizar la renta media, estará diciendo que el grupo quiere elegir una distribución con la renta media más alta.  A cada uno de ustedes se le asignará aleatoriamente un ingreso de esa distribución. Ese es su resultado en la Parte II. El principio elegido por el grupo se aplicará entonces para determinar los ingresos finales de cada uno.\n\nCada ronda de la Fase 2 sigue este flujo:\n1. Debate\n2. Votación\n\nProceso de votación: Los participantes pueden iniciar una votación, que requiere confirmación unánime (1=Sí, 0=No). Si se confirma, se realiza una votación secreta de dos etapas: selección de principio (1-4), luego especificación de restricción para los principios 3-4. El consenso requiere que todos los participantes estén de acuerdo tanto en el principio como en el valor de la restricción (si corresponde).\n\nActividad Reciente:\n{round_content}\n\nDEVUELVA: Su memoria completa actualizada como narrativa continua (no agregue prefijos como 'Actualización de memoria:')",
+    "memory_narrative_update_prompt_first_round_no_recent_activity": "Devuelves tu memoria actualizada completa incorporando las percepciones del historial de discusión actual y tu razonamiento reciente. Incluye tanto la información importante de tu memoria anterior como los nuevos aprendizajes.\n\nAdemás de tu memoria y tu historial de discusión actual, recibirás el resultado de tu elección, que incluye el pago que recibiste, tu asignación de clase y los pagos que habrías recibido según cada principio. Analiza e incorpora esta información a tu memoria actualizada.\n\nConcéntrate en la información que pueda influir en tus elecciones sobre los principios de justicia o ayudarte en las discusiones de grupo. Presta especial atención a los patrones en los resultados, a los resultados inesperados y a las ideas sobre cómo funcionan los diferentes principios en la práctica frente a la teoría. Enfóquese en lo que cambió e ideas clave, no en reglas o transcripciones.\n\nImportante: Tu memoria se te da en cada interacción y te proporciona tu conocimiento sobre ti mismo, las interacciones anteriores y el experimento. No incluyas tu nombre, personalidad o cuenta bancaria ya que se te dan en cada interacción. Estructura tu memoria como mejor te convenga. Se te da tu memoria anterior y la actividad reciente del experimento.\n\nSu Memoria Previa:\n{current_memory}\n\n{experiment_explanation}\n\nEstás en la Fase 2:\nEn esta parte del experimento, el grupo debe elegir un principio para sí mismo. Esta elección determinará el resultado que obtengan en esta parte del experimento. Sus resultados se determinarán de la siguiente manera. No es necesario que las distribuciones se parezcan a las de la Parte I.\nLO QUE ESTÁ EN JUEGO EN ESTA PARTE DEL EXPERIMENTO ES MUCHO MAYOR QUE EN LA PRIMERA.\nSu elección de principio se utilizará para elegir las distribuciones que se ajusten a su principio.\nAsí, por ejemplo, si ha elegido el principio de maximizar la renta media, estará diciendo que el grupo quiere elegir una distribución con la renta media más alta.  A cada uno de ustedes se le asignará aleatoriamente un ingreso de esa distribución. Ese es su resultado en la Parte II. El principio elegido por el grupo se aplicará entonces para determinar los ingresos finales de cada uno.\n\nCada ronda de la Fase 2 sigue este flujo:\n1. Debate\n2. Votación\n\nProceso de votación: Los participantes pueden iniciar una votación, que requiere confirmación unánime (1=Sí, 0=No). Si se confirma, se realiza una votación secreta de dos etapas: selección de principio (1-4), luego especificación de restricción para los principios 3-4. El consenso requiere que todos los participantes estén de acuerdo tanto en el principio como en el valor de la restricción (si corresponde).\n\n=== HISTORIAL DE DISCUSIÓN ACTUAL ===\n{round_content}\n========================================\n\nDEVUELVA: Su memoria completa actualizada como narrativa continua (no agregue prefijos como 'Actualización de memoria:')",
+    "format_floor_constraint_example": "Restricción de ingreso mínimo: \"Elijo maximizar promedio con restricción de ingreso mínimo de $X\"",
+    "format_range_constraint_example": "Restricción de rango: \"Elijo maximizar promedio con restricción de rango de $X\"",
+    "context_context_info_format": "\nNombre: {name}\nDescripción del Rol: {role_description}\nSaldo Bancario: ${bank_balance:.2f}\nFase Actual: {phase}\n{stage_header}{discussion_header_section}\n{formatted_memory}\n\n{internal_reasoning_section}\n\n{experiment_explanation}\n\n{phase_instructions}\n\n{language_instruction}\n",
+    "context_memory_update_format": "\nNombre: {name}\nDescripción del Rol: {role_description}\nSaldo Bancario: ${bank_balance:.2f}\nFase Actual: {phase}\n{discussion_header_section}\nEstá actualizando su memoria.\n",
+    "utility_string_validation_error_incomplete_ranking": "Incomplete clasificación - missing principios or invalid ranks",
+    "phase1_final_ranking_prompt": "\nTarea Actual: Clasificación final de principios\n\nDespués de experimentar las cuatro rondas de aplicación de los principios, clasifique estos cuatro principios de justicia del mejor (1) al peor (4):\n\n{master_principle_descriptions}\n\nFormato de Respuesta:\nEstructure su respuesta de la siguiente manera:\n1. [Su mejor opción]\n2. [Su segunda opción]\n3. [Su tercera opción]\n4. [Su peor opción]\n\nCerteza general: [muy inseguro/inseguro/sin opinión/seguro/muy seguro]\n\nImportante: Debe proporcionar los 4 principios clasificados como líneas numeradas, no solo una elección.",
+    "phase2_internal_reasoning": "Estás en la Fase 2:\nEn esta parte del experimento, el grupo debe elegir un principio para sí mismo. Esta elección determinará el resultado que obtengan en esta parte del experimento. Sus resultados se determinarán de la siguiente manera. No es necesario que las distribuciones se parezcan a las de la Parte I.\nLO QUE ESTÁ EN JUEGO EN ESTA PARTE DEL EXPERIMENTO ES MUCHO MAYOR QUE EN LA PRIMERA.\nSu elección de principio se utilizará para elegir las distribuciones que se ajusten a su principio.\nAsí, por ejemplo, si ha elegido el principio de maximizar la renta media, estará diciendo que el grupo quiere elegir una distribución con la renta media más alta.  A cada uno de ustedes se le asignará aleatoriamente un ingreso de esa distribución. Ese es su resultado en la Parte II. El principio elegido por el grupo se aplicará entonces para determinar los ingresos finales de cada uno.\n\nSi, como grupo, no adoptan ningún principio, entonces seleccionaremos una de las distribuciones de ingresos al azar para ustedes como grupo. Esa elección de distribución de ingresos no se ajustará a ninguna característica particular.\n\nImportante: el grupo debe adoptar exactamente uno de los cuatro principios que estudió en la Fase 1; no se pueden crear principios nuevos.\nAhora están trabajando con una distribución de mayor riesgo, distinta de los ejemplos de la Fase 1, y por diseño sus pagos exactos permanecen desconocidos para los participantes.\n\nCada ronda de la Fase 2 sigue este flujo:\n1. Debate\n2. Votación\n\nProceso de votación: Los participantes pueden iniciar una votación, que requiere confirmación unánime (1=Sí, 0=No). Si se confirma, se realiza una votación secreta de dos etapas: selección de principio (1-4), luego especificación de restricción para los principios 3-4. El consenso requiere que todos los participantes estén de acuerdo tanto en el principio como en el valor de la restricción (si corresponde).\n\nDiscusión Grupal - Ronda {round_number} de {max_rounds} (Razonamiento Interno)\n\nAntes de hacer su declaración pública, considere internamente:\n\n1. Análisis Situacional:\n\n¿Cuál es su principio de justicia preferido actualmente y las razones principales para ello?\n\n¿Cuáles son las posiciones expresadas de los otros participantes? Basado en sus argumentos, ¿qué infiere sobre sus intereses o motivaciones subyacentes?\n\n¿Cuáles son los argumentos y propuestas clave presentados hasta ahora?\n\nSi se realizó una votación, ¿cuál fue el resultado y qué revela sobre las alianzas o preferencias actuales?\n\n¿Dónde están los principales puntos de acuerdo y desacuerdo en el grupo?\n\n2. Planificación Estratégica para Esta Ronda:\n\n¿Cuál es su objetivo principal para esta ronda? (por ejemplo, persuadir a una persona específica, probar el apoyo para una idea, bloquear una propuesta rival).\n\n¿Cómo contribuirá a la discusión para dirigirla hacia sus preferencias? ¿Qué puntos clave hará?\n\n¿Quiénes son sus posibles aliados en este tema? ¿Qué lenguaje específico podría usar para ganarlos o formar un bloque de votación?\n\n¿Hay alguna pequeña concesión que esté dispuesto a ofrecer para construir consenso sin comprometer su objetivo principal?\n\n3. Estrategia de Votación:\n\n¿Tiene sentido iniciar una votación en esta ronda? ¿Por qué sí o por qué no? (Recuerde que puede activar una votación una vez, y una votación fallida no tiene consecuencias negativas).\n\n¿Cómo encaja su plan para esta ronda en su estrategia general para las rondas restantes?\n\nRecordatorios Importantes:\n\nSi no se alcanza consenso al final de la última ronda (ronda {max_rounds}), las ganancias se asignarán completamente al azar.\n\nSu razonamiento interno de la ronda anterior será sobrescrito por su respuesta a este mensaje. Si quiere mantener alguna parte de él, inclúyalo a continuación.\n\nProporcione su razonamiento interno (esto no será compartido con otros participantes).",
+    "phase2_internal_reasoning_short": "Discusión Grupal - Ronda {round_number} de {max_rounds} (Razonamiento Interno)\n\nAntes de hacer su declaración pública, considere internamente:\n\n1. Análisis Situacional:\n\n¿Cuál es su principio de justicia preferido actualmente y las razones principales para ello?\n\n¿Cuáles son las posiciones expresadas de los otros participantes? Basado en sus argumentos, ¿qué infiere sobre sus intereses o motivaciones subyacentes?\n\n¿Cuáles son los argumentos y propuestas clave presentados hasta ahora?\n\nSi se realizó una votación, ¿cuál fue el resultado y qué revela sobre las alianzas o preferencias actuales?\n\n¿Dónde están los principales puntos de acuerdo y desacuerdo en el grupo?\n\n2. Planificación Estratégica para Esta Ronda:\n\n¿Cuál es su objetivo principal para esta ronda? (por ejemplo, persuadir a una persona específica, probar el apoyo para una idea, bloquear una propuesta rival).\n\n¿Cómo contribuirá a la discusión para dirigirla hacia sus preferencias? ¿Qué puntos clave hará?\n\n¿Quiénes son sus posibles aliados en este tema? ¿Qué lenguaje específico podría usar para ganarlos o formar un bloque de votación?\n\n¿Hay alguna pequeña concesión que esté dispuesto a ofrecer para construir consenso sin comprometer su objetivo principal?\n\n3. Estrategia de Votación:\n\n¿Tiene sentido iniciar una votación en esta ronda? ¿Por qué sí o por qué no? (Recuerde que puede activar una votación una vez, y una votación fallida no tiene consecuencias negativas).\n\n¿Cómo encaja su plan para esta ronda en su estrategia general para las rondas restantes?\n\nRecordatorios Importantes:\n\nSi no se alcanza consenso al final de la última ronda (ronda {max_rounds}), las ganancias se asignarán completamente al azar.\n\nSu razonamiento interno de la ronda anterior será sobrescrito por su respuesta a este mensaje. Si quiere mantener alguna parte de él, inclúyalo a continuación.\n\nProporcione su razonamiento interno (esto no será compartido con otros participantes).",
+    "phase2_final_ranking_prompt": "Tarea Actual: Clasificación final de principios\n\nBasado en su experiencia a lo largo del experimento, clasifique estos cuatro principios de justicia del mejor (1) al peor (4):\n\n{master_principle_descriptions}\n\nFormato de Respuesta:\nPor favor, estructure su respuesta de la siguiente manera:\n\n1. [Su mejor opción]\n2. [Su segunda opción]\n3. [Su tercera opción]\n4. [Su peor opción]\n\nCerteza general: [muy inseguro/inseguro/sin opinión/seguro/muy seguro]\n\nImportante: Debe proporcionar los 4 principios clasificados como líneas numeradas, no solo una opción.",
+    "vote_initiation_with_reasoning_prompt": "=== SU RAZONAMIENTO INTERNO ===\n{internal_reasoning}\n\n================================\n\nLa discusión ha progresado y es posible que se sienta listo para pasar a la votación formal.\n\nBasándose en su razonamiento interno anterior y la discusión hasta ahora, ¿quiere iniciar este proceso de votación ahora?\n- 1 si quiere comenzar el proceso de votación\n- 0 si no quiere votar ahora\n\nSu respuesta (1 o 0):",
+    "vote_initiation_with_statement_and_reasoning_prompt": "Acaba de hacer esta declaración al grupo:\n\"{agent_recent_statement}\"\n\n=== SU RAZONAMIENTO INTERNO ===\n{internal_reasoning}\n\n================================\n\nBasándose en su razonamiento interno anterior, su declaración reciente y la discusión hasta ahora, ¿quiere iniciar la votación formal sobre los principios de justicia ahora?\n\nPor favor responda con:\n- 1 si quiere iniciar la votación ahora\n- 0 si no quiere votar ahora\n\nSu respuesta (1 o 0):",
+    "memory_insertions": {
+      "vote_initiation_decision": "Ronda {round_num}: Elegí {decision}.",
+      "confirmation_response": "Confirmación de votación: {response} participar en la votación formal.",
+      "secret_ballot_choice": "Voto secreto: Voté por {principle_name}.",
+      "amount_specification": "Cantidad de restricción: Especifiqué {amount}.",
+      "status_update": "Estado: {status_message}",
+      "initiate_voting": "iniciar la votación",
+      "continue_discussion": "continuar la discusión",
+      "agreed_to": "Acepté",
+      "declined_to": "Rechacé"
+    },
+    "phase2_detailed_results_header": "RESULTADOS FINALES FASE 2\n\nEstado del Consenso: {consenso_status}\nAsignación de Clase de Ingresos: {assigned_class}\nSus Ganancias: ${earnings:.2f}",
+    "phase2_counterfactual_table_header": "ANÁLISIS CONTRAFACTUAL - Lo que habría ganado bajo cada principio:\n┌─────────────────────────────────────────┬──────────┬──────────┐\n│ Principio de Justicia                   │ Ingresos │ Ganancias│\n├─────────────────────────────────────────┼──────────┼──────────┤",
+    "phase2_counterfactual_insights_best_more": "- Mejor alternativa: Habría ganado ${best_diff:.2f} más bajo {best_principle}",
+    "phase2_counterfactual_insights_best_same": "- Mejor alternativa: Las ganancias actuales coinciden con el mejor resultado posible",
+    "phase2_counterfactual_insights_worst_more": "- Peor alternativa: Habría ganado ${worst_diff:.2f} menos bajo {worst_principle}",
+    "phase2_counterfactual_insights_worst_same": "- Peor alternativa: Las ganancias actuales coinciden con el peor resultado posible",
+    "two_stage_principle_selection": "Todos los participantes acordaron votar. Tu voto es completamente privado - otros participantes no verán tu elección individual.\n\nSelecciona tu principio de justicia preferido por número:\n\n1. Maximizar Ingreso Mínimo\n2. Maximizar Ingreso Promedio\n3. Maximizar Promedio con Restricción Mínima\n4. Maximizar Promedio con Restricción de Rango\n\nImportante: Los principios 3 y 4 requieren cantidades de restricción en el siguiente paso.\n\nTu elección de voto privado (1, 2, 3, o 4):",
+    "two_stage_amount_specification": "Voto Secreto - PASO 2 DE 2\n\nSeleccionaste {principle_name}.\n\nEste principio requiere que especifiques una cantidad de restricción en dólares. Esta cantidad se comparará con las cantidades de otros participantes para determinar si se alcanza el consenso.\n\nPara el consenso, todos los participantes deben elegir:\n- El mismo número de principio Y\n- La misma cantidad de restricción (si aplica)\n\nImportante: Ingresa dólares de ingresos completos, no dólares de pago. NO escales por la tasa de $1 por $10,000 de pago.\n\nPor favor especifica tu cantidad de restricción como una cantidad entera en dólares:",
+    "phase1_distributions_intro": "Aquí tienes algunos ejemplos de distribuciones para ayudarte a entender:",
+    "context_stage_prompts": {
+      "initial_ranking": "Fase 1 – Clasificación inicial.",
+      "principle_explanation": "Fase 1 – Explicación de principios.",
+      "post_explanation_ranking": "Fase 1 – Clasificación post-explicación.",
+      "application": "Fase 1 – Ronda de demostración.",
+      "discussion": "Fase 2 – Discusión grupal.",
+      "voting": "Fase 2 – Etapa de votación.",
+      "results": "Fase 2 – Revisión de resultados.",
+      "final_ranking": "{phase_label} – Clasificación final."
+    }
+  },
+  "results": {
+    "phase2_header": "Ganancias de la Fase 2",
+    "counterfactual_header": "ANÁLISIS CONTRAFACTUAL - Lo que habría ganado bajo cada principio:",
+    "table_headers": {
+      "principle": "Principio de Justicia",
+      "income": "Ingresos",
+      "earnings": "Ganancias"
+    },
+    "consensus_status": "Estado del Consenso:",
+    "key_insights": "Conocimientos Clave:",
+    "assigned_income_class": "Clase de ingresos asignada:",
+    "counterfactuals_header": "Análisis contrafactual:",
+    "income_classes": {
+      "very_high": "MUY ALTO",
+      "high": "ALTO",
+      "medium": "MEDIO",
+      "low": "BAJO",
+      "very_low": "MUY BAJO"
+    }
+  },
+  "errors": {
+    "two_stage_respond_with_number_only": "Respuesta inválida (intento {attempt}/{max_attempts}). Debes responder con exactamente un número: 1, 2, 3, o 4.",
+    "two_stage_use_digits_not_words": "Respuesta inválida (intento {attempt}/{max_attempts}). Por favor usa dígitos (1, 2, 3, o 4), no palabras.",
+    "two_stage_number_out_of_range": "Respuesta inválida (intento {attempt}/{max_attempts}). Debes responder con 1, 2, 3, o 4 solamente.",
+    "two_stage_zero_not_valid": "Respuesta inválida (intento {attempt}/{max_attempts}). Cero no es una opción válida de principio. Usa 1, 2, 3, o 4.",
+    "two_stage_response_too_long": "Respuesta inválida (intento {attempt}/{max_attempts}). Por favor responde solo con el número.",
+    "two_stage_empty_response": "Respuesta vacía (intento {attempt}/{max_attempts}). Por favor responde con 1, 2, 3, o 4.",
+    "two_stage_invalid_format_general": "Respuesta inválida (intento {attempt}/{max_attempts}). Debes responder con exactamente un número: 1, 2, 3, o 4.",
+    "two_stage_amount_must_be_positive": "Cantidad inválida (intento {attempt}/{max_attempts}). Debes responder con una cantidad entera positiva en dólares.",
+    "two_stage_whole_numbers_only": "Formato de cantidad inválido (intento {attempt}/{max_attempts}). Debes responder con una cantidad entera en dólares (sin decimales).",
+    "two_stage_no_negative_amounts": "Cantidad inválida (intento {attempt}/{max_attempts}). No se permiten cantidades negativas.",
+    "two_stage_no_text_in_amount": "Formato de cantidad inválido (intento {attempt}/{max_attempts}). Debes responder solo con un número.",
+    "two_stage_empty_amount_response": "Respuesta vacía (intento {attempt}/{max_attempts}). Por favor proporciona una cantidad en dólares.",
+    "two_stage_invalid_amount_format": "Formato de cantidad inválido (intento {attempt}/{max_attempts}). Debes responder con una cantidad entera positiva en dólares.",
+    "two_stage_amount_too_low": "Cantidad demasiado baja (intento {attempt}/{max_attempts}). Por favor proporciona una cantidad realista en dólares (mínimo $1,000).",
+    "two_stage_amount_too_high": "Cantidad demasiado alta (intento {attempt}/{max_attempts}). Por favor proporciona una cantidad realista en dólares (máximo $100,000).",
+    "two_stage_no_letter_choices": "Respuesta inválida (intento {attempt}/{max_attempts}). No uses letras (a, b, c, d). Usa números: 1, 2, 3, o 4.",
+    "two_stage_principle_content_unclear": "Elección de principio poco clara (intento {attempt}/{max_attempts}). Por favor responde con el número de tu principio preferido: 1, 2, 3, o 4.",
+    "timeout_retry": "El tiempo de respuesta expiró. Por favor intenta de nuevo."
+  },
+  "retry_prompts": {
+    "retry_needed_intro": "Déjame intentar proporcionar una mejor respuesta.",
+    "feedback_header": "Comentarios sobre la respuesta anterior:",
+    "original_request": "Por favor responde a la solicitud original:"
+  },
+  "discussion_format": {
+    "round_speaker_format": "Ronda {round_number} / Participante: {speaker_name} Declaración: {statement}"
+  },
+  "memory_field_labels": {
+    "prompt": "Instrucción:",
+    "your_response": "Su respuesta:",
+    "your_rankings": "Sus clasificaciones:",
+    "your_post_explanation_rankings": "Sus clasificaciones post-explicación:",
+    "your_final_rankings": "Sus clasificaciones finales:",
+    "your_statement": "Su declaración:",
+    "your_income_assignment": "Su asignación de clase de ingresos:",
+    "your_earnings": "Sus ganancias:",
+    "chosen_principle": "Principio elegido:",
+    "constraint_amount": "Cantidad de restricción:",
+    "assigned_class": "Clase asignada:",
+    "earnings": "Ganancias:",
+    "original_values_situation": "Situación:",
+    "distribution_multiplier": "Multiplicador de distribución:",
+    "distribution_assignment": "Distribución: {number}",
+    "your_payoff": "Su recompensa (ya en su cuenta bancaria):",
+    "outcome": "Resultado:",
+    "payoff_notification_header": "=== NOTIFICACIÓN DE RECOMPENSA ===",
+    "retry_feedback": "Comentarios de reintento:"
+  },
+  "context_phase2_discussion_header": "Discusión en Grupo - Ronda {round_number} de {max_rounds}",
+  "context_group_composition_format": "Participantes: {participants}",
+  "context_discussion_header_section": "\nDiscusión Grupal - Ronda {round_number} de {max_rounds}\n\nParticipantes: {participants}\n",
+  "context_voting_header_section": "\nSesión de Votación - Ronda {round_number} de {max_rounds}\n\nParticipantes: {participants}\n",
+  "context_discussion_history_section_format": "--- HISTORIAL DE DISCUSIÓN ---\n{discussion_history}\n\n--------------------------------",
+  "memory_discussion_history_header": "=== HISTORIAL DE DISCUSIÓN ===",
+  "round_statement_format": "Ronda {round_num}: Tu declaración: {statement}",
+  "internal_reasoning_format": "Razonamiento interno: {reasoning}",
+  "experiment_explanation_header": "=== DESCRIPCIÓN DEL EXPERIMENTO ===",
+  "no_previous_discussion_placeholder": "No hay discusión previa.",
+  "memory_outcomes": {
+    "completed_initial_ranking": "Clasificación inicial completada de los principios de justicia.",
+    "learned_principle_applications": "Aprendió cómo cada principio de justicia se aplica a las distribuciones de ingresos a través de ejemplos.",
+    "completed_post_explanation_ranking": "Clasificación completada después de aprender cómo los principios se aplican a las distribuciones.",
+    "applied_principle_round": "Aplicó el principio de justicia elegido en la ronda de demostración {round_number}.",
+    "completed_final_ranking": "Clasificación final completada de los principios de justicia después de experimentar las cuatro rondas.",
+    "made_discussion_statement": "Hizo declaración en la Ronda {round_number} de la discusión grupal.",
+    "agreed_to_vote": "Acordó proceder con la votación",
+    "declined_to_vote": "Rechazó votar"
+  },
+  "memory": {
+    "round_statement_format": "Ronda {round_num}: Tu declaración: {statement}",
+    "internal_reasoning_format": "Razonamiento interno: {reasoning}",
+    "final_results_format": "Resultados Finales de la Fase 2: {result_content}",
+    "round_prefix": "Ronda ",
+    "statement_key": "declaración:",
+    "reasoning_prefix": "Razonamiento interno:",
+    "memory_end_marker": "--- Fin de la Memoria ---",
+    "labels": {
+      "round_applied": "Ronda {round_num}: Aplicó {principle}",
+      "class_earnings": "Clase: {assigned_class}, Ganancias: ${earnings:.2f}",
+      "original_values": "(Valores originales: {situation})",
+      "multiplier": "(Multiplicador: {multiplier:.2f})",
+      "constraint": "Restricción: {constraint}",
+      "reasoning": "Razonamiento: {reasoning}",
+      "key_alternatives": "Alternativas clave: {highlights}",
+      "speaking": "Turno de palabra #{position}",
+      "statement": "Declaración: {statement}",
+      "favored": "Preferido: {principle}",
+      "vote_intention": "Intención de voto: {vote_status}",
+      "no_consensus_random": "Sin consenso - asignación aleatoria",
+      "alternatives": "Alternativas: {highlights}"
+    },
+    "two_stage": {
+      "stage1_header": "Votación en dos etapas - Paso 1: Selección del principio",
+      "selected": "Seleccionado: {principle_num} ({principle_display_name})",
+      "attempts": "Intentos: {attempts}",
+      "failed_select": "FALLÓ - No se pudo seleccionar el principio",
+      "response_short": "Respuesta: '{response}'",
+      "stage2_header": "Votación en dos etapas - Paso 2: Especificación del monto para {principle_display_name}",
+      "specified": "Especificado: ${constraint_amount:,}",
+      "failed_amount": "FALLÓ - No se pudo especificar el monto de restricción",
+      "complete_header": "Votación en dos etapas completada",
+      "vote_info": "Tu voto: {principle_num} ({principle_display_name})",
+      "vote_info_with_constraint": "Tu voto: {principle_num} ({principle_display_name}) con restricción de ${constraint_amount:,}",
+      "process_two_stage": "Proceso de dos etapas (principio + monto)",
+      "process_single_stage": "Proceso de una etapa (solo principio)",
+      "total_attempts": "Intentos totales: {total_attempts}",
+      "consensus_yes": "Consenso del grupo: SÍ",
+      "consensus_yes_with_agreed": "Consenso del grupo: SÍ (Acuerdo: {agreed_principle})",
+      "consensus_no": "Consenso del grupo: NO"
+    }
+  },
+  "voting_phases": {
+    "initiation": "La votación ha sido iniciada por {initiator_name}. El proceso formal de votación está comenzando.",
+    "confirmation": "Fase de confirmación: Se está pidiendo a los participantes que confirmen si están de acuerdo en proceder con la votación.",
+    "secret_ballot": "Fase de voto secreto: Todos los participantes están emitiendo sus votos sobre los principios de justicia.",
+    "results": "Fase de resultados de votación: El resultado de la votación ha sido determinado y comunicado a todos los participantes."
+  },
+  "voting_results": {
+  "consensus_reached": "Consenso alcanzado: {principle_name}",
+  "consensus_with_constraint": "Consenso alcanzado: {principle_name} (${constraint_amount:,})",
+  "no_consensus": "No se alcanzó consenso - regresando a discusión."
+  },
+  "voting": {
+    "timeout_fallback": "Se agotó el tiempo de respuesta. Por favor, inténtalo de nuevo.",
+    "fallback_principle_prompt": "Se ha iniciado una votación. ¿Por cuál de los cuatro principios quieres votar?\n\n1. Maximizar los Ingresos Mínimos\n2. Maximizar los Ingresos Promedio\n3. Maximizar el Promedio con Restricción Mínima\n4. Maximizar el Promedio con Restricción de Rango\n\nResponde SOLO con el número (1, 2, 3, o 4):",
+    "fallback_amount_prompt": "Elegiste {principle_name}. Por favor, indica la cantidad en dólares como un número entero positivo.\n\nResponde con la cantidad (ejemplos: 25000 o $25000):",
+    "error_messages": {
+      "respond_with_number_only": "Respuesta inválida (intento {attempt}/{max_retries}). Debes responder con exactamente un número: 1, 2, 3, o 4.",
+      "use_digits_not_words": "Respuesta inválida (intento {attempt}/{max_retries}). Por favor usa dígitos (1, 2, 3, o 4), no palabras.",
+      "number_out_of_range": "Respuesta inválida (intento {attempt}/{max_retries}). Debes responder con 1, 2, 3, o 4 solamente.",
+      "zero_not_valid": "Respuesta inválida (intento {attempt}/{max_retries}). Cero no es una opción de principio válida. Usa 1, 2, 3, o 4.",
+      "multiple_valid_numbers": "Múltiples números detectados (intento {attempt}/{max_retries}). Por favor responde con solo UN número: 1, 2, 3, o 4.",
+      "response_too_long": "Respuesta inválida (intento {attempt}/{max_retries}). Por favor responde solo con el número.",
+      "empty_response": "Respuesta vacía (intento {attempt}/{max_retries}). Por favor responde con 1, 2, 3, o 4.",
+      "no_letter_choices": "Respuesta inválida (intento {attempt}/{max_retries}). No uses letras (a, b, c, d). Usa números: 1, 2, 3, o 4.",
+      "principle_content_unclear": "Elección de principio poco clara (intento {attempt}/{max_retries}). Por favor responde con el número de tu principio preferido: 1, 2, 3, o 4.",
+      "invalid_format_general": "Respuesta inválida (intento {attempt}/{max_retries}). Debes responder con exactamente un número: 1, 2, 3, o 4.",
+      "amount_must_be_positive": "Cantidad inválida (intento {attempt}/{max_retries}). Debes responder con una cantidad entera positiva en dólares.",
+      "whole_numbers_only": "Formato de cantidad inválido (intento {attempt}/{max_retries}). Debes responder con una cantidad entera en dólares (sin decimales).",
+      "no_negative_amounts": "Cantidad inválida (intento {attempt}/{max_retries}). No se permiten cantidades negativas.",
+      "no_text_in_amount": "Formato de cantidad inválido (intento {attempt}/{max_retries}). Debes responder solo con un número.",
+      "empty_amount_response": "Respuesta vacía (intento {attempt}/{max_retries}). Por favor proporciona una cantidad en dólares.",
+      "invalid_amount_format": "Formato de cantidad inválido (intento {attempt}/{max_retries}). Debes responder con una cantidad entera positiva en dólares.",
+      "no_amount_found": "No se encontró cantidad monetaria (intento {attempt}/{max_retries}). Por favor indica claramente una cantidad en dólares (ej. $10,000 o 25000).",
+      "multiple_different_amounts_found": "Múltiples cantidades diferentes detectadas (intento {attempt}/{max_retries}). Por favor especifica exactamente una cantidad en dólares claramente."
+    }
+  },
+  "phase2_voting_no_consensus_principle_disagreement": "Sin consenso - los agentes votaron por diferentes principios de justicia - la discusión continúa",
+  "phase2_voting_no_consensus_constraint_disagreement": "Sin consenso - los agentes estuvieron de acuerdo en {principle_name} pero discreparon en las cantidades de restricción - la discusión continúa",
+  "phase2_voting_no_consensus_mixed_disagreement": "Sin consenso - desacuerdo mixto sobre principios y restricciones - la discusión continúa",
+  "error_messages": {
+    "empty_response_retry": "Importante: Su respuesta anterior estaba vacía o era demasiado corta. Por favor proporcione una respuesta significativa."
+  },
+  "system_messages": {
+    "voting": {
+      "initiated_tag": "[VOTACIÓN INICIADA]",
+      "confirmation_tag": "[CONFIRMACIÓN DE VOTACIÓN]",
+      "result_tag": "[RESULTADO DE VOTACIÓN]",
+      "error_tag": "[ERROR DE VOTACIÓN]",
+      "initiated_message": "{name} ha iniciado la votación formal",
+      "confirmation_success": "Todos los participantes acordaron proceder con la votación",
+      "confirmation_failed": "La confirmación falló - continuando con la discusión",
+      "process_failed": "El proceso de votación en dos etapas falló",
+      "result_summary": "Votación realizada - Consenso: {consensus}",
+      "agreed_principle": " (Acordado en: {principle})",
+      "all_confirmed": "Todos confirmaron",
+    "voting_declined": "Votación rechazada por: {declined_participants} - regresando a discusión.",
+      "consensus_tag": "[CONSENSO]",
+      "no_consensus_tag": "[SIN CONSENSO]"
+    },
+    "discussion": {
+      "truncation_marker": "...discusión anterior truncada...",
+      "group_composition": "El grupo actual consiste en {participants}",
+      "retry_hint": "Por favor asegúrese de que su respuesta contenga una declaración clara sobre su posición en los principios de justicia",
+      "rounds_remaining": "\n Información del Experimento: Quedan {rounds_remaining} rondas, esto significa que este grupo tiene {rounds_remaining} oportunidades de votar restantes \n"
+    }
+  },
+  "comprehensive_earnings": {
+    "distributions_table_header": "Distribuciones de Experimento y Mapeo de Selección",
+    "principle_outcomes_header": "Resultados de Elección Ronda {round_number} - Resultados de Principios para la Clase {class_name}:",
+    "principle_outcomes_simple_header": "Resultado para cada principio para la clase {class_name}:",
+    "phase2_outcomes_header": "Resultados Finales Fase 2 - Resultados de Principios para la Clase {class_name}:",
+    "outcome_line": "- {principle_name} → {distribution} → {income} → {earnings}{marker}",
+    "markers": {
+      "assigned_principle": " ← Su principio asignado",
+      "group_choice": " ← La elección de su grupo",
+      "random_assignment": " ← Asignación aleatoria"
+    },
+    "no_consensus_status": "No se alcanzó consenso: Asignación aleatoria aplicada",
+    "no_consensus_explanation": "Su grupo no pudo ponerse de acuerdo sobre un principio de justicia después de {rounds} rondas de discusión. Los ingresos fueron asignados aleatoriamente entre todos los participantes.",
+    "no_consensus_outcome_line": "Su asignación aleatoria: clase {class_name} y Distribución {distribution_num} → ${earnings:.2f} ingresos.",
+    "constraint_analysis_header": "Resultados del Análisis de Restricción:",
+    "outcome_summary": "Resumen de resultados bajo diferentes restricciones:",
+    "selected_distribution": "Distribución Seleccionada:",
+    "constraint_value": "Valor de Restricción: ${amount:,}",
+    "no_constraint": "Sin restricción",
+    "floor_constraint_label": "Restricción mínima de ${amount:,}",
+    "range_constraint_label": "Restricción de rango de ${amount:,}",
+    "table_columns": {
+      "constraint": "Restricción",
+      "selected_dist": "Dist. Selec.",
+      "your_class": "Su Clase",
+      "your_income": "Sus Ingresos",
+      "your_earnings": "Sus Ganancias"
+    },
+    "choice_summary_header": "**Resumen de Tu Elección**",
+    "choice_summary_line": "Elegiste: {principle_name}{constraint_display}",
+    "choice_outcome_line": "Tu resultado: {distribution} → {class_name} → {income} → {earnings}",
+    "choice_brief_explanation": "Tu {principle_type} llevó a que se seleccionara {distribution}{class_assignment}."
+  },
+  "constraint_explanations": {
+    "floor_constraint_fallback": "Ninguna distribución cumplió la restricción de piso de ${constraint_amount:,}. Se eligió la distribución con el piso más alto: ${actual_floor:,}",
+    "range_constraint_fallback": "Ninguna distribución cumplió la restricción de rango de ${constraint_amount:,}. Se eligió la distribución con el rango más pequeño: ${actual_range:,}",
+    "floor_constraint_success": "Se eligió la distribución con el promedio {weighted}más alto (${avg_income:,.0f}) que cumple la restricción de piso de ${constraint_amount:,}",
+    "range_constraint_success": "Se eligió la distribución con el promedio {weighted}más alto (${avg_income:,.0f}) que cumple la restricción de rango de ${constraint_amount:,}",
+    "maximizing_floor_explanation": "Se eligió la distribución con el ingreso de piso más alto: ${floor_amount:,}",
+    "maximizing_average_explanation": "Se eligió la distribución con el ingreso promedio {weighted}más alto: ${avg_income:,.0f}"
+  },
+  "constraint_formatting": {
+    "floor_constraint": "Restricción mínima ≤ {amount}",
+    "range_constraint": "Restricción de rango ≤ {amount}",
+    "currency_format": "${amount:,}"
+  },
+  "fallback_messages": {
+    "earnings_display_error": "Visualización de ganancias no disponible debido a un error interno.",
+    "counterfactual_error": "El análisis contrafactual no está disponible.",
+    "consensus_generic": "Se alcanzó un consenso sobre un principio de justicia.",
+    "no_consensus_generic": "No se alcanzó consenso. Las ganancias se asignaron aleatoriamente.",
+    "generic_error": "Ocurrió un error inesperado."
+  },
+  "voting_prompts": {
+    "retry_instruction": "⚠️ Por favor responda exactamente con 1 (para votar ahora) o 0 (para continuar la discusión)",
+    "internal_reasoning_section": "=== SU RAZONAMIENTO INTERNO ===",
+    "reasoning_prompt": "Basado en su razonamiento interno anterior, ¿cuál es su declaración al grupo?"
+  },
+  "parsing_feedback": {
+    "attempt_label": "Intento {attempt_number}",
+    "issue_heading": "Problema de análisis",
+    "preview_label": "Tu respuesta",
+    "choice_format_confusion": {
+      "explanation": "Proporcionaste una declaración de elección (\"Elijo X\") en lugar de un formato de clasificación.",
+      "instruction": "Por favor, proporciona una clasificación numerada de los 4 principios del 1 (mejor) al 4 (peor).",
+      "example": "1. Maximizar ingresos mínimos\n2. Maximizar ingresos promedio\n3. Maximizar promedio con restricción mínima\n4. Maximizar promedio con restricción de rango"
+    },
+    "incomplete_ranking": {
+      "explanation": "Tu clasificación está incompleta - faltan algunos principios.",
+      "instruction": "Por favor, clasifica TODOS los 4 principios de justicia del 1 al 4.",
+      "example": "Asegúrate de incluir:\n1. [Primera opción]\n2. [Segunda opción]\n3. [Tercera opción]\n4. [Cuarta opción]"
+    },
+    "no_numbered_list": {
+      "explanation": "Proporcionaste una respuesta en lenguaje natural en lugar de una lista numerada.",
+      "instruction": "Por favor, usa un formato numerado para clasificar los principios.",
+      "example": "Formato: 1. [nombre del principio], 2. [nombre del principio], etc."
+    },
+    "empty_response": {
+      "explanation": "Tu respuesta estaba vacía o era demasiado corta para analizar.",
+      "instruction": "Por favor, proporciona una respuesta completa clasificando los principios de justicia.",
+      "example": "Ejemplo: 1. Tu primera opción, 2. Segunda opción, 3. Tercera opción, 4. Última opción"
+    }
+  },
+  "results_explicit": {
+    "principle_applied_consensus": "Principio aplicado: Su grupo llegó a un consenso sobre {principle_name}{constraint}",
+    "principle_applied_no_consensus": "Principio aplicado: Su grupo no llegó a un consenso sobre un principio de justicia",
+    "probabilities_header": "Las probabilidades para cada clase de ingresos son:",
+    "assignment_statement": "Se le asignó a la clase de ingresos {class_name}",
+    "distributions_header": "Estas fueron las Distribuciones del Experimento:",
+    "causal_narrative_consensus": "El principio sobre el que su grupo llegó a consenso fue {principle_name}{constraint}, lo que resultó en la Distribución {dist_num}. Se le asignó a la clase de ingresos {class_name}, resultando en un ingreso anual de ${income} (que se convierte en un pago de ${earnings} a razón de $1 por cada $10,000 de ingreso).",
+    "causal_narrative_no_consensus": "Debido a que el grupo no llegó a consenso, se le asignó aleatoriamente a la Distribución {dist_num}. Se le asignó a la clase de ingresos {class_name}, resultando en un ingreso anual de ${income} (que se convierte en un pago de ${earnings} a razón de $1 por cada $10,000 de ingreso).",
+    "counterfactual_header": "ANÁLISIS CONTRAFACTUAL:",
+    "counterfactual_purpose_consensus": "La sección a continuación muestra lo que habría ganado bajo cada principio, asumiendo que tuvo la misma asignación de clase de ingresos ({class_name}).",
+    "counterfactual_purpose_no_consensus": "La sección a continuación muestra lo que habría ganado si el grupo HUBIERA llegado a consenso sobre cada principio, asumiendo que tuvo la misma asignación de clase de ingresos ({class_name}).",
+    "outcomes_header": "Resultados Finales de la Fase 2 - Resultados de Principios para la Clase {class_name}:",
+    "veil_reminder_header": "IMPORTANTE PARA LA CLASIFICACIÓN:",
+    "veil_reminder_consensus": "Su clase de ingresos se asignó aleatoriamente DESPUÉS de que el grupo eligiera el principio. Al evaluar qué principio es más justo, considere qué habría preferido ANTES de conocer su asignación de clase (desde detrás del \"velo de ignorancia\").",
+    "veil_reminder_no_consensus": "Su clase de ingresos se asignó aleatoriamente, y como no se alcanzó consenso, su distribución también se asignó aleatoriamente. Al evaluar qué principio es más justo, considere qué principio habría preferido que el grupo eligiera desde detrás del \"velo de ignorancia\" (antes de conocer su posición).",
+    "difference_same": "Diferencia: igual",
+    "difference_positive": "Diferencia: +${diff}",
+    "difference_negative": "Diferencia: ${diff}",
+    "marker_chosen": " ← SU PRINCIPIO ELEGIDO",
+    "marker_random": " ← SU ASIGNACIÓN ALEATORIA",
+    "floor_constraint_label": "Restricción mínima ${amount}",
+    "range_constraint_label": "Restricción de rango ${amount}"
+  },
+  "results_phase1": {
+    "round_header": "=== Notificación de Pago de la Ronda {round_num} ===",
+    "principle_chosen": "Principio elegido: {principle_name}{constraint}",
+    "probabilities_header": "Las probabilidades para cada clase de ingresos son:",
+    "assignment_statement": "Se le asignó aleatoriamente a la clase de ingresos {class_name}",
+    "distributions_header": "Estas fueron las Distribuciones de la Ronda {round_num}:",
+    "causal_narrative": "El principio que eligió fue {principle_name}{constraint}, lo que resultó en la Distribución {dist_num}. Se le asignó a la clase de ingresos {class_name}, resultando en un ingreso anual de ${income} (que se convierte en un pago de ${earnings} a razón de $1 por cada $10,000 de ingreso).",
+    "counterfactual_header": "ANÁLISIS CONTRAFACTUAL:",
+    "counterfactual_purpose": "La sección a continuación muestra lo que habría ganado bajo cada principio, asumiendo que tuvo la misma asignación de clase de ingresos ({class_name}).",
+    "outcomes_header": "Resultados de la Ronda {round_num} - Resultados de Principios para la Clase {class_name}:"
+  },
+  "manipulator": {
+    "target_header": "**OBJETIVO DEL MANIPULADOR**",
+  "target_principle_line": "Principio: {principle}",
+  "target_method_line": "Determinado mediante conteo de Borda en las clasificaciones de la Fase 1.",
+  "target_guidance": "Orientación: Mantén esta asignación confidencial y dirige el consenso hacia ella.",
+  "reasoning_target_reminder": "Recordatorio: Tu objetivo asignado como manipulador es {principle_name}. Mantén el rumbo del consenso exactamente hacia ese resultado.",
+  "tiebreak_note": "Nota: Desempate aplicado. Los principios {tied_principles} estaban empatados; {selected_principle} seleccionado usando orden determinista: {tiebreak_order}."
+}
+}
