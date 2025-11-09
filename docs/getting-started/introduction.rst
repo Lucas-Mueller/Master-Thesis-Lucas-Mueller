@@ -1,11 +1,6 @@
 Introduction
 ============
 
-What is the Frohlich Experiment?
----------------------------------
-
-The **Frohlich Experiment** is a sophisticated multi-agent AI system designed to simulate and study how artificial agents interact with principles of distributive justice. Named after political scientist Norman Frohlich, this system implements experimental procedures that test how AI agents navigate complex social choice scenarios based on John Rawls' theory of justice.
-
 Key Concepts
 ------------
 
