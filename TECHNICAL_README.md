@@ -2,11 +2,11 @@
 
 ## Executive Summary
 
-This document provides a comprehensive technical analysis of the **Frohlich Experiment** framework—a sophisticated Python system for conducting computational experiments on distributive justice. The framework orchestrates AI agents in a two-phase experiment grounded in **Rawlsian philosophy** and inspired by economist Norman Frohlich's empirical work on justice principles.
+This document provides a comprehensive technical analysis of the **Technical Implementation of the Master Thesis of Lucas Mueller** framework—a sophisticated Python system for conducting computational experiments on distributive justice. The framework orchestrates AI agents in a two-phase experiment grounded in **Rawlsian philosophy** and inspired by Frohlich & Oppenheimers empirical implementation.
 
 **Core Thesis**: Under a computationally-simulated "veil of ignorance," agents autonomously reason about and reach consensus on principles of distributive justice through formal voting mechanisms and memory-augmented discussion.
 
-**Scale**: ~10,452 lines of production code across 60+ modules implementing:
+**Scale**: 
 - Two-phase experiment orchestration with 6 specialized Phase 2 services
 - Deterministic two-stage voting system with multilingual support
 - Sophisticated memory management with content truncation
@@ -30,27 +30,25 @@ The experiment implements a computational variant of **John Rawls' veil of ignor
 
 The framework operationalizes four distinct principles (implemented in `models/principle_types.py`):
 
-```
-Principle 1: MAXIMIZING_FLOOR
-  - Maximize the lowest income in the distribution
-  - Rawlsian "difference principle": prioritize the worst-off
-  - No constraint parameters required
+**Principle 1: MAXIMIZING_FLOOR**
+- Strategy: Maximize the lowest income in the distribution
+- Philosophy: Rawlsian "difference principle" that prioritizes the worst-off members
+- Configuration: No constraint parameters required
 
-Principle 2: MAXIMIZING_AVERAGE
-  - Maximize average income across all classes
-  - Utilitarian: total welfare maximization
-  - No constraint parameters required
+**Principle 2: MAXIMIZING_AVERAGE**
+- Strategy: Maximize average income across all classes
+- Philosophy: Utilitarian approach focused on total welfare maximization
+- Configuration: No constraint parameters required
 
-Principle 3: MAXIMIZING_AVERAGE_FLOOR_CONSTRAINT
-  - Maximize average income with a minimum floor constraint
-  - Example: "maximize average but no class earns < $15,000"
-  - Requires positive integer constraint_amount
+**Principle 3: MAXIMIZING_AVERAGE_FLOOR_CONSTRAINT**
+- Strategy: Maximize average income while maintaining a minimum floor constraint
+- Example: Maximize average income but ensure no class earns less than fifteen thousand dollars
+- Configuration: Requires a positive integer constraint amount specification
 
-Principle 4: MAXIMIZING_AVERAGE_RANGE_CONSTRAINT
-  - Maximize average income with range limitation
-  - Example: "maximize average but income spread ≤ $10,000"
-  - Requires positive integer constraint_amount
-```
+**Principle 4: MAXIMIZING_AVERAGE_RANGE_CONSTRAINT**
+- Strategy: Maximize average income while limiting the income spread between highest and lowest earners
+- Example: Maximize average income but ensure income spread does not exceed ten thousand dollars
+- Configuration: Requires a positive integer constraint amount specification
 
 Each principle produces different income distributions and payoffs for different agent classes, creating meaningful trade-offs in the bargaining process.
 
@@ -58,45 +56,27 @@ Each principle produces different income distributions and payoffs for different
 
 **Distribution Generator** (`core/distribution_generator.py`) provides four income distributions per round:
 
-```python
-BASE_DISTRIBUTION = IncomeDistribution(
-    high=32000,           # Class 1 (richest)
-    medium_high=27000,    # Class 2
-    medium=24000,         # Class 3 (most likely)
-    medium_low=13000,     # Class 4
-    low=12000            # Class 5 (poorest)
-)
-```
+**Base Distribution Structure**: The system uses a standard baseline distribution with five income classes:
+- High income (Class 1, richest): $32,000
+- Medium-high income (Class 2): $27,000
+- Medium income (Class 3, most likely): $24,000
+- Medium-low income (Class 4): $13,000
+- Low income (Class 5, poorest): $12,000
 
 **Two distribution generation modes**:
 
-1. **Dynamic Mode**: Applies random multiplier (e.g., 0.8-1.2) to base distribution
-   ```python
-   multiplier = random_gen.uniform(0.8, 1.2)  # Seeded for reproducibility
-   scaled_distribution = {income * multiplier for each class}
-   ```
+1. **Dynamic Mode**: Applies random scaling multipliers (ranging from 0.8 to 1.2) to the base distribution. The multiplier is generated from a seeded random number generator for reproducibility. Each income class value is multiplied by this scaling factor to create varied economic scenarios.
 
-2. **Original Values Mode**: Uses predefined historical distributions (Frohlich's original data)
-   - Round 1 → Situation A
-   - Round 2 → Situation B
-   - Round 3 → Situation C
-   - Round 4 → Situation D
+2. **Original Values Mode**: Uses predefined historical distributions derived from Frohlich's original empirical data. The system maps rounds to specific situations: Round 1 uses Situation A, Round 2 uses Situation B, Round 3 uses Situation C, and Round 4 uses Situation D.
 
-**Income Class Probabilities**: Each round specifies how likely each class is
-```python
-default_probabilities = {
-    high: 0.05,           # 5% chance of high income
-    medium_high: 0.10,    # 10% chance
-    medium: 0.50,         # 50% chance (modal class)
-    medium_low: 0.25,     # 25% chance
-    low: 0.10             # 10% chance
-}
-```
+**Income Class Probabilities**: Each round specifies probability distributions for class assignment:
+- High income: 5% probability
+- Medium-high income: 10% probability
+- Medium income: 50% probability (modal class - most likely)
+- Medium-low income: 25% probability
+- Low income: 10% probability
 
-When calculating payoffs, the framework uses **weighted expected value** calculations:
-```
-expected_payoff = Σ(income_class[i] * probability[i])
-```
+When calculating payoffs, the framework uses **weighted expected value** calculations by summing the products of each income class value multiplied by its probability.
 
 ---
 
@@ -108,51 +88,23 @@ expected_payoff = Σ(income_class[i] * probability[i])
 
 **Flow** (`core/phase1_manager.py`):
 
-```
-For each participant (executed in parallel asyncio tasks):
-  1. Initial Ranking
-     - Agent ranks 4 justice principles 1-4 (best to worst)
-     - No prior knowledge of distributions
+The Phase 1 manager executes tasks for each participant in parallel using asynchronous task scheduling:
 
-  2. Principle Explanation
-     - Agent receives detailed explanation of each principle
-     - Explanation includes empirical payoff examples
+1. **Initial Ranking**: The agent ranks the four justice principles from 1 to 4 (best to worst) without any prior knowledge of specific income distributions
 
-  3. Post-Explanation Ranking
-     - Agent re-ranks principles after understanding implications
-     - Tests learning and preference stability
+2. **Principle Explanation**: The agent receives detailed explanations of each principle, including empirical payoff examples that illustrate real outcomes
 
-  4. Application Tasks (4 rounds)
-     For each round:
-       a. Agent receives 4 income distributions
-       b. Agent selects which distribution to apply chosen principle to
-       c. System calculates participant's expected payoff
-       d. Participant provides reasoning for choices
-```
+3. **Post-Explanation Ranking**: The agent re-ranks the principles after understanding their practical implications. This tests both learning effectiveness and preference stability
+
+4. **Application Tasks** (four rounds): For each round, the agent receives four different income distributions, selects which distribution to apply their chosen principle to, and the system calculates the participant's expected payoff. The participant then provides reasoning for their choices
 
 **Key Implementation Details**:
 
-- **Deterministic RNGs**: Each participant gets seeded random.Random instance
-  ```python
-  self._participant_rngs[agent_name] = random.Random(seed=base_seed + agent_index)
-  ```
-  This ensures reproducibility across experiment runs
+- **Deterministic Random Number Generators**: Each participant receives a seeded random number generator instance, where the seed equals the base experiment seed plus the agent's index (e.g., agent 0 gets seed 42, agent 1 gets seed 43, etc.). This ensures complete reproducibility across experiment runs.
 
-- **Memory Management**: Integrated SelectiveMemoryManager for context truncation
-  - Prevents context overflow for long discussions
-  - Truncates old statements (≤300 characters each)
-  - Limits accumulated internal reasoning (≤200 characters)
+- **Memory Management**: The system integrates a SelectiveMemoryManager for context truncation to prevent context window overflow. Old statements are truncated to a maximum of 300 characters each, and accumulated internal reasoning is limited to 200 characters.
 
-- **Output**: Phase1Results containing:
-  ```python
-  {
-    initial_ranking: PrincipleRanking,
-    post_explanation_ranking: PrincipleRanking,
-    application_results: [ApplicationResult × 4 rounds],
-    participant_name: str,
-    completion_status: str
-  }
-  ```
+- **Output Structure**: Phase1Results contains the agent's initial ranking, post-explanation ranking, application results from all four rounds, participant name, and completion status indicator.
 
 ### 2.2 Phase 2: Group Discussion and Consensus (Sequential with Services)
 
@@ -160,189 +112,57 @@ For each participant (executed in parallel asyncio tasks):
 
 **Architecture**: Services-first design with 6 specialized services orchestrated by Phase2Manager:
 
-```
-Phase2Manager (orchestrator)
-├── SpeakingOrderService        → Manages turn allocation with finisher restrictions
-├── DiscussionService           → Generates discussion prompts, validates statements
-├── VotingService               → Coordinates voting process (initiation + confirmation + ballot)
-├── MemoryService               → Updates agent memories with event summaries
-├── CounterfactualsService      → Calculates payoffs and prepares results
-└── ManipulatorService          → Optional experimental manipulation
-```
+The Phase2Manager acts as an orchestrator that delegates responsibilities to specialized services:
+- **SpeakingOrderService**: Manages turn allocation with finisher restrictions
+- **DiscussionService**: Generates discussion prompts and validates statements
+- **VotingService**: Coordinates the complete voting process (initiation, confirmation, and ballot)
+- **MemoryService**: Updates agent memories with event summaries
+- **CounterfactualsService**: Calculates payoffs and prepares results formatting
+- **ManipulatorService**: Provides optional experimental manipulation capabilities
 
 **Full Phase 2 Flow**:
 
-```python
-async def run_phase2(phase1_results: List[Phase1Results]) -> Phase2Results:
-    """
-    Executes group discussion with formal consensus building.
-    """
+Phase 2 executes an asynchronous workflow that coordinates group discussion and formal consensus building:
 
-    # Initialize speaking order with finisher restrictions
-    speaking_order = speaking_order_service.determine_speaking_order(
-        participants=participants,
-        randomize_finisher=(settings.finisher_restrictions_active)
-    )
+**Initialization**: The speaking order service determines the turn allocation for each round, optionally applying finisher restrictions if that setting is active.
 
-    # Begin rounds of discussion and potential voting
-    for round_num in range(1, config.phase2_rounds + 1):
+**Discussion Rounds Loop**: For each round (from 1 to the configured maximum):
 
-        # 1. DISCUSSION: Sequential agent statements with memory context
-        for participant in speaking_order[round_num]:
+**1. Discussion Stage** - Sequential agent statements with memory context:
+- For each participant in the speaking order, the discussion service builds a contextual discussion prompt that incorporates the participant's Phase 1 results, the discussion history, current round number, and consensus status
+- The agent generates a statement by processing the discussion prompt
+- The statement is validated against minimum length requirements (with up to 3 retries if validation fails)
+- The validated statement is appended to the public history with metadata (round number, participant name, timestamp)
+- The memory service updates the agent's memory with a truncated summary (maximum 300 characters)
 
-            # Get contextual discussion prompt
-            discussion_prompt = discussion_service.build_discussion_prompt(
-                participant=participant,
-                phase1_results=phase1_results[participant],
-                discussion_history=group_state.public_history,
-                current_round=round_num,
-                consensus_status=group_state.consensus_reached
-            )
+**2. Voting Initiation Check**:
+- The discussion service builds a voting initiation prompt asking if agents want to initiate voting
+- Each participant responds with a binary answer (1=Yes, 0=No) using numerical agreement detection
+- If any participant votes yes, or if this is the final round, voting proceeds
 
-            # Agent generates statement
-            statement = await participant.think(discussion_prompt)
+**2a. Confirmation Phase** (if voting initiated):
+- The voting service coordinates a confirmation phase where all agents must agree to participate
+- Confirmation results indicate whether all agents confirmed (requires 100% agreement to proceed)
 
-            # Validate statement (>= min_length, retries up to 3 times)
-            validated_statement = discussion_service.validate_statement(
-                statement=statement,
-                min_length=settings.statement_min_length,
-                max_retries=settings.statement_validation_retries
-            )
+**2b. Secret Ballot** (if all confirmed):
+- **Stage 1 - Principle Selection**: Each participant receives a ballot prompt and responds with a principle number (1-4). The TwoStageVotingManager extracts the principle number via regex (with up to 3 retries). If extraction fails, the system falls back to keyword matching in the participant's language
+- **Stage 2 - Amount Specification**: For participants who voted for principles 3 or 4 (constraint principles), the system prompts for a constraint amount and extracts a positive integer via regex (with up to 3 retries)
 
-            # Update public history and agent-specific memories
-            group_state.public_history.append({
-                'round': round_num,
-                'participant': participant.name,
-                'statement': validated_statement,
-                'timestamp': datetime.now()
-            })
+**2c. Consensus Detection**:
+- The voting service detects consensus by checking if all votes are identical in strict mode
+- If consensus is reached, the system records the consensus principle and constraint amount, then exits the round loop
+- If no consensus, the system updates voting failure memory and continues to the next discussion round
 
-            memory_delta = memory_service.update_discussion_memory(
-                agent=participant,
-                context=participant.context,
-                statement_summary=validated_statement[:300],  # Truncate to 300 chars
-                round_number=round_num
-            )
+**3. Payoff Calculation and Results Formatting**:
+- The counterfactuals service calculates final results based on whether consensus was reached and which principle was selected
+- The service formats detailed results including participant payoffs
 
-        # 2. VOTING: Check if any agent wants to initiate voting
-        voting_initiation_prompt = discussion_service.build_voting_initiation_prompt(
-            round_number=round_num,
-            is_final_round=(round_num == config.phase2_rounds),
-            consensus_reached=group_state.consensus_reached
-        )
+**4. Final Rankings Collection**:
+- Each participant receives a final ranking prompt
+- The utility agent parses the ranking responses
+- Rankings are stored in the final results
 
-        voting_initiated = False
-        for participant in participants:
-            # Agent decision: initiate voting? (1=Yes, 0=No)
-            initiation_response = await participant.think(voting_initiation_prompt)
-            vote_yes, principle = utility_agent.detect_numerical_agreement(initiation_response)
-
-            if vote_yes:
-                voting_initiated = True
-                break
-
-        if voting_initiated or round_num == config.phase2_rounds:
-
-            # 2a. CONFIRMATION PHASE
-            confirmation_results = await voting_service.coordinate_voting_confirmation(
-                participants=participants,
-                discussion_state=group_state,
-                current_round=round_num,
-                timeout_seconds=settings.voting_confirmation_timeout
-            )
-
-            # All must agree (confirmation_results = 100% Yes) to proceed
-            if confirmation_results.all_confirmed:
-
-                # 2b. SECRET BALLOT (Two-Stage Voting)
-                ballot_results = await voting_service.coordinate_secret_ballot(
-                    participants=participants,
-                    current_round=round_num,
-                    timeout_seconds=settings.voting_secret_ballot_timeout
-                )
-
-                # STAGE 1: Principle Selection (deterministic numerical input: 1-4)
-                for participant in participants:
-                    ballot_prompt = voting_service.build_ballot_prompt(stage=1)
-                    response = await participant.think(ballot_prompt)
-
-                    # TwoStageVotingManager: Extract principle number (1-4) via regex
-                    principle_num, success = two_stage_voting.extract_principle_number(
-                        response=response,
-                        max_retries=3
-                    )
-
-                    if success:
-                        participant.principle_vote = principle_num
-                    else:
-                        # Fallback: keyword matching in participant's language
-                        principle_num = principle_keyword_matcher.match_principle(
-                            text=response,
-                            detected_language=detect_language_from_response(response)
-                        )
-
-                # STAGE 2: Amount Specification (if principles 3 or 4 chosen)
-                for participant in participants:
-                    if participant.principle_vote in [3, 4]:  # Constraint principles
-                        amount_prompt = voting_service.build_ballot_prompt(
-                            stage=2,
-                            principle_num=participant.principle_vote
-                        )
-                        response = await participant.think(amount_prompt)
-
-                        # Extract positive integer via regex
-                        constraint_amount, success = two_stage_voting.extract_constraint_amount(
-                            response=response,
-                            max_retries=3
-                        )
-
-                        if success:
-                            participant.constraint_amount = constraint_amount
-
-                # 2c. CONSENSUS DETECTION
-                consensus = voting_service.detect_consensus(
-                    votes=[(p.principle_vote, p.constraint_amount) for p in participants],
-                    strict_mode=True  # All must vote identically
-                )
-
-                if consensus:
-                    group_state.consensus_reached = True
-                    group_state.consensus_principle = consensus.principle
-                    group_state.consensus_constraint = consensus.constraint_amount
-                    break  # Exit round loop
-                else:
-                    # Voting failed: continue discussion in next round
-                    memory_service.update_voting_memory(
-                        agents=participants,
-                        event_type=MemoryEventType.VOTING_FAILED,
-                        reason="No consensus reached"
-                    )
-
-    # 3. PAYOFF CALCULATION & RESULTS
-    final_results = await counterfactuals_service.calculate_and_format_results(
-        consensus_reached=group_state.consensus_reached,
-        consensus_principle=group_state.consensus_principle if group_state.consensus_reached else None,
-        participants=participants,
-        phase1_results=phase1_results,
-        current_round=round_num
-    )
-
-    # 4. FINAL RANKINGS
-    for participant in participants:
-        final_ranking_prompt = counterfactuals_service.build_final_ranking_prompt()
-        ranking_response = await participant.think(final_ranking_prompt)
-        final_ranking = utility_agent.parse_principle_ranking(ranking_response)
-        final_results[participant.name].final_ranking = final_ranking
-
-    return Phase2Results(
-        consensus_reached=group_state.consensus_reached,
-        final_principle=group_state.consensus_principle,
-        final_constraint_amount=group_state.consensus_constraint,
-        discussion_transcript=group_state.public_history,
-        participant_results=final_results,
-        rounds_completed=round_num
-    )
-```
+**Return**: The system returns comprehensive Phase2Results containing consensus status, the final principle and constraint amount, the complete discussion transcript, per-participant results, and the number of rounds completed.
 
 ---
 
@@ -358,38 +178,22 @@ The framework employs a **services-first architecture** for Phase 2, replacing m
 
 **Key Methods**:
 
-```python
-def determine_speaking_order(
-    self,
-    participants: List[ParticipantAgent],
-    randomize_finisher: bool = False
-) -> Dict[int, List[ParticipantAgent]]:
-    """
-    Determine speaking order for each round with finisher restrictions.
+**determine_speaking_order** - Determines speaking order for each round with finisher restrictions:
+- Takes a list of participant agents and an optional boolean flag to randomize the finisher
+- Returns a dictionary mapping round numbers to ordered lists of participants
+- Algorithm: Randomly shuffles participant order using a seeded random number generator. If randomize_finisher is enabled, ensures the last speaker differs from previous rounds. Returns the round-to-participants mapping
+- Finisher Restriction philosophy: The agent speaking last must not have spoken last in any previous round, which encourages new perspectives at round conclusion
 
-    Algorithm:
-    1. Randomly shuffle participant order using seeded RNG
-    2. If randomize_finisher: ensure last speaker differs from previous rounds
-    3. Return dict mapping round_number → [ordered_participants]
-
-    Finisher Restriction: The agent speaking last must not have spoken last
-    in any previous round (encourages new perspectives at round conclusion).
-    """
-
-def apply_finisher_restrictions(
-    self,
-    order: List[ParticipantAgent],
-    previous_finishers: Set[str]
-) -> List[ParticipantAgent]:
-    """Reorder to ensure new finisher if restriction enabled."""
-```
+**apply_finisher_restrictions** - Reorders participant list to ensure a new finisher:
+- Takes a proposed speaking order and a set of previous finisher names
+- Returns a reordered list of participants
+- Purpose: Enforces the finisher restriction by swapping participants if necessary
 
 **Configuration**:
-```yaml
-phase2_settings:
-  finisher_restrictions_active: true  # Enable finisher reordering
-  use_fixed_speaking_order: false     # Or specify fixed order
-```
+
+Phase 2 settings control finisher behavior:
+- **finisher_restrictions_active**: Boolean flag to enable finisher reordering (true/false)
+- **use_fixed_speaking_order**: Boolean flag to specify a fixed order instead of random (true/false)
 
 ### 3.2 DiscussionService
 
@@ -399,64 +203,31 @@ phase2_settings:
 
 **Key Methods**:
 
-```python
-def build_discussion_prompt(
-    self,
-    participant: ParticipantAgent,
-    phase1_results: Phase1Results,
-    discussion_history: List[Dict],
-    current_round: int,
-    consensus_status: bool
-) -> str:
-    """
-    Build contextual discussion prompt with:
-    - Agent's Phase 1 rankings and application results
-    - Summary of previous statements (with truncation)
-    - Current round context
-    - System instructions for tone/length
+**build_discussion_prompt** - Builds contextual discussion prompts:
+- Takes the participant agent, their Phase 1 results, the discussion history, current round number, and consensus status
+- Returns a localized prompt template with agent-specific context
+- Includes: The agent's Phase 1 rankings and application results, a summary of previous statements (with truncation applied), current round context, and system instructions for tone and length
 
-    Returns: Localized prompt template with agent-specific context
-    """
+**validate_statement** - Validates statement quality:
+- Takes a statement string, minimum length threshold (default 50 characters), and maximum retry count (default 3)
+- Returns the validated statement string
+- Process: Checks if the statement meets minimum length requirements and retries up to the maximum if validation fails
+- Raises a ValidationError exception if maximum retries are exceeded
 
-def validate_statement(
-    self,
-    statement: str,
-    min_length: int = 50,
-    max_retries: int = 3
-) -> str:
-    """
-    Validate that statement meets minimum length.
-    Retry up to max_retries times if validation fails.
-
-    Raises: ValidationError if max_retries exceeded
-    """
-
-def manage_discussion_history_length(
-    self,
-    history: List[Dict],
-    max_length_chars: int
-) -> List[Dict]:
-    """
-    Truncate discussion history intelligently:
-    1. Remove oldest entries first (chronological ordering)
-    2. Keep enough context for decision-making
-    3. Preserve critical principle discussion
-
-    Uses Phase2Settings.public_history_max_length (default: 100,000 chars)
-    """
-```
+**manage_discussion_history_length** - Truncates discussion history intelligently:
+- Takes the history list and maximum character length
+- Returns the truncated history list
+- Strategy: Removes oldest entries first (chronological ordering), keeps enough context for decision-making, and preserves critical principle discussion
+- Uses the Phase2Settings public_history_max_length parameter (default: 100,000 characters)
 
 **Multilingual Support**:
-```python
-# Translation keys for discussion prompts
-DISCUSSION_ROUND_START = "discussion_round_{round}_start"
-DISCUSSION_VOTING_INITIATION = "discussion_voting_initiation"
-DISCUSSION_FINAL_ROUND = "discussion_final_round"
 
-# Language manager retrieves localized versions (en/es/zh)
-prompt = language_manager.get("discussion_round_{round}_start",
-                               round=current_round)
-```
+The service uses translation keys for discussion prompts:
+- Round start prompts: "discussion_round_{round}_start"
+- Voting initiation prompts: "discussion_voting_initiation"
+- Final round prompts: "discussion_final_round"
+
+The language manager retrieves localized versions for English, Spanish, and Mandarin by calling the get method with the translation key and any required parameters (such as round number).
 
 ### 3.3 VotingService
 
@@ -466,95 +237,30 @@ prompt = language_manager.get("discussion_round_{round}_start",
 
 **Key Methods**:
 
-```python
-async def initiate_voting(
-    self,
-    participants: List[ParticipantAgent],
-    discussion_state: GroupDiscussionState,
-    current_round: int,
-    timeout_seconds: Optional[float] = None
-) -> VotingInitiationResult:
-    """
-    Determine if voting should be initiated.
+**initiate_voting** - Determines if voting should be initiated:
+- Takes participants list, discussion state, current round number, and optional timeout in seconds
+- Returns a VotingInitiationResult containing whether voting should proceed and which participant initiated it
+- Process: Generates an initiation prompt asking "Do you want to initiate voting?", collects responses from each participant with numerical answer detection (1=Yes, 0=No), and returns after the first Yes response or when all participants have been checked
 
-    Process:
-    1. Generate initiation prompt asking "Do you want to initiate voting?"
-    2. For each participant: get response and detect numerical answer (1=Yes, 0=No)
-    3. Return: (should_initiate, initiating_participant)
+**coordinate_voting_confirmation** - Confirmation Phase where all agents must agree:
+- Takes participants list, discussion state, current round number, and optional timeout in seconds
+- Returns a ConfirmationResult containing an all_confirmed boolean and a dictionary mapping participant names to vote-confidence tuples
+- Process: Sends confirmation prompt "Do you agree to participate in voting? (1=Yes, 0=No)" to all participants, collects responses, and validates that 100% agreement was achieved (all agents said Yes)
 
-    Returns after first Yes response or all participants checked.
-    """
+**coordinate_secret_ballot** - Executes two-stage secret ballot process:
+- Takes participants list, current round number, and optional timeout in seconds
+- Returns a SecretBallotResult containing vote data
+- Stages: Stage 1 collects principle selection (1-4), Stage 2 collects amount specification (for principles 3 and 4)
+- Implementation: Handled by TwoStageVotingManager with deterministic numerical validation
 
-async def coordinate_voting_confirmation(
-    self,
-    participants: List[ParticipantAgent],
-    discussion_state: GroupDiscussionState,
-    current_round: int,
-    timeout_seconds: Optional[float] = None
-) -> ConfirmationResult:
-    """
-    Confirmation Phase: All agents must agree to participate in voting.
-
-    Process:
-    1. Send confirmation prompt: "Do you agree to participate in voting? (1=Yes, 0=No)"
-    2. Collect responses from all participants
-    3. Validate 100% agreement (all_confirmed = all agents said Yes)
-
-    Returns:
-        all_confirmed: bool
-        confirmation_votes: Dict[participant_name -> (vote, confidence)]
-    """
-
-async def coordinate_secret_ballot(
-    self,
-    participants: List[ParticipantAgent],
-    current_round: int,
-    timeout_seconds: Optional[float] = None
-) -> SecretBallotResult:
-    """
-    Execute two-stage secret ballot process.
-
-    STAGE 1: Principle Selection (1-4)
-    STAGE 2: Amount Specification (for principles 3 & 4)
-
-    Handled by TwoStageVotingManager with deterministic numerical validation.
-    """
-
-def detect_consensus(
-    self,
-    votes: List[Tuple[int, Optional[int]]],
-    strict_mode: bool = True
-) -> Optional[ConsensusResult]:
-    """
-    Detect unanimous agreement on principle and constraint.
-
-    If strict_mode=True: All agents must vote identically
-    If strict_mode=False: Majority rule (not used in current implementation)
-
-    Returns: ConsensusResult or None if no consensus
-    """
-```
+**detect_consensus** - Detects unanimous agreement on principle and constraint:
+- Takes a list of vote tuples (principle number, optional constraint amount) and a strict mode boolean flag
+- Returns either a ConsensusResult object or None if no consensus reached
+- Behavior: In strict mode (True), all agents must vote identically. In non-strict mode (False), majority rule applies (not used in current implementation)
 
 **Error Handling**:
-```python
-# Automatic retry with exponential backoff
-async def _invoke_voting_interaction(
-    self,
-    participant: ParticipantAgent,
-    context: ParticipantContext,
-    prompt: str,
-    timeout_seconds: Optional[float] = None
-):
-    """Execute interaction with timeout and automatic retry."""
-    try:
-        return await asyncio.wait_for(
-            coroutine=participant.think(prompt),
-            timeout=timeout_seconds or self.settings.voting_confirmation_timeout
-        )
-    except asyncio.TimeoutError:
-        # Retry up to settings.voting_retry_limit times with exponential backoff
-        ...
-```
+
+The service implements automatic retry with exponential backoff through an internal method that executes voting interactions with timeout protection. When a timeout occurs, the system retries up to the configured voting_retry_limit with exponentially increasing timeout durations (using an asyncio.wait_for pattern with timeout escalation).
 
 ### 3.4 TwoStageVotingManager
 
@@ -564,130 +270,37 @@ async def _invoke_voting_interaction(
 
 **Stage 1: Principle Selection** (Deterministic Numerical Input)
 
-```python
-async def conduct_principle_selection(
-    self,
-    participants: List[ParticipantAgent],
-    round_number: int,
-    timeout_seconds: Optional[float] = None
-) -> Dict[str, int]:  # participant_name -> principle_number (1-4)
-    """
-    STAGE 1: Select principle (1-4).
+**conduct_principle_selection** - Executes Stage 1 principle selection:
+- Takes participants list, round number, and optional timeout in seconds
+- Returns a dictionary mapping participant names to principle numbers (1-4)
+- Algorithm:
+  1. Sends prompt: "Which principle do you choose? (1=Floor, 2=Average, 3=Avg+Floor, 4=Avg+Range)"
+  2. For each participant: Gets response, uses regex to extract first digit 1-4, falls back to keyword matching in participant's language on parse failure, retries up to max_retries on continued failure
+- Key Design: Replaces complex LLM-based principle detection with regex validation, supports keyword fallback for multilingual responses, and provides deterministic results with no interpretation variance
 
-    Algorithm:
-    1. Send prompt: "Which principle do you choose? (1=Floor, 2=Average, 3=Avg+Floor, 4=Avg+Range)"
-    2. For each participant:
-       a. Get response
-       b. Use regex to extract first digit 1-4
-       c. On parse failure: Use keyword fallback in participant's language
-       d. On continued failure: Retry up to max_retries
-
-    Returns: Dict mapping participant_name -> principle_number
-
-    Key Design:
-    - Replaces complex LLM-based principle detection with regex validation
-    - Keyword fallback supports multilingual responses
-    - Deterministic: no interpretation variance
-    """
-
-    principle_mapping = {}
-    for participant in participants:
-        principle_prompt = self.language_manager.get(
-            "voting_principle_selection_prompt"
-        )
-
-        response = await participant.think(principle_prompt)
-
-        # Try regex extraction first (deterministic)
-        principle_num = self._extract_principle_number(response)
-
-        if principle_num is None:
-            # Fallback: keyword matching in participant's language
-            detected_lang = detect_language_from_response(response)
-            principle_num = principle_keyword_matcher.match_principle(
-                text=response,
-                language=detected_lang
-            )
-
-        principle_mapping[participant.name] = principle_num
-
-    return principle_mapping
-
-def _extract_principle_number(self, response: str) -> Optional[int]:
-    """Extract first digit 1-4 from response using regex."""
-    match = re.search(r'([1-4])', response)
-    return int(match.group(1)) if match else None
-```
+**Internal extraction method**: Extracts the first digit 1-4 from response text using regular expression pattern matching, returning the integer value if found or None if not found
 
 **Stage 2: Amount Specification** (For Constraint Principles)
 
-```python
-async def conduct_amount_specification(
-    self,
-    participants: List[ParticipantAgent],
-    principle_mapping: Dict[str, int],  # From Stage 1
-    round_number: int,
-    timeout_seconds: Optional[float] = None
-) -> Dict[str, Optional[int]]:  # participant_name -> constraint_amount
-    """
-    STAGE 2: Specify constraint amount (for principles 3 & 4).
+**conduct_amount_specification** - Executes Stage 2 amount specification:
+- Takes participants list, principle mapping from Stage 1, round number, and optional timeout
+- Returns a dictionary mapping participant names to constraint amounts (or None)
+- Algorithm:
+  1. Filters participants who voted for principle 3 or 4
+  2. For each filtered participant: Sends prompt "What is your constraint amount? Please specify a number.", uses regex to extract first positive integer, retries with cultural adaptation (number format parsing) on parse failure, returns integer or None if failed after retries
+- Multilingual Number Parsing Support:
+  - English: Handles 1000, 1,000 (comma separator), 1.000 (period separator)
+  - Spanish: Handles 1.000 (period for thousands), 1,000 (comma)
+  - Mandarin: Handles 1000 with cultural context for large numbers
+- Uses the get_amount_formatter function from the cultural_adaptation module
 
-    Algorithm:
-    1. Filter participants who voted for principle 3 or 4
-    2. For each such participant:
-       a. Send prompt: "What is your constraint amount? Please specify a number."
-       b. Use regex to extract first positive integer
-       c. On parse failure: Retry with cultural adaptation (number format parsing)
-       d. Return int or None if failed after retries
-
-    Returns: Dict mapping participant_name -> constraint_amount (or None)
-
-    Multilingual Number Parsing:
-    - English: 1000, 1,000 (comma), 1.000 (period)
-    - Spanish: 1.000 (period), 1,000 (comma)
-    - Mandarin: 1000, with cultural context for large numbers
-
-    Uses get_amount_formatter() from cultural_adaptation.py
-    """
-
-    amount_mapping = {}
-    for participant in participants:
-        if principle_mapping[participant.name] not in [3, 4]:
-            amount_mapping[participant.name] = None
-            continue
-
-        amount_prompt = self.language_manager.get(
-            "voting_amount_specification_prompt",
-            principle_num=principle_mapping[participant.name]
-        )
-
-        response = await participant.think(amount_prompt)
-
-        # Extract amount using regex + cultural adaptation
-        amount = self._extract_constraint_amount(response)
-
-        if amount is None:
-            # Try cultural adaptation (multilingual number formats)
-            formatter = get_amount_formatter(
-                language=detect_language_from_response(response)
-            )
-            amount = formatter.parse_amount_from_text(response)
-
-        amount_mapping[participant.name] = amount
-
-    return amount_mapping
-
-def _extract_constraint_amount(self, response: str) -> Optional[int]:
-    """Extract first positive integer from response."""
-    match = re.search(r'(\d+)', response)
-    return int(match.group(1)) if match else None
-```
+**Internal extraction method**: Extracts the first positive integer from response text using regular expression pattern matching, returning the integer value if found or None otherwise
 
 **Key Design Rationale**:
-- **Deterministic**: Replaces complex LLM parsing ("Does the agent want principle 3?") with simple regex
-- **Multilingual**: Keyword fallback and cultural number formatting
-- **Auditable**: Each vote extractable from raw response with clear validation rules
-- **Testable**: Stateless validation functions for unit testing
+- **Deterministic**: Replaces complex LLM parsing approaches (such as "Does the agent want principle 3?") with simple regex pattern matching
+- **Multilingual**: Supports keyword fallback and cultural number formatting for international use
+- **Auditable**: Each vote is extractable from the raw response with clear validation rules
+- **Testable**: Uses stateless validation functions that enable comprehensive unit testing
 
 ### 3.5 MemoryService
 
@@ -697,115 +310,50 @@ def _extract_constraint_amount(self, response: str) -> Optional[int]:
 
 **Architecture**:
 
-```
-SelectiveMemoryManager (lower-level)
-    ↓ (wrapped by)
-MemoryService (public API)
-    ├── Routes events by type (discussion, voting, results)
-    ├── Applies truncation rules (≤300 char statements, ≤200 char reasoning)
-    ├── Delegates to SelectiveMemoryManager for implementation
-    └── Provides consistent guidance style application
-```
+The memory system uses a layered architecture where SelectiveMemoryManager (lower-level implementation) is wrapped by MemoryService (public API). The MemoryService routes events by type (discussion, voting, results), applies truncation rules (maximum 300 character statements, maximum 200 character reasoning), delegates to SelectiveMemoryManager for implementation, and provides consistent guidance style application.
 
 **Key Methods**:
 
-```python
-async def update_discussion_memory(
-    self,
-    agent: ParticipantAgent,
-    context: ParticipantContext,
-    statement_summary: str,  # Participant's statement
-    round_number: int,
-    include_reasoning: bool = False
-) -> str:
-    """
-    Update agent memory with discussion statement.
+**update_discussion_memory** - Updates agent memory with discussion statements:
+- Takes the agent, context, statement summary (participant's statement), round number, and optional include_reasoning flag
+- Returns the memory update result string
+- Process: Truncates statement to 300 characters, formats with memory guidance style (narrative or structured), delegates to SelectiveMemoryManager for insertion, and returns the result
+- Routing: Routes to update_memory_simple for direct insertion
 
-    Process:
-    1. Truncate statement to 300 characters
-    2. Format with memory guidance style (narrative or structured)
-    3. Delegate to SelectiveMemoryManager for insertion
-    4. Return memory update result
+**update_voting_memory** - Updates agent memory with voting events:
+- Takes the agent, context, event type (VOTING_INITIATED, VOTING_CONFIRMED, or BALLOT_COMPLETED), round number, optional vote choice, and consensus_reached flag
+- Returns the memory update result string
+- Three sub-events handled:
+  1. VOTING_INITIATED: Group is considering voting
+  2. VOTING_CONFIRMED: All agents agreed to participate
+  3. BALLOT_COMPLETED: Secret ballot results (with consensus if reached)
+- Routing: Routes to update_memory_complex if consensus reached, otherwise uses simple insertion for status updates
 
-    Routing: Routes to update_memory_simple() for direct insertion
-    """
+**update_final_results_memory** - Updates agent memory with final Phase 2 results:
+- Takes the agent, context, result content string, final earnings amount, and consensus_reached flag
+- Returns the memory update result string
+- Content includes: Consensus principle and constraint (if reached), agent's assigned income class, final earnings (actual payoff), and counterfactual earnings under other principles
+- Routing: Always uses update_memory_complex for detailed analysis
 
-async def update_voting_memory(
-    self,
-    agent: ParticipantAgent,
-    context: ParticipantContext,
-    event_type: MemoryEventType,  # VOTING_INITIATED, VOTING_CONFIRMED, BALLOT_COMPLETED
-    round_number: int,
-    vote_choice: Optional[PrincipleChoice] = None,
-    consensus_reached: bool = False
-) -> str:
-    """
-    Update agent memory with voting event.
+**_truncate_content** - Applies content truncation rules:
+- Takes content string and content_type indicator ('statement', 'reasoning', or 'result')
+- Returns truncated content string
+- Rules based on Phase2Settings: statements limited to 300 characters, reasoning limited to 200 characters, results preserved in full without truncation
 
-    Three sub-events:
-    1. VOTING_INITIATED: Group is considering voting
-    2. VOTING_CONFIRMED: All agents agreed to participate
-    3. BALLOT_COMPLETED: Secret ballot results (with consensus if reached)
-
-    Routing: Routes to update_memory_complex() if consensus reached,
-             simple insertion if just status update
-    """
-
-async def update_final_results_memory(
-    self,
-    agent: ParticipantAgent,
-    context: ParticipantContext,
-    result_content: str,
-    final_earnings: float,
-    consensus_reached: bool
-) -> str:
-    """
-    Update agent memory with final Phase 2 results.
-
-    Content:
-    - Consensus principle and constraint (if reached)
-    - Agent's assigned income class
-    - Final earnings (actual payoff)
-    - Counterfactual earnings under other principles
-
-    Routing: Always uses update_memory_complex() for detailed analysis
-    """
-
-def _truncate_content(
-    self,
-    content: str,
-    content_type: str  # 'statement', 'reasoning', 'result'
-) -> str:
-    """
-    Apply truncation rules based on Phase2Settings:
-    - statement: ≤ 300 characters
-    - reasoning: ≤ 200 characters
-    - result: No truncation (full results preserved)
-    """
-
-def _apply_guidance_style(
-    self,
-    content: str,
-    guidance_style: str  # 'narrative' or 'structured'
-) -> str:
-    """
-    Format memory content with guidance style:
-
-    narrative: "Agent Alice discussed the importance of fairness..."
-    structured: "Topic: Fairness; Agent: Alice; Key Points: ..."
-    """
-```
+**_apply_guidance_style** - Formats memory content with guidance style:
+- Takes content string and guidance_style indicator ('narrative' or 'structured')
+- Returns formatted content string
+- Narrative style example: "Agent Alice discussed the importance of fairness..."
+- Structured style example: "Topic: Fairness; Agent: Alice; Key Points: ..."
 
 **Configuration**:
-```yaml
-phase2_settings:
-  memory_management:
-    guidance_style: "narrative"  # or "structured"
-    public_history_max_length: 100000  # characters
-    statement_max_length: 300
-    reasoning_max_length: 200
-    enable_truncation: true
-```
+
+Phase 2 memory management settings:
+- **guidance_style**: "narrative" or "structured" formatting
+- **public_history_max_length**: Maximum character count (default: 100,000)
+- **statement_max_length**: Maximum statement characters (300)
+- **reasoning_max_length**: Maximum reasoning characters (200)
+- **enable_truncation**: Boolean flag to enable/disable truncation
 
 ### 3.6 CounterfactualsService
 
@@ -815,164 +363,43 @@ phase2_settings:
 
 **Payoff Calculation Algorithm**:
 
-```python
-async def calculate_payoffs(
-    self,
-    distribution_set: DistributionSet,
-    consensus_principle: Optional[JusticePrinciple],
-    participants: List[ParticipantAgent],
-    income_probabilities: IncomeClassProbabilities
-) -> Dict[str, float]:  # participant_name -> final_earnings
-    """
-    Calculate final payoffs based on consensus principle.
+**calculate_payoffs** - Calculates final payoffs based on consensus principle:
+- Takes distribution set, optional consensus principle, participants list, and income class probabilities
+- Returns a dictionary mapping participant names to final earnings (as floating-point numbers)
+- Two scenarios:
+  - **Scenario 1 (Consensus Reached)**: Applies the consensus principle to the distribution. For each participant: randomly assigns income class using seeded random number generator (respects probabilities), looks up income for assigned class in mapped distribution, and sets earnings equal to income
+  - **Scenario 2 (No Consensus)**: Randomly selects a principle from the four available principles, then applies the same process as Scenario 1
 
-    Two scenarios:
+**_apply_principle_to_distribution** - Applies a principle to a distribution:
+- Takes a justice principle, original income distribution, and optional constraint amount
+- Returns a dictionary mapping income classes to income values
+- Implementation varies by principle:
+  - **Principle 1 (MAXIMIZING_FLOOR)**: Objective is to maximize the lowest income. The algorithm optimizes each income class to maximize the floor value, producing a modified distribution where the floor is the highest possible
+  - **Principle 2 (MAXIMIZING_AVERAGE)**: Objective is to maximize average income. The algorithm scales the entire distribution uniformly (already optimal), resulting in the original distribution without changes
+  - **Principle 3 (MAXIMIZING_AVERAGE_FLOOR_CONSTRAINT)**: Objective is to maximize average income with a floor constraint. The algorithm sets all incomes to be greater than or equal to the constraint amount, then allocates remaining budget to maximize average. Example: Original distribution has high=32k, med=24k, med_low=13k, low=12k, avg=20.2k. With a 15k floor constraint, result is high=38k, med=30k, med_low=15k, low=15k, avg=21.6k (redistributed to satisfy floor while maximizing average)
+  - **Principle 4 (MAXIMIZING_AVERAGE_RANGE_CONSTRAINT)**: Objective is to maximize average income with range constraint. The algorithm calculates range such that high minus low is less than or equal to constraint amount, then maximizes average subject to range constraint. Example: Original distribution has high=32k, low=12k, range=20k, avg=20.2k. With 10k range max constraint, result is high=22k, low=12k, range=10k, avg=17.2k (compressed to satisfy range limit)
 
-    SCENARIO 1: Consensus Reached
-        Apply the consensus principle to the distribution
-        principle_mapping = apply_principle(consensus_principle, distribution)
+**format_detailed_results** - Generates transparent results:
+- Takes participants list, final payoffs dictionary, consensus_reached flag, optional consensus principle, and distribution set
+- Returns a dictionary mapping participant names to DetailedResult objects
+- For each participant, includes: final principle (consensus or random), assigned income class, final earnings, counterfactual earnings under each of the 4 principles (with same income class assignment), and counterfactual earnings under each of the 4 distributions (with same principle assignment)
+- Purpose: Provides transparency and enables post-hoc analysis by showing "Here's what you earned. Here's what you would have earned under other principles."
 
-        For each participant:
-            1. Randomly assign income class using seeded RNG (respects probabilities)
-            2. Look up income for assigned class in mapped distribution
-            3. earnings[participant] = income
-
-    SCENARIO 2: No Consensus
-        Assign principle randomly from 4 principles
-        random_principle = random.choice([Principle1, Principle2, Principle3, Principle4])
-
-        Then apply same process as Scenario 1
-
-    Returns: Dict mapping participant names to final earnings
-    """
-
-def _apply_principle_to_distribution(
-    self,
-    principle: JusticePrinciple,
-    original_distribution: IncomeDistribution,
-    constraint_amount: Optional[int] = None
-) -> Dict[IncomeClass, int]:
-    """
-    Apply principle to original distribution, return optimized mapping.
-
-    Principle 1: MAXIMIZING_FLOOR
-        Objective: Maximize lowest income
-        Algorithm: For each income class, optimize to maximize floor()
-        Result: Modified distribution where floor is highest possible
-
-    Principle 2: MAXIMIZING_AVERAGE
-        Objective: Maximize average income
-        Algorithm: Scale entire distribution uniformly (already optimal)
-        Result: Original distribution (no change needed)
-
-    Principle 3: MAXIMIZING_AVERAGE_FLOOR_CONSTRAINT
-        Objective: Maximize average with floor constraint
-        Algorithm:
-            1. Set all incomes ≥ constraint_amount
-            2. Remaining budget → maximize average
-
-        Example:
-            Original: high=32k, med=24k, med_low=13k, low=12k, avg=20.2k
-            Constraint: 15k floor
-            Result: high=38k, med=30k, med_low=15k, low=15k, avg=21.6k
-                    (redistributed to satisfy floor while maximizing avg)
-
-    Principle 4: MAXIMIZING_AVERAGE_RANGE_CONSTRAINT
-        Objective: Maximize average with range constraint
-        Algorithm:
-            1. Calculate range: high - low ≤ constraint_amount
-            2. Maximize average subject to range constraint
-
-        Example:
-            Original: high=32k, low=12k, range=20k, avg=20.2k
-            Constraint: 10k range max
-            Result: high=22k, low=12k, range=10k, avg=17.2k
-                    (compressed to satisfy range limit)
-    """
-
-async def format_detailed_results(
-    self,
-    participants: List[ParticipantAgent],
-    final_payoffs: Dict[str, float],
-    consensus_reached: bool,
-    consensus_principle: Optional[JusticePrinciple],
-    distribution_set: DistributionSet
-) -> Dict[str, DetailedResult]:
-    """
-    Generate transparent results showing:
-
-    For each participant:
-        1. Final principle (consensus or random)
-        2. Assigned income class
-        3. Final earnings
-        4. COUNTERFACTUAL earnings under each of 4 principles
-            (with same income class assignment)
-        5. Counterfactual earnings under each of 4 distributions
-            (with same principle assignment)
-
-    Returns: Dict[participant_name -> {
-        assigned_income_class: IncomeClass,
-        final_earnings: float,
-        counterfactual_by_principle: Dict[principle -> earnings],
-        counterfactual_by_distribution: Dict[distribution_idx -> earnings]
-    }]
-
-    Purpose: Transparency and post-hoc analysis
-    "Here's what you earned. Here's what you would have earned under other principles."
-    """
-
-async def collect_final_rankings(
-    self,
-    participants: List[ParticipantAgent],
-    results: Dict[str, DetailedResult]
-) -> Dict[str, PrincipleRanking]:
-    """
-    Ask participants to re-rank principles after seeing results.
-
-    Process:
-    1. Generate final ranking prompt with counterfactual results
-    2. Each participant ranks 4 principles 1-4 (best to worst)
-    3. Parse ranking using utility_agent.parse_principle_ranking()
-    4. Validate ranking completeness
-
-    Returns: Dict[participant_name -> PrincipleRanking]
-
-    Purpose: Measure shift in preferences after payoff revelation
-    """
-```
+**collect_final_rankings** - Collects final rankings after results revelation:
+- Takes participants list and results dictionary
+- Returns a dictionary mapping participant names to PrincipleRanking objects
+- Process: Generates final ranking prompt with counterfactual results, asks each participant to rank 4 principles 1-4 (best to worst), parses rankings using utility agent's parse_principle_ranking method, and validates ranking completeness
+- Purpose: Measures shift in preferences after payoff revelation
 
 **Counterfactual Generation Example**:
 
-```
-Participant: Alice
-Final Principle: MAXIMIZING_FLOOR (voted unanimously)
-Distribution Set Round 4:
-  - Dist 1: high=32k, med=24k, low=12k
-  - Dist 2: high=28k, med=20k, low=13k
-  - Dist 3: high=31k, med=21k, low=14k
-  - Dist 4: high=21k, med=19k, low=15k
+For participant Alice with final principle MAXIMIZING_FLOOR (voted unanimously) in distribution set round 4 containing four distributions (Dist 1: high=32k, med=24k, low=12k; Dist 2: high=28k, med=20k, low=13k; Dist 3: high=31k, med=21k, low=14k; Dist 4: high=21k, med=19k, low=15k), where Alice is assigned the medium income class (50% probability):
 
-Alice's Assigned Income Class: medium (50% probability)
+**Actual Result**: Distribution Used is Dist 1 (application-chosen), Principle Used is MAXIMIZING_FLOOR, Alice's Earnings are 24,000
 
-ACTUAL RESULT:
-  Distribution Used: Dist 1 (application-chosen)
-  Principle Used: MAXIMIZING_FLOOR
-  Alice's Earnings: 24000
-
-COUNTERFACTUALS (same income class):
-
-By Principle (Dist 1):
-  If Maximizing_Floor → 24000 (actual)
-  If Maximizing_Average → 24000 (different mapping, potentially different income)
-  If Avg+Floor(15k) → 25000
-  If Avg+Range(10k) → 23000
-
-By Distribution (Maximizing_Floor principle):
-  If Dist 1 → 24000 (actual)
-  If Dist 2 → 20000 (lower incomes)
-  If Dist 3 → 21000
-  If Dist 4 → 19000
-```
+**Counterfactuals (same income class)**:
+- By Principle (Dist 1): If Maximizing_Floor then 24,000 (actual); If Maximizing_Average then 24,000 (different mapping, potentially different income); If Avg+Floor(15k) then 25,000; If Avg+Range(10k) then 23,000
+- By Distribution (Maximizing_Floor principle): If Dist 1 then 24,000 (actual); If Dist 2 then 20,000 (lower incomes); If Dist 3 then 21,000; If Dist 4 then 19,000
 
 ---
 
@@ -982,104 +409,49 @@ By Distribution (Maximizing_Floor principle):
 
 The voting system orchestrates three phases:
 
-```
-VOTING FLOW:
-├── Phase 1: VOTING INITIATION
-│   └── Any agent can trigger: "Do you want to initiate voting?" (1=Yes/0=No)
-│
-├── Phase 2: VOTING CONFIRMATION
-│   └── All must agree: "Do you confirm to participate in voting?" (1=Yes/0=No)
-│       Requires 100% unanimous agreement
-│
-└── Phase 3: SECRET BALLOT (TwoStageVotingManager)
-    ├── Stage 1: Principle Selection (1-4)
-    │   └── Extract numerical response: "Which principle? (1/2/3/4)"
-    │
-    └── Stage 2: Amount Specification (principles 3 & 4)
-        └── Extract amount: "What is your constraint? (positive integer)"
-```
+**VOTING FLOW**:
+- **Phase 1: VOTING INITIATION**: Any agent can trigger by responding to "Do you want to initiate voting?" (1=Yes, 0=No)
+- **Phase 2: VOTING CONFIRMATION**: All must agree by responding to "Do you confirm to participate in voting?" (1=Yes, 0=No). Requires 100% unanimous agreement
+- **Phase 3: SECRET BALLOT** (TwoStageVotingManager):
+  - **Stage 1: Principle Selection (1-4)**: Extract numerical response to "Which principle? (1/2/3/4)"
+  - **Stage 2: Amount Specification (principles 3 & 4)**: Extract amount in response to "What is your constraint? (positive integer)"
 
 ### 4.2 Consensus Definition
 
-**Strict Unanimity**: All participants must vote:
-- **Same principle** (1, 2, 3, or 4)
-- **Same constraint amount** (if principle 3 or 4)
+**Strict Unanimity**: All participants must vote for the **same principle** (1, 2, 3, or 4) and the **same constraint amount** (if principle 3 or 4).
 
-```python
-def detect_consensus(votes: List[Tuple[int, Optional[int]]]) -> bool:
-    """
-    Example:
-    votes = [
-        (1, None),  # Alice: Floor, no constraint
-        (1, None),  # Bob: Floor, no constraint
-        (1, None),  # Carol: Floor, no constraint
-    ]
-    → consensus = True (all agree on principle 1)
+**Consensus Detection Function**: The detect_consensus function takes a list of vote tuples (each containing principle number and optional constraint amount) and returns a boolean.
 
-    votes = [
-        (3, 15000),  # Alice: Avg+Floor, floor=15k
-        (3, 15000),  # Bob: Avg+Floor, floor=15k
-        (3, 15000),  # Carol: Avg+Floor, floor=15k
-    ]
-    → consensus = True (all agree on principle 3 with 15k floor)
+**Example scenarios**:
+1. If votes are [(1, None), (1, None), (1, None)] representing Alice, Bob, and Carol all voting for Floor with no constraint, then consensus equals True (all agree on principle 1)
+2. If votes are [(3, 15000), (3, 15000), (3, 15000)] representing Alice, Bob, and Carol all voting for Avg+Floor with floor=15k, then consensus equals True (all agree on principle 3 with 15k floor)
+3. If votes are [(1, None), (2, None), (1, None)] representing Alice voting Floor, Bob voting Average (different), and Carol voting Floor, then consensus equals False (no unanimous agreement)
 
-    votes = [
-        (1, None),   # Alice: Floor
-        (2, None),   # Bob: Average ← Different!
-        (1, None),   # Carol: Floor
-    ]
-    → consensus = False (no unanimous agreement)
-    """
-    if not votes:
-        return False
-
-    first_vote = votes[0]
-    return all(vote == first_vote for vote in votes)
-```
+The algorithm checks if the votes list is non-empty. If empty, returns False. Otherwise, takes the first vote and returns True only if all subsequent votes equal the first vote.
 
 ### 4.3 Timeout and Retry Mechanisms
 
-**Configuration**:
-```yaml
-phase2_settings:
-  voting_initiation_timeout: 30  # seconds
-  voting_confirmation_timeout: 30
-  voting_secret_ballot_timeout: 45
-  voting_retry_limit: 3
-  voting_retry_backoff_factor: 1.5  # exponential backoff
-```
+**Configuration Settings**:
+
+Phase 2 voting timeout settings:
+- **voting_initiation_timeout**: 30 seconds
+- **voting_confirmation_timeout**: 30 seconds
+- **voting_secret_ballot_timeout**: 45 seconds
+- **voting_retry_limit**: 3 attempts
+- **voting_retry_backoff_factor**: 1.5 (for exponential backoff)
 
 **Retry Algorithm**:
-```python
-async def _invoke_with_retry(
-    prompt: str,
-    max_retries: int = 3,
-    base_timeout: float = 30
-) -> str:
-    """
-    Execute with exponential backoff retry:
 
-    Attempt 1: timeout = 30s
-    Attempt 2: timeout = 45s (30 × 1.5)
-    Attempt 3: timeout = 67.5s (45 × 1.5)
+The _invoke_with_retry internal function executes with exponential backoff retry. It takes a prompt string, maximum retries count (default 3), and base timeout duration (default 30 seconds), returning the response string.
 
-    Stops on:
-    - Successful response
-    - Max retries exceeded
-    """
-    for attempt in range(max_retries):
-        timeout = base_timeout * (1.5 ** attempt)
-        try:
-            return await asyncio.wait_for(
-                participant.think(prompt),
-                timeout=timeout
-            )
-        except asyncio.TimeoutError:
-            if attempt < max_retries - 1:
-                await asyncio.sleep(1)  # Brief pause before retry
-            else:
-                raise
-```
+The algorithm uses exponential backoff retry strategy:
+- Attempt 1: timeout equals 30 seconds
+- Attempt 2: timeout equals 45 seconds (30 multiplied by 1.5)
+- Attempt 3: timeout equals 67.5 seconds (45 multiplied by 1.5)
+
+The function stops on either successful response or when max retries are exceeded.
+
+For each attempt in the range from 0 to max_retries, it calculates the timeout as base_timeout multiplied by (1.5 raised to the power of attempt). It then tries to await the participant.think method call with the prompt, wrapping it in asyncio.wait_for with the calculated timeout. If a TimeoutError exception occurs and the current attempt is less than max_retries minus 1, it sleeps for 1 second (brief pause before retry) then continues. If the exception occurs on the final attempt, it raises the exception.
 
 ---
 
@@ -1089,106 +461,73 @@ async def _invoke_with_retry(
 
 **File**: `config/models.py` with Pydantic validation
 
-**Structure**:
-```yaml
-# Main experiment config
-experiment_name: "baseline_v1"
-phase2_rounds: 10
-distribution_mode: "dynamic"  # or "original_values"
+**Configuration Structure**:
 
-# Phase 2 settings
-phase2_settings:
-  finisher_restrictions_active: true
-  statement_min_length: 50
-  statement_validation_retries: 3
-  public_history_max_length: 100000
+The experiment configuration uses YAML format with the following major sections:
 
-  memory_management:
-    guidance_style: "narrative"  # or "structured"
-    enable_truncation: true
+**Main experiment settings**:
+- experiment_name: String identifier (e.g., "baseline_v1")
+- phase2_rounds: Integer number of discussion rounds (e.g., 10)
+- distribution_mode: String mode selector, either "dynamic" or "original_values"
 
-  voting:
-    voting_confirmation_timeout: 30
-    voting_secret_ballot_timeout: 45
-    voting_retry_limit: 3
+**Phase 2 settings**:
+- finisher_restrictions_active: Boolean (true/false)
+- statement_min_length: Integer minimum character count (e.g., 50)
+- statement_validation_retries: Integer retry count (e.g., 3)
+- public_history_max_length: Integer character limit (e.g., 100000)
+- memory_management subsection:
+  - guidance_style: String, either "narrative" or "structured"
+  - enable_truncation: Boolean (true/false)
+- voting subsection:
+  - voting_confirmation_timeout: Integer seconds (e.g., 30)
+  - voting_secret_ballot_timeout: Integer seconds (e.g., 45)
+  - voting_retry_limit: Integer count (e.g., 3)
 
-# Agents (8 participants for standard setup)
-agents:
-  - name: "Alice"
-    model: "gpt-4o"
-    language: "en"
-    temperature: 0.7
+**Agents configuration** (8 participants for standard setup):
+Each agent entry includes:
+- name: String identifier (e.g., "Alice", "Bob")
+- model: String model identifier (e.g., "gpt-4o")
+- language: String language code (e.g., "en" for English)
+- temperature: Float value (e.g., 0.7)
 
-  - name: "Bob"
-    model: "gpt-4o"
-    language: "en"
-    temperature: 0.7
+**Income distribution settings**:
+- income_class_probabilities mapping:
+  - high: Float probability (e.g., 0.05)
+  - medium_high: Float probability (e.g., 0.10)
+  - medium: Float probability (e.g., 0.50)
+  - medium_low: Float probability (e.g., 0.25)
+  - low: Float probability (e.g., 0.10)
 
-  # ... 6 more agents
-
-# Income distribution
-income_class_probabilities:
-  high: 0.05
-  medium_high: 0.10
-  medium: 0.50
-  medium_low: 0.25
-  low: 0.10
-
-# Reproducibility
-seed: 42  # Global seed for all RNGs
-```
+**Reproducibility setting**:
+- seed: Integer global seed for all random number generators (e.g., 42)
 
 ### 5.2 Multi-Provider Model Support
 
 **Intelligent Model Provider Detection**:
 
-```python
-# In experiment_agents/participant_agent.py
-class ModelProvider(Enum):
-    OPENAI = "openai"
-    GEMINI = "gemini"
-    OPENROUTER = "openrouter"
-    OLLAMA = "ollama"
+The system implements a ModelProvider enumeration (`experiment_agents/participant_agent.py`) with four values:
+- OPENAI: String value "openai"
+- GEMINI: String value "gemini"
+- OPENROUTER: String value "openrouter"
+- OLLAMA: String value "ollama"
 
-def detect_model_provider(model_str: str) -> ModelProvider:
-    """
-    Auto-detect provider from model string:
-
-    - "gpt-4o" → OpenAI
-    - "o1-mini" → OpenAI
-    - "gemini-2.0-flash" → Google Gemini
-    - "provider/model" → OpenRouter (e.g., "anthropic/claude-3.5-sonnet")
-    - "ollama/gemma2:7b" → Ollama
-    """
-```
+The detect_model_provider function auto-detects the provider from the model string:
+- If model string is "gpt-4o" or "o1-mini" or any string starting with "gpt-" or "o1-" or "o3-", returns OpenAI provider
+- If model string is "gemini-2.0-flash" or any string starting with "gemini-" or "gemma-", returns Google Gemini provider
+- If model string contains a slash character (e.g., "anthropic/claude-3.5-sonnet" format using "provider/model" pattern), returns OpenRouter provider
+- If model string starts with "ollama/" (e.g., "ollama/gemma2:7b"), returns Ollama provider
 
 **Provider-Specific Implementation**:
-```python
-if provider == ModelProvider.OPENAI:
-    # Native OpenAI Agents SDK
-    client = Agents(api_key=os.getenv("OPENAI_API_KEY"))
 
-elif provider == ModelProvider.GEMINI:
-    # Google Gemini (if GEMINI_API_KEY set)
-    client = anthropic.Anthropic(
-        api_key=os.getenv("GEMINI_API_KEY"),
-        base_url="https://generativelanguage.googleapis.com/openai/"
-    )
+The system creates different client instances based on the detected provider:
 
-elif provider == ModelProvider.OPENROUTER:
-    # OpenRouter proxy (any model via provider/model format)
-    client = anthropic.Anthropic(
-        api_key=os.getenv("OPENROUTER_API_KEY"),
-        base_url="https://openrouter.ai/api/v1"
-    )
+For **OpenAI provider**: Creates a native OpenAI Agents SDK client using the Agents constructor with api_key parameter reading from the OPENAI_API_KEY environment variable
 
-elif provider == ModelProvider.OLLAMA:
-    # Local Ollama instance
-    client = anthropic.Anthropic(
-        api_key=os.getenv("OLLAMA_API_KEY", "ollama"),
-        base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
-    )
-```
+For **GEMINI provider**: Creates a client using the anthropic.Anthropic constructor with api_key parameter reading from the GEMINI_API_KEY environment variable and base_url parameter set to "https://generativelanguage.googleapis.com/openai/"
+
+For **OPENROUTER provider**: Creates an OpenRouter proxy client using the anthropic.Anthropic constructor with api_key parameter reading from the OPENROUTER_API_KEY environment variable and base_url parameter set to "https://openrouter.ai/api/v1". This allows access to any model via the provider/model format
+
+For **OLLAMA provider**: Creates a local Ollama instance client using the anthropic.Anthropic constructor with api_key parameter reading from the OLLAMA_API_KEY environment variable (defaulting to "ollama" if not set) and base_url parameter reading from the OLLAMA_BASE_URL environment variable (defaulting to "http://localhost:11434/v1" if not set)
 
 ---
 
@@ -1198,78 +537,55 @@ elif provider == ModelProvider.OLLAMA:
 
 **File**: `utils/language_manager.py`
 
-```python
-class SupportedLanguage(Enum):
-    ENGLISH = "en"
-    SPANISH = "es"
-    MANDARIN = "zh"
+**Supported Languages**: The SupportedLanguage enumeration defines three language codes:
+- ENGLISH: String value "en"
+- SPANISH: String value "es"
+- MANDARIN: String value "zh"
 
-class LanguageManager:
-    """
-    Centralized translation management.
+**LanguageManager Class**: Provides centralized translation management.
 
-    Loads translations from JSON files:
-    - translations/en.json
-    - translations/es.json
-    - translations/zh.json
-    """
+The class loads translations from JSON files in the translations directory:
+- translations/en.json for English
+- translations/es.json for Spanish
+- translations/zh.json for Mandarin
 
-    def get(self, key: str, **kwargs) -> str:
-        """
-        Retrieve localized string with substitutions.
-
-        Example:
-            message = lang_manager.get(
-                "discussion_round_X_start",
-                round=3,
-                agent_name="Alice"
-            )
-            # Returns: "Round 3: Alice, please share your thoughts..."
-        """
-```
+The **get method** retrieves localized strings with substitutions:
+- Takes a key string and optional keyword arguments
+- Returns the localized string with parameters substituted
+- Example usage: Calling lang_manager.get with key "discussion_round_X_start", round parameter 3, and agent_name parameter "Alice" returns the localized string "Round 3: Alice, please share your thoughts..." (exact wording depends on the language)
 
 ### 6.2 Multilingual Voting
 
 **Number Format Parsing** (`utils/cultural_adaptation.py`):
 
-```python
-def get_amount_formatter(language: SupportedLanguage):
-    """
-    Multilingual number format parsing:
+The get_amount_formatter function provides multilingual number format parsing based on the language parameter:
 
-    English:
-        "1000", "1,000" → 1000
+For **English language**:
+- Accepts "1000" (plain number) and "1,000" (comma as thousands separator), both parsing to integer 1000
 
-    Spanish:
-        "1.000" (period=thousands), "1,000" (comma) → 1000
+For **Spanish language**:
+- Accepts "1.000" (period as thousands separator) and "1,000" (comma as thousands separator), both parsing to integer 1000
 
-    Mandarin:
-        "1000", "1千" (thousand), "1万" (ten thousand) → culturally aware
-    """
-```
+For **Mandarin language**:
+- Accepts "1000" (plain number), "1千" (using the thousand character), and "1万" (using the ten-thousand character), all parsing with cultural awareness for large numbers
 
 **Keyword Fallback** (`core/principle_keywords.py`):
 
-```python
-def match_principle_from_text(text: str, language: SupportedLanguage) -> Optional[int]:
-    """
-    Fallback principle detection via keywords when numerical extraction fails.
+The match_principle_from_text function provides fallback principle detection via keywords when numerical extraction fails. It takes a text string and language parameter, returning an optional integer representing the principle number.
 
-    Example responses:
+Example responses by language:
 
-    English:
-        "I choose the maximizing average principle" → 2
-        "Floor constraint sounds best" → 3
+**English**:
+- "I choose the maximizing average principle" maps to principle 2
+- "Floor constraint sounds best" maps to principle 3
 
-    Spanish:
-        "Prefiero maximizar el piso" → 1
-        "El promedio me parece bien" → 2
+**Spanish**:
+- "Prefiero maximizar el piso" (I prefer to maximize the floor) maps to principle 1
+- "El promedio me parece bien" (The average seems good to me) maps to principle 2
 
-    Mandarin:
-        "最大化平均收入" → 2
-        "保证最低收入" → 1
-    """
-```
+**Mandarin**:
+- "最大化平均收入" (maximize average income) maps to principle 2
+- "保证最低收入" (guarantee minimum income) maps to principle 1
 
 ---
 
@@ -1277,67 +593,51 @@ def match_principle_from_text(text: str, language: SupportedLanguage) -> Optiona
 
 ### 7.1 Three-Tier Memory System
 
-```
-TIER 1: CONTEXT WINDOW (ParticipantAgent.context)
-├── Current memories (truncated to fit context)
-├── Updated by MemoryService after each event
-└── Sent to LLM in every prompt
+The framework implements a three-tier memory architecture:
 
-TIER 2: AGENT MEMORY STORAGE (MemoryManager)
-├── Persistent memory across rounds
-├── Accumulated discussion statements
-├── Voting events and results
-└── Truncated intelligently to prevent overflow
+**TIER 1: CONTEXT WINDOW** (ParticipantAgent.context):
+- Contains current memories truncated to fit within the context window
+- Updated by MemoryService after each event
+- Sent to the LLM in every prompt
 
-TIER 3: DISCUSSION HISTORY (GroupDiscussionState.public_history)
-├── Shared among all agents
-├── All statements (truncated versions)
-└── Used for context window building
-```
+**TIER 2: AGENT MEMORY STORAGE** (MemoryManager):
+- Maintains persistent memory across rounds
+- Accumulates discussion statements
+- Stores voting events and results
+- Applies intelligent truncation to prevent overflow
+
+**TIER 3: DISCUSSION HISTORY** (GroupDiscussionState.public_history):
+- Shared among all agents
+- Contains all statements in truncated versions
+- Used for building context windows
 
 ### 7.2 Truncation Rules
 
 **Applied by MemoryService**:
 
-```python
-TRUNCATION_RULES = {
-    "statement": {
-        "max_chars": 300,
-        "strategy": "truncate_end_with_ellipsis"
-    },
-    "reasoning": {
-        "max_chars": 200,
-        "strategy": "truncate_end_with_ellipsis"
-    },
-    "result": {
-        "max_chars": None,  # No truncation
-        "strategy": "preserve_full"
-    }
-}
+The system defines truncation rules based on content type:
 
-# Example:
-original_statement = "I believe in maximizing the floor because fairness requires we protect the worst-off members of society..."
-truncated = original_statement[:300] + "..."
-# Result: "I believe in maximizing the floor because fairness requires we protect the worst-off members of society..."
-```
+For **statement content type**:
+- Maximum characters: 300
+- Strategy: truncate_end_with_ellipsis (cuts off at 300 characters and appends "...")
+
+For **reasoning content type**:
+- Maximum characters: 200
+- Strategy: truncate_end_with_ellipsis (cuts off at 200 characters and appends "...")
+
+For **result content type**:
+- Maximum characters: None (no truncation applied)
+- Strategy: preserve_full (results are preserved in their entirety)
+
+Example of truncation: If the original statement is "I believe in maximizing the floor because fairness requires we protect the worst-off members of society..." and it exceeds 300 characters, the truncated version becomes the first 300 characters of the original statement plus "..."
 
 **History Truncation**:
 
-```python
-def manage_discussion_history_length(
-    self,
-    history: List[Dict],
-    max_length_chars: int = 100000
-) -> List[Dict]:
-    """
-    If total history exceeds max_length_chars:
-    1. Remove oldest statement first
-    2. Recalculate total length
-    3. Repeat until under limit
+The manage_discussion_history_length function handles history truncation:
+- Takes a history list and max_length_chars parameter (default 100,000)
+- Returns the truncated history list
 
-    Ensures recent context preserved while old statements pruned.
-    """
-```
+Algorithm: If the total history character count exceeds max_length_chars, the function removes the oldest statement first (maintaining chronological ordering), recalculates the total length, and repeats until the total is under the limit. This ensures recent context is preserved while old statements are pruned.
 
 ### 7.3 Selective Memory Manager
 
@@ -1345,45 +645,21 @@ def manage_discussion_history_length(
 
 **Two Update Strategies**:
 
-```python
-async def update_memory_simple(
-    agent: ParticipantAgent,
-    context: ParticipantContext,
-    summary: str
-) -> str:
-    """
-    Direct Memory Insertion (fast, ~1 second):
+**update_memory_simple** - Direct Memory Insertion (fast, approximately 1 second):
+- Takes an agent, context, and summary string
+- Returns the memory update result string
+- Process: Directly appends the summary to agent.context.memory without LLM involvement
+- Used for: Discussion statements and status updates
 
-    Directly append summary to agent.context.memory
-    No LLM involvement
-    Used for: Discussion statements, status updates
-    """
+**update_memory_complex** - LLM-Mediated Memory Integration (slow, approximately 10 seconds):
+- Takes an agent, context, new_information string, and optional internal_reasoning string
+- Returns the agent's synthesized memory update string
+- Process: Asks the agent's LLM to integrate new information by providing a prompt like: "Here's what happened: {new_information}. Current memory: {existing_memory}. Integrate the new information into memory, updating beliefs..."
+- Used for: Complex results and voting outcomes with reasoning
 
-async def update_memory_complex(
-    agent: ParticipantAgent,
-    context: ParticipantContext,
-    new_information: str,
-    internal_reasoning: str = ""
-) -> str:
-    """
-    LLM-Mediated Memory Integration (slow, ~10 seconds):
-
-    Ask agent's LLM to integrate new information:
-    "Here's what happened: {new_information}
-    Current memory: {existing_memory}
-
-    Integrate the new information into memory, updating beliefs..."
-
-    Returns: Agent's synthesized memory update
-    Used for: Complex results, voting outcomes with reasoning
-    """
-
-# Routing in MemoryService:
-if event_type in [VOTING_INITIATED, DISCUSSION_STATEMENT]:
-    await selective_memory_manager.update_memory_simple(...)
-elif event_type in [VOTING_COMPLETE, FINAL_RESULTS]:
-    await selective_memory_manager.update_memory_complex(...)
-```
+**Routing in MemoryService**: The service routes events to the appropriate update method:
+- If event_type is in the set [VOTING_INITIATED, DISCUSSION_STATEMENT], calls selective_memory_manager.update_memory_simple
+- If event_type is in the set [VOTING_COMPLETE, FINAL_RESULTS], calls selective_memory_manager.update_memory_complex
 
 ---
 
@@ -1393,71 +669,45 @@ elif event_type in [VOTING_COMPLETE, FINAL_RESULTS]:
 
 **File**: `utils/seed_manager.py`
 
-```python
-class SeedManager:
-    """
-    Centralized seeding for reproducible experiments.
+**SeedManager Class**: Provides centralized seeding for reproducible experiments with three levels of seeding.
 
-    Three levels of seeding:
-    """
+**Initialization**: The constructor takes a global_seed parameter (default 42) and:
+- Stores the global_seed as an instance variable
+- Creates a global Random number generator instance initialized with the global_seed
+- Initializes an empty seeds_by_component dictionary for per-component seeds
 
-    def __init__(self, global_seed: int = 42):
-        self.global_seed = global_seed
-        self.random = random.Random(global_seed)  # Global RNG
-        self.seeds_by_component = {}  # Per-component seeds
+**get_seed_for method** - Gets deterministic seed for a component:
+- Takes a component_name string parameter
+- Returns an integer seed value
+- Behavior: Deterministically generates a seed for the named component. Given the same global_seed, always returns the same component seed
+- Example usage: Calling seed_manager.get_seed_for("phase1") returns the phase1 seed, calling get_seed_for("participant_1") returns participant_1's seed, calling get_seed_for("voting") returns the voting seed
 
-    def get_seed_for(self, component_name: str) -> int:
-        """
-        Get deterministic seed for a component:
-
-        Example:
-            phase1_seed = seed_manager.get_seed_for("phase1")
-            participant_1_seed = seed_manager.get_seed_for("participant_1")
-            voting_seed = seed_manager.get_seed_for("voting")
-
-        Deterministic: Same global_seed → Same component seeds
-        """
-
-    def _build_participant_rngs(self, config: ExperimentConfiguration):
-        """
-        Create deterministic RNG for each participant:
-
-        for i, agent in enumerate(agents):
-            seed = global_seed + i  # e.g., 42, 43, 44, 45...
-            agent_rng = random.Random(seed)
-
-        Result: Each participant's randomization is independent but seeded
-        """
-```
+**_build_participant_rngs method** - Creates deterministic RNG for each participant:
+- Takes an ExperimentConfiguration object
+- Process: Iterates through each agent with enumeration. For agent at index i, calculates seed as global_seed plus i (e.g., seeds 42, 43, 44, 45 for global_seed 42). Creates a Random instance with that seed and assigns it to the agent
+- Result: Each participant's randomization is independent yet seeded, ensuring reproducibility
 
 ### 8.2 Reproducibility Guarantees
 
-**With configuration + seed, experiment is fully reproducible**:
+**With configuration plus seed, experiments are fully reproducible**:
 
-```python
-# Run 1
-config = ExperimentConfiguration.from_yaml("config.yaml")
-config.seed = 42
-results_1 = await FrohlichExperimentManager(config).run_complete_experiment()
+Example demonstrating reproducibility:
 
-# Run 2 (identical to Run 1)
-config = ExperimentConfiguration.from_yaml("config.yaml")
-config.seed = 42
-results_2 = await FrohlichExperimentManager(config).run_complete_experiment()
+**Run 1**: Load ExperimentConfiguration from "config.yaml", set config.seed to 42, await FrohlichExperimentManager(config).run_complete_experiment() and store result in results_1
 
-# results_1 == results_2 (exactly, not probabilistically)
-# Same distributions, same agent decisions, same payoffs, same consensus
-```
+**Run 2**: Load ExperimentConfiguration from "config.yaml", set config.seed to 42, await FrohlichExperimentManager(config).run_complete_experiment() and store result in results_2
 
-**What's Seeded**:
-- Distribution generation (multiplier)
+**Result**: results_1 equals results_2 exactly (not just probabilistically). Same distributions generated, same agent decisions recorded, same payoffs calculated, same consensus achieved.
+
+**What's Seeded** (deterministic components):
+- Distribution generation multiplier
 - Participant income class assignment
 - Speaking order randomization
 - Finisher restriction randomization
 
-**What's NOT Seeded** (LLM-dependent):
-- Agent reasoning and statement generation (stochastic by nature)
-- Agent's voting choices (depends on LLM temperature and model state)
+**What's NOT Seeded** (LLM-dependent, stochastic components):
+- Agent reasoning and statement generation (inherently stochastic by nature)
+- Agent's voting choices (depends on LLM temperature and internal model state)
 
 ---
 
@@ -1465,105 +715,93 @@ results_2 = await FrohlichExperimentManager(config).run_complete_experiment()
 
 ### 9.1 Core Type Hierarchy
 
-```python
-# Justice principles (models/principle_types.py)
-class JusticePrinciple(str, Enum):
-    MAXIMIZING_FLOOR = "maximizing_floor"  # Principle 1
-    MAXIMIZING_AVERAGE = "maximizing_average"  # Principle 2
-    MAXIMIZING_AVERAGE_FLOOR_CONSTRAINT = "maximizing_average_floor_constraint"  # Principle 3
-    MAXIMIZING_AVERAGE_RANGE_CONSTRAINT = "maximizing_average_range_constraint"  # Principle 4
+The framework defines data models in `models/principle_types.py` and related files:
 
-class PrincipleChoice(BaseModel):
-    principle: JusticePrinciple
-    constraint_amount: Optional[int] = None  # For principles 3 & 4
-    certainty: CertaintyLevel  # VERY_UNSURE, UNSURE, NO_OPINION, SURE, VERY_SURE
-    reasoning: Optional[str] = None
+**JusticePrinciple enumeration** (string-based enum):
+- MAXIMIZING_FLOOR: String value "maximizing_floor" (Principle 1)
+- MAXIMIZING_AVERAGE: String value "maximizing_average" (Principle 2)
+- MAXIMIZING_AVERAGE_FLOOR_CONSTRAINT: String value "maximizing_average_floor_constraint" (Principle 3)
+- MAXIMIZING_AVERAGE_RANGE_CONSTRAINT: String value "maximizing_average_range_constraint" (Principle 4)
 
-class PrincipleRanking(BaseModel):
-    rankings: List[RankedPrinciple]  # 4 items, ranks 1-4
-    certainty: CertaintyLevel
+**PrincipleChoice model** (Pydantic BaseModel):
+- principle field: JusticePrinciple type
+- constraint_amount field: Optional integer (None allowed), used for principles 3 and 4
+- certainty field: CertaintyLevel type with values VERY_UNSURE, UNSURE, NO_OPINION, SURE, VERY_SURE
+- reasoning field: Optional string (None allowed)
 
-# Income distribution
-class IncomeClass(str, Enum):
-    HIGH = "high"
-    MEDIUM_HIGH = "medium_high"
-    MEDIUM = "medium"
-    MEDIUM_LOW = "medium_low"
-    LOW = "low"
+**PrincipleRanking model** (Pydantic BaseModel):
+- rankings field: List of RankedPrinciple objects (exactly 4 items with ranks 1-4)
+- certainty field: CertaintyLevel type
 
-class IncomeDistribution(BaseModel):
-    high: int
-    medium_high: int
-    medium: int
-    medium_low: int
-    low: int
+**IncomeClass enumeration** (string-based enum):
+- HIGH: String value "high"
+- MEDIUM_HIGH: String value "medium_high"
+- MEDIUM: String value "medium"
+- MEDIUM_LOW: String value "medium_low"
+- LOW: String value "low"
 
-    # Methods:
-    # - get_floor_income() → int
-    # - get_average_income(probabilities) → float
-    # - get_range() → int
+**IncomeDistribution model** (Pydantic BaseModel):
+- high field: Integer
+- medium_high field: Integer
+- medium field: Integer
+- medium_low field: Integer
+- low field: Integer
+- Methods available: get_floor_income() returns integer, get_average_income(probabilities) returns float, get_range() returns integer
 
-class DistributionSet(BaseModel):
-    distributions: List[IncomeDistribution]  # Always 4
-    multiplier: float  # Applied to base
+**DistributionSet model** (Pydantic BaseModel):
+- distributions field: List of IncomeDistribution objects (always contains 4 distributions)
+- multiplier field: Float value applied to base
 
-# Results
-class Phase1Results(BaseModel):
-    participant_name: str
-    initial_ranking: PrincipleRanking
-    post_explanation_ranking: PrincipleRanking
-    application_results: List[ApplicationResult]  # 4 rounds
-    completion_status: str
+**Phase1Results model** (Pydantic BaseModel):
+- participant_name field: String
+- initial_ranking field: PrincipleRanking object
+- post_explanation_ranking field: PrincipleRanking object
+- application_results field: List of ApplicationResult objects (4 rounds)
+- completion_status field: String
 
-class Phase2Results(BaseModel):
-    consensus_reached: bool
-    final_principle: Optional[JusticePrinciple]
-    final_constraint_amount: Optional[int]
-    discussion_transcript: List[Dict]
-    participant_results: Dict[str, DetailedResult]
-    rounds_completed: int
+**Phase2Results model** (Pydantic BaseModel):
+- consensus_reached field: Boolean
+- final_principle field: Optional JusticePrinciple (None allowed)
+- final_constraint_amount field: Optional integer (None allowed)
+- discussion_transcript field: List of dictionaries
+- participant_results field: Dictionary mapping strings to DetailedResult objects
+- rounds_completed field: Integer
 
-class ExperimentResults(BaseModel):
-    phase1_results: List[Phase1Results]
-    phase2_results: Phase2Results
-    metadata: Dict[str, Any]  # timestamps, seed, config file path, etc.
-```
+**ExperimentResults model** (Pydantic BaseModel):
+- phase1_results field: List of Phase1Results objects
+- phase2_results field: Phase2Results object
+- metadata field: Dictionary mapping strings to any type (includes timestamps, seed, config file path, etc.)
 
 ### 9.2 Context Objects
 
-```python
-class ParticipantContext(BaseModel):
-    """
-    Agent's working context updated throughout experiment.
-    Sent in every prompt to the LLM.
-    """
-    participant_name: str
-    current_phase: ExperimentPhase
-    current_stage: ExperimentStage
-    current_round: int
-    memory: str  # Accumulated memory from MemoryService
-    assigned_income_class: Optional[IncomeClass] = None
-    interaction_type: Optional[str] = None  # "discussion", "voting", "ranking"
+**ParticipantContext model** (Pydantic BaseModel): Represents the agent's working context updated throughout the experiment and sent in every prompt to the LLM.
 
-    # Phase 1 specific
-    income_distributions: Optional[DistributionSet] = None
-    principle_explanations: Optional[Dict] = None
+Common fields:
+- participant_name: String
+- current_phase: ExperimentPhase enumeration value
+- current_stage: ExperimentStage enumeration value
+- current_round: Integer
+- memory: String containing accumulated memory from MemoryService
+- assigned_income_class: Optional IncomeClass (None allowed)
+- interaction_type: Optional string (None allowed) with values like "discussion", "voting", "ranking"
 
-    # Phase 2 specific
-    public_discussion_history: Optional[str] = None
-    current_principle_choice: Optional[PrincipleChoice] = None
+Phase 1 specific fields:
+- income_distributions: Optional DistributionSet (None allowed)
+- principle_explanations: Optional dictionary (None allowed)
 
-class GroupDiscussionState(BaseModel):
-    """
-    Shared state for Phase 2 discussion.
-    """
-    public_history: List[Dict]  # All statements so far
-    consensus_reached: bool
-    consensus_principle: Optional[JusticePrinciple] = None
-    consensus_constraint: Optional[int] = None
-    current_round: int
-    voting_in_progress: bool
-```
+Phase 2 specific fields:
+- public_discussion_history: Optional string (None allowed)
+- current_principle_choice: Optional PrincipleChoice (None allowed)
+
+**GroupDiscussionState model** (Pydantic BaseModel): Represents shared state for Phase 2 discussion.
+
+Fields:
+- public_history: List of dictionaries containing all statements so far
+- consensus_reached: Boolean flag
+- consensus_principle: Optional JusticePrinciple (None allowed)
+- consensus_constraint: Optional integer (None allowed)
+- current_round: Integer
+- voting_in_progress: Boolean flag
 
 ---
 
@@ -1573,151 +811,114 @@ class GroupDiscussionState(BaseModel):
 
 **File**: `utils/error_handling.py`
 
-```python
-class ExperimentError(Exception):
-    """Base for all experiment errors."""
-    pass
+The framework defines a hierarchy of exception classes:
 
-class ExperimentLogicError(ExperimentError):
-    """Logic errors in experiment flow."""
-    pass
+**ExperimentError** (base exception class): Base class for all experiment errors. Inherits from Python's built-in Exception class.
 
-class AgentCommunicationError(ExperimentError):
-    """Communication failures with agents."""
-    pass
+**ExperimentLogicError** (exception class): Represents logic errors in experiment flow. Inherits from ExperimentError.
 
-class ValidationError(ExperimentError):
-    """Data validation errors."""
-    pass
+**AgentCommunicationError** (exception class): Represents communication failures with agents. Inherits from ExperimentError.
 
-# Error handler with automatic retry
-class ExperimentErrorHandler:
-    async def handle_with_retry(
-        self,
-        coroutine,
-        max_retries: int = 3,
-        base_delay: float = 1.0
-    ):
-        """Execute with exponential backoff retry."""
-```
+**ValidationError** (exception class): Represents data validation errors. Inherits from ExperimentError.
+
+**ExperimentErrorHandler class**: Provides error handler with automatic retry.
+
+The **handle_with_retry method** is an asynchronous method that:
+- Takes a coroutine, max_retries parameter (default 3), and base_delay parameter (default 1.0 seconds)
+- Executes the coroutine with exponential backoff retry
+- Returns the coroutine result if successful
 
 ### 10.2 Parsing Error Recovery
 
 **File**: `utils/parsing_errors.py`
 
-```python
-class ParsingError(Enum):
-    """Classification of parsing failures."""
-    EXTRACTION_FAILED = "extraction_failed"  # Regex found nothing
-    INVALID_FORMAT = "invalid_format"  # Found text but wrong format
-    OUT_OF_RANGE = "out_of_range"  # Value outside expected range
-    LANGUAGE_MISMATCH = "language_mismatch"  # Language doesn't match expected
+**ParsingError enumeration**: Classifies parsing failures with four values:
+- EXTRACTION_FAILED: String value "extraction_failed" (regex found nothing in the response)
+- INVALID_FORMAT: String value "invalid_format" (found text but in wrong format)
+- OUT_OF_RANGE: String value "out_of_range" (value exists but is outside expected range)
+- LANGUAGE_MISMATCH: String value "language_mismatch" (detected language doesn't match expected language)
 
-def detect_parsing_failure_type(response: str, context: str) -> ParsingError:
-    """Classify why parsing failed."""
+**detect_parsing_failure_type function**: Classifies why parsing failed
+- Takes response string and context string parameters
+- Returns a ParsingError enumeration value
+- Analyzes the response to determine which error type occurred
 
-def handle_parsing_error(error: ParsingError, response: str):
-    """Route to appropriate recovery strategy."""
-```
+**handle_parsing_error function**: Routes to appropriate recovery strategy
+- Takes error (ParsingError enumeration value) and response string parameters
+- Executes recovery logic based on the error type
+- May retry with different parsing strategy, adjust validation rules, or escalate to human review
 
 ---
 
 ## 11. Experiment Flow Diagram
 
-```
-START: FrohlichExperimentManager
-│
-├─→ Load Configuration (ExperimentConfiguration.from_yaml)
-│   └─→ Validate with Pydantic models
-│
-├─→ Create Agents
-│   ├─→ 8 ParticipantAgents (with model provider detection)
-│   └─→ 1 UtilityAgent (for parsing)
-│
-├─→ PHASE 1 EXECUTION (Parallel)
-│   │
-│   └─→ For each participant (asyncio.create_task):
-│       ├─→ Initial Ranking (rank 4 principles)
-│       ├─→ Principle Explanation (receive explanation)
-│       ├─→ Post-Explanation Ranking (re-rank)
-│       └─→ Application Tasks (4 rounds):
-│           ├─→ Generate distribution set
-│           ├─→ Agent selects distribution
-│           ├─→ Calculate payoff
-│           └─→ Update memory
-│
-├─→ PHASE 2 EXECUTION (Sequential)
-│   │
-│   ├─→ Initialize Services
-│   │   ├─→ SpeakingOrderService
-│   │   ├─→ DiscussionService
-│   │   ├─→ VotingService
-│   │   ├─→ MemoryService
-│   │   ├─→ CounterfactualsService
-│   │   └─→ ManipulatorService (optional)
-│   │
-│   ├─→ For each round (1 to phase2_rounds):
-│   │   │
-│   │   ├─→ Determine Speaking Order
-│   │   │
-│   │   ├─→ DISCUSSION STAGE:
-│   │   │   └─→ For each speaker:
-│   │   │       ├─→ Build discussion prompt
-│   │   │       ├─→ Agent generates statement
-│   │   │       ├─→ Validate (length check, retries)
-│   │   │       ├─→ Update public history
-│   │   │       └─→ Update agent memories
-│   │   │
-│   │   ├─→ VOTING CHECK:
-│   │   │   ├─→ Any agent initiate voting? (1=Yes/0=No)
-│   │   │   └─→ Is final round?
-│   │   │
-│   │   └─→ IF VOTING INITIATED OR FINAL ROUND:
-│   │       │
-│   │       ├─→ VOTING CONFIRMATION PHASE:
-│   │       │   └─→ All agents confirm participation (1=Yes/0=No)
-│   │       │       Requires 100% agreement
-│   │       │
-│   │       ├─→ IF ALL CONFIRMED:
-│   │       │   │
-│   │       │   ├─→ STAGE 1: Principle Selection (TwoStageVotingManager)
-│   │       │   │   └─→ Extract principle number 1-4 via regex
-│   │       │   │       (with keyword fallback)
-│   │       │   │
-│   │       │   ├─→ STAGE 2: Amount Specification (if principle 3 or 4)
-│   │       │   │   └─→ Extract constraint amount via regex
-│   │       │   │       (with cultural adaptation for number formats)
-│   │       │   │
-│   │       │   └─→ DETECT CONSENSUS:
-│   │       │       └─→ All votes identical?
-│   │       │           ├─→ YES: Set consensus_reached=True, exit rounds
-│   │       │           └─→ NO: Update voting failure memory, continue
-│   │       │
-│   │       └─→ IF NOT ALL CONFIRMED:
-│   │           └─→ Update confirmation failure memory, continue
-│   │
-│   └─→ [End of round loop - either consensus reached or max rounds]
-│
-├─→ PAYOFF CALCULATION (CounterfactualsService)
-│   │
-│   ├─→ Apply consensus principle (or random if no consensus)
-│   ├─→ Randomly assign income classes (seeded, respects probabilities)
-│   ├─→ Calculate final earnings for each agent
-│   └─→ Calculate counterfactuals (earnings under all 4 principles)
-│
-├─→ FINAL RANKING COLLECTION
-│   │
-│   └─→ For each agent:
-│       ├─→ Present results with counterfactuals
-│       ├─→ Ask to re-rank principles
-│       └─→ Parse ranking
-│
-└─→ COMPILE RESULTS & EXPORT
-    ├─→ ExperimentResults (phase1 + phase2 + metadata)
-    └─→ Save to JSON
+The complete experiment follows this execution flow:
 
-END
-```
+**START**: FrohlichExperimentManager initialization
+
+**Configuration Loading**:
+- Load Configuration using ExperimentConfiguration.from_yaml method
+- Validate configuration using Pydantic models
+
+**Agent Creation**:
+- Create 8 ParticipantAgent instances with model provider detection
+- Create 1 UtilityAgent instance for parsing operations
+
+**PHASE 1 EXECUTION** (Parallel execution):
+- For each participant, create an asyncio task that executes:
+  - **Initial Ranking**: Agent ranks 4 principles
+  - **Principle Explanation**: Agent receives explanations
+  - **Post-Explanation Ranking**: Agent re-ranks principles
+  - **Application Tasks** (4 rounds): For each round, generate distribution set, agent selects distribution, calculate payoff, update memory
+
+**PHASE 2 EXECUTION** (Sequential execution):
+- **Initialize Services**: Create instances of SpeakingOrderService, DiscussionService, VotingService, MemoryService, CounterfactualsService, and optional ManipulatorService
+
+- **Discussion Rounds Loop** (for round 1 to phase2_rounds):
+  - **Determine Speaking Order** for the current round
+
+  - **DISCUSSION STAGE**: For each speaker in order:
+    - Build discussion prompt incorporating context
+    - Agent generates statement
+    - Validate statement (check length, apply retries)
+    - Update public history
+    - Update agent memories
+
+  - **VOTING CHECK**:
+    - Ask each agent: "Do you want to initiate voting?" (1=Yes/0=No)
+    - Check if current round is the final round
+
+  - **IF VOTING INITIATED OR FINAL ROUND**:
+    - **VOTING CONFIRMATION PHASE**: Ask all agents to confirm participation (1=Yes/0=No). Requires 100% agreement to proceed
+
+    - **IF ALL CONFIRMED**:
+      - **STAGE 1: Principle Selection**: Use TwoStageVotingManager to extract principle number 1-4 via regex (with keyword fallback if regex fails)
+      - **STAGE 2: Amount Specification**: If principle 3 or 4, extract constraint amount via regex (with cultural adaptation for number formats if needed)
+      - **DETECT CONSENSUS**: Check if all votes are identical
+        - If YES: Set consensus_reached=True and exit the rounds loop
+        - If NO: Update voting failure memory and continue to next round
+
+    - **IF NOT ALL CONFIRMED**: Update confirmation failure memory and continue to next round
+
+- **End of round loop** (exits when consensus reached or max rounds completed)
+
+**PAYOFF CALCULATION** (CounterfactualsService):
+- Apply consensus principle (or select random principle if no consensus)
+- Randomly assign income classes to agents (seeded, respects probability distributions)
+- Calculate final earnings for each agent
+- Calculate counterfactuals showing earnings under all 4 principles
+
+**FINAL RANKING COLLECTION**:
+- For each agent:
+  - Present results with counterfactuals
+  - Ask agent to re-rank principles
+  - Parse ranking response
+
+**COMPILE RESULTS & EXPORT**:
+- Assemble ExperimentResults object containing phase1_results, phase2_results, and metadata
+- Save to JSON file
+
+**END**
 
 ---
 
@@ -1725,31 +926,37 @@ END
 
 ### 12.1 Phase 1 Timing
 
-- **Per participant**: ~30-60 seconds
-- **Total (8 participants parallel)**: ~60 seconds
-- **Breakdown**:
-  - Initial ranking: 5-10 seconds
-  - Explanations: 10-15 seconds
-  - 4 application rounds: 15-30 seconds
-  - Memory updates: 5-10 seconds
+**Per participant timing**: Approximately 30-60 seconds per participant
+
+**Total timing** (8 participants in parallel): Approximately 60 seconds total
+
+**Breakdown by component**:
+- Initial ranking: 5-10 seconds
+- Explanations: 10-15 seconds
+- 4 application rounds: 15-30 seconds
+- Memory updates: 5-10 seconds
 
 ### 12.2 Phase 2 Timing
 
-- **Per round**: 2-4 minutes (depends on agent count)
-- **Typical experiment** (10 rounds): 20-40 minutes
-- **Breakdown per round**:
-  - Discussion (8 agents × 20-30s each): 2-4 minutes
-  - Voting check: 30 seconds
-  - If voting initiated:
-    - Confirmation phase: 1-2 minutes
-    - Secret ballot (stage 1 + 2): 2-3 minutes
-    - Consensus detection: instant
+**Per round timing**: 2-4 minutes per round (depends on agent count)
+
+**Typical experiment timing** (10 rounds): 20-40 minutes total
+
+**Breakdown per round**:
+- Discussion phase (8 agents multiplied by 20-30 seconds each): 2-4 minutes
+- Voting check: 30 seconds
+- If voting initiated:
+  - Confirmation phase: 1-2 minutes
+  - Secret ballot (stage 1 plus stage 2): 2-3 minutes
+  - Consensus detection: Near-instant
 
 ### 12.3 Token Usage (GPT-4o)
 
-- **Phase 1**: ~50,000 tokens (8 agents)
-- **Phase 2 (10 rounds)**: ~200,000 tokens
-- **Total per experiment**: ~250,000 tokens (~$10-15 at current pricing)
+**Phase 1 token usage**: Approximately 50,000 tokens for 8 agents
+
+**Phase 2 token usage** (10 rounds): Approximately 200,000 tokens
+
+**Total per experiment**: Approximately 250,000 tokens (costs approximately $10-15 at current GPT-4o pricing)
 
 ---
 
@@ -1757,126 +964,136 @@ END
 
 ### 13.1 Test Layers
 
-```
-ULTRA-FAST TESTS (< 1 second)
-├── Unit tests for services (protocol-based mocking)
-├── Voting validation tests
-└── Data model validation tests
-    └── Run with: pytest --mode=ultra_fast
+The testing framework provides four execution layers optimized for different development phases:
 
-DEVELOPMENT TESTS (< 5 minutes)
-├── Component tests (with API calls, but small payloads)
-├── Multilingual response parsing
-└── Memory service behavior
-    └── Run with: pytest --mode=dev
+**ULTRA-FAST TESTS** (less than 1 second total):
+- Unit tests for services using protocol-based mocking
+- Voting validation tests with deterministic data
+- Data model validation tests
+- Run command: pytest --mode=ultra_fast
 
-CI/CD TESTS (< 15 minutes)
-├── Integration tests (full Phase 1 + Phase 2)
-├── Live endpoint testing (requires API key)
-└── Multilingual coverage validation (EN, ES, ZH)
-    └── Run with: pytest --mode=ci
+**DEVELOPMENT TESTS** (less than 5 minutes total):
+- Component tests with API calls using small payloads
+- Multilingual response parsing with real LLM calls
+- Memory service behavior validation
+- Run command: pytest --mode=dev
 
-FULL TESTS (30-45 minutes)
-├── End-to-end experiment runs
-├── All language combinations
-└── All configuration combinations
-    └── Run with: pytest --mode=full
-```
+**CI/CD TESTS** (less than 15 minutes total):
+- Integration tests executing full Phase 1 and Phase 2 workflows
+- Live endpoint testing requiring API key
+- Multilingual coverage validation across English, Spanish, and Mandarin
+- Run command: pytest --mode=ci
+
+**FULL TESTS** (30-45 minutes total):
+- End-to-end experiment runs with complete configurations
+- All language combinations tested
+- All configuration combinations validated
+- Run command: pytest --mode=full
 
 ### 13.2 Key Test Files
 
-```
-tests/
-├── unit/
-│   ├── test_fast_response_parsing.py       # Multilingual voting parsing
-│   ├── test_fast_data_flows.py             # Service integration (mocked)
-│   └── test_fast_*.py                      # 40+ fast tests (~0.04s)
-│
-├── component/
-│   ├── test_voting_service.py              # Voting service integration
-│   ├── test_memory_service.py              # Memory management
-│   └── test_distribution_generator.py      # Payoff calculations
-│
-├── integration/
-│   ├── test_phase1_execution.py            # Full Phase 1 flow
-│   └── test_phase2_execution.py            # Full Phase 2 with services
-│
-└── snapshots/
-    └── test_golden_results.py              # Baseline result validation
-```
+The test suite is organized in the tests directory:
 
+**tests/unit/** directory:
+- test_fast_response_parsing.py: Multilingual voting parsing tests
+- test_fast_data_flows.py: Service integration tests with mocked dependencies
+- test_fast_*.py: Collection of 40+ fast tests executing in approximately 0.04 seconds
 
-### 15.2 Debug Logging
+**tests/component/** directory:
+- test_voting_service.py: Voting service integration tests
+- test_memory_service.py: Memory management tests
+- test_distribution_generator.py: Payoff calculation tests
 
-```python
-# Enable detailed logging
-import logging
-logging.basicConfig(level=logging.DEBUG)
+**tests/integration/** directory:
+- test_phase1_execution.py: Full Phase 1 flow integration tests
+- test_phase2_execution.py: Full Phase 2 with services integration tests
 
-# Check specific logger
-logger = logging.getLogger("core.phase2_manager")
-logger.setLevel(logging.DEBUG)
-
-# Key log locations
-# - core/phase2_manager.py: Overall flow
-# - core/services/voting_service.py: Voting process
-# - core/two_stage_voting_manager.py: Vote extraction
-# - utils/selective_memory_manager.py: Memory updates
-```
-
-### 15.2 Transcript Logging
-
-**Enable in config**:
-```yaml
-transcript_logging:
-  enabled: true
-  output_path: "transcripts/"
-  include_instructions: true  # Expensive (adds ~5%)
-  include_agent_responses: true  # Default, includes full responses
-```
-
-**Transcript contains**:
-```json
-{
-  "experiment_id": "uuid",
-  "timestamp": "2025-01-01T00:00:00",
-  "interactions": [
-    {
-      "interaction_type": "phase1_discussion",
-      "participant": "Alice",
-      "prompt": "[Full prompt sent]",
-      "response": "[Full response from agent]",
-      "duration_seconds": 5.2
-    },
-    ...
-  ]
-}
-```
+**tests/snapshots/** directory:
+- test_golden_results.py: Baseline result validation using snapshot testing
 
 ---
 
-## 16. Reference Implementation
+## 14. Debugging and Logging
 
-**Quick Start**:
-```bash
-# Install dependencies
-pip install -r requirements.txt
+### 14.1 Debug Logging
 
-# Set API keys
-export OPENAI_API_KEY="sk-..."
-export OPENROUTER_API_KEY="sk-..."  # Optional
+**Enable detailed logging** using Python's logging module:
 
-# Run quick test
-python main.py config/fast.yaml results/test.json
+To enable DEBUG level logging globally:
+- Import the logging module
+- Call logging.basicConfig with level parameter set to logging.DEBUG
 
-# Run with custom config
-python main.py config/my_experiment.yaml results/my_output.json
+To enable DEBUG level logging for a specific logger:
+- Import the logging module
+- Get a logger instance using logging.getLogger with the module name (e.g., "core.phase2_manager")
+- Call setLevel method on the logger instance with logging.DEBUG parameter
 
-# Run tests
-pytest --mode=ultra_fast  # 7 seconds
-pytest --mode=dev        # 5 minutes
-pytest --mode=ci         # 15 minutes
-pytest --mode=full       # 30-45 minutes
-```
+**Key log locations** for debugging:
+- core/phase2_manager.py: Overall Phase 2 flow execution
+- core/services/voting_service.py: Voting process coordination
+- core/two_stage_voting_manager.py: Vote extraction and validation
+- utils/selective_memory_manager.py: Memory update operations
 
+### 14.2 Transcript Logging
 
+**Enable in configuration file**:
+
+Add a transcript_logging section to your YAML configuration:
+- enabled: Boolean true to enable transcript logging
+- output_path: String path to output directory (e.g., "transcripts/")
+- include_instructions: Boolean true to include system instructions (note: this is expensive, adding approximately 5% overhead)
+- include_agent_responses: Boolean true to include full agent responses (this is the default behavior)
+
+**Transcript structure**:
+
+The transcript JSON file contains:
+- experiment_id: String UUID identifier
+- timestamp: String ISO 8601 timestamp (e.g., "2025-01-01T00:00:00")
+- interactions: Array of interaction objects, where each object contains:
+  - interaction_type: String describing the interaction (e.g., "phase1_discussion", "phase2_voting")
+  - participant: String agent name (e.g., "Alice")
+  - prompt: String containing the full prompt sent to the agent
+  - response: String containing the full response from the agent
+  - duration_seconds: Float indicating how long the interaction took (e.g., 5.2)
+
+---
+
+## 15. Reference Implementation
+
+**Quick Start Commands**:
+
+**Install dependencies**:
+Execute: pip install -r requirements.txt
+
+**Set API keys** (using environment variables):
+- Execute: export OPENAI_API_KEY="sk-..." (replacing with your actual key)
+- Execute: export OPENROUTER_API_KEY="sk-..." (optional, only if using OpenRouter)
+
+**Run quick test**:
+Execute: python main.py config/fast.yaml results/test.json
+
+**Run with custom configuration**:
+Execute: python main.py config/my_experiment.yaml results/my_output.json
+
+**Run test suites**:
+- Execute: pytest --mode=ultra_fast (completes in 7 seconds)
+- Execute: pytest --mode=dev (completes in 5 minutes)
+- Execute: pytest --mode=ci (completes in 15 minutes)
+- Execute: pytest --mode=full (completes in 30-45 minutes)
+
+---
+
+## 16. Summary
+
+This technical document has provided a comprehensive overview of the Frohlich Experiment Framework, a sophisticated system for conducting computational experiments on distributive justice. The framework successfully implements:
+
+- A two-phase experiment architecture separating individual familiarization from group consensus-building
+- Six specialized services providing clean separation of concerns in Phase 2
+- Deterministic two-stage voting with multilingual support across English, Spanish, and Mandarin
+- Sophisticated memory management preventing context overflow while preserving critical information
+- Complete reproducibility through comprehensive seeding strategies
+- Multi-provider LLM support enabling experimentation across different models and providers
+- Robust error handling and recovery mechanisms
+- Comprehensive testing infrastructure with intelligent test acceleration
+
+The framework represents a novel approach to computational social science, enabling rigorous empirical investigation of how artificial agents reason about principles of distributive justice under uncertainty.
