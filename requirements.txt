@@ -17,6 +17,8 @@ diagrams
 pytest
 pytest-asyncio
 pytest-cov
+httpx
+nest-asyncio
 
 # Documentation dependencies
 sphinx>=7.0.0
