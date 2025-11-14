@@ -101,7 +101,6 @@ graph TB
     CS --> LM
 
     P1M --> DG
-    P1M --> CS
     EM --> SM
 
     EM --> Results
@@ -151,9 +150,9 @@ graph TB
 
 **Layer 5: Support Systems**
 - `MemoryService`: Shared memory management (Phase 1 & Phase 2)
-- `CounterfactualsService`: Payoff calculations, counterfactuals, rankings (Phase 1 & Phase 2)
+- `CounterfactualsService`: Payoff calculations, counterfactuals, rankings (Phase 2 only)
 - `LanguageManager`: Multilingual support (English, Spanish, Mandarin)
-- `DistributionGenerator`: Income distribution generation
+- `DistributionGenerator`: Income distribution generation, payoff calculations, counterfactuals (Phase 1); distribution selection (Phase 2)
 - `SeedManager`: Reproducibility via comprehensive seeding
 
 **Layer 6: Data & Output Layer**
@@ -168,7 +167,7 @@ Phase 1 orchestrates individual agent deliberation using **support services** fo
 
 **Key Characteristics**:
 - **Parallel execution**: All participants run Phase 1 simultaneously
-- **Support services**: Uses shared services (MemoryService, CounterfactualsService, LanguageManager, DistributionGenerator)
+- **Support services**: Uses shared services (MemoryService, LanguageManager, DistributionGenerator)
 - **Sequential steps**: Each participant completes 5 steps in order (initial ranking, explanation, post-explanation ranking, application rounds x4, final ranking)
 
 ```mermaid
@@ -182,7 +181,6 @@ graph LR
 
     subgraph "Support Services (Shared)"
         MS[MemoryService]
-        CS[CounterfactualsService]
         LM[LanguageManager]
         DG[DistributionGenerator]
     end
@@ -192,10 +190,9 @@ graph LR
     P1M -->|3. Generate response| PA
     P1M -->|4. Parse response| UA
     P1M -->|5. Update memory| MS
-    P1M -->|6. Calculate payoffs| DG
+    P1M -->|6. Calculate payoffs & counterfactuals| DG
 
     PA -.uses context from.-> MS
-    CS -.used for final rankings.-> P1M
 
     %% Styling
     classDef orchestratorStyle fill:#E8F4F8,stroke:#4A90E2,stroke-width:3px
@@ -204,7 +201,7 @@ graph LR
 
     class P1M orchestratorStyle
     class PA,UA agentStyle
-    class MS,CS,LM,DG supportStyle
+    class MS,LM,DG supportStyle
 ```
 
 ### Service Communication Pattern
@@ -227,11 +224,10 @@ Phase1Manager follows a **parallel execution pattern** where:
 
 **Support Services Usage**:
 - **LanguageManager**: Provides localized prompts for all 5 steps
-- **DistributionGenerator**: Creates income distributions and calculates payoffs (Step 1.4)
+- **DistributionGenerator**: Creates income distributions, calculates payoffs, and computes counterfactual earnings for all 4 principles (Step 1.4 - Application Rounds)
 - **MemoryService**: Updates participant memory after each step (consistent with Phase 2)
 - **ParticipantAgent**: Generates rankings and selections
 - **UtilityAgent**: Parses responses into structured data
-- **CounterfactualsService**: Optionally used for final ranking collection (if applicable)
 
 ---
 
@@ -311,9 +307,9 @@ Services **do not call each other directly** (except protocol-based dependencies
 | Service | Primary Responsibility | Key Operations | Used By | Configuration |
 |---------|----------------------|----------------|---------|---------------|
 | **MemoryService** | Memory management | • Update discussion memory<br/>• Update voting memory<br/>• Update results memory<br/>• Apply guidance styles<br/>• Truncate content | Phase1Manager<br/>Phase2Manager | Phase2Settings memory configuration |
-| **CounterfactualsService** | Payoffs & rankings | • Apply chosen principle<br/>• Calculate payoffs<br/>• Calculate counterfactuals<br/>• Format results<br/>• Collect final rankings | Phase1Manager<br/>Phase2Manager | Phase2Settings |
+| **CounterfactualsService** | Payoffs & rankings (Phase 2) | • Apply chosen principle<br/>• Calculate payoffs<br/>• Calculate counterfactuals<br/>• Format results<br/>• Collect final rankings | Phase2Manager | Phase2Settings |
 | **LanguageManager** | Multilingual support | • Load translations<br/>• Get localized prompts<br/>• Format cultural context | Phase1Manager<br/>Phase2Manager<br/>Services | Language config |
-| **DistributionGenerator** | Income distributions | • Generate distributions<br/>• Apply principles<br/>• Calculate payoffs | Phase1Manager<br/>CounterfactualsService | Distribution ranges |
+| **DistributionGenerator** | Income distributions & payoffs | • Generate distributions<br/>• Apply principles<br/>• Calculate payoffs<br/>• Calculate counterfactuals (Phase 1) | Phase1Manager<br/>CounterfactualsService | Distribution ranges |
 | **SeedManager** | Reproducibility | • Initialize RNG<br/>• Provide seeded randomness | ExperimentManager | Seed value |
 
 ### Service Modification Guide
@@ -325,12 +321,15 @@ Services **do not call each other directly** (except protocol-based dependencies
 - **Discussion prompt updates** → `DiscussionService`
 - **Voting workflow changes** → `VotingService`
 
-**Support Services (Used by Phase 1 & Phase 2):**
+**Support Services - Shared (Used by Phase 1 & Phase 2):**
 - **Memory update strategies** → `MemoryService`
-- **Payoff or results logic** → `CounterfactualsService`
 - **Multilingual prompts** → `LanguageManager`
-- **Income distributions** → `DistributionGenerator`
 - **Reproducibility/seeding** → `SeedManager`
+
+**Support Services - Phase-Specific:**
+- **Phase 1 payoffs/counterfactuals** → `DistributionGenerator` (handles application round calculations)
+- **Phase 2 payoffs/counterfactuals** → `CounterfactualsService` (handles post-discussion results)
+- **Income distributions** → `DistributionGenerator` (used by both phases)
 
 **Important**: Never modify Phase1Manager or Phase2Manager directly for feature changes. Managers should only orchestrate service calls, not implement business logic.
 
