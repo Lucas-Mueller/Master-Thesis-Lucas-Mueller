@@ -680,7 +680,7 @@ phase2_settings:
   public_history_max_length: 100000
   statement_min_length: 10
   voting_confirmation_timeout: 120
-  memory_guidance_style: "narrative"  # or "structured"
+  memory_guidance_style: "structure"  # or "narrative"
 ```
 
 **3. Income Distribution**
@@ -739,7 +739,7 @@ All configurations are validated via Pydantic models:
 - [Phase 1 Process Flow](./docs/diagrams/02_phase1_process_flow.md) - Individual deliberation details
 - [Phase 2 Process Flow](./docs/diagrams/03_phase2_process_flow.md) - Group discussion details
 
-### For Feature Development
+### For Development
 
 **Phase 1 Features**:
 - [Phase 1 Service Sequence](./docs/diagrams/04_phase1_service_sequence.md) - Service-level interactions
@@ -763,23 +763,6 @@ All configurations are validated via Pydantic models:
 - [Data Models Diagram](./docs/diagrams/07_data_models.md) - All data structures
 - Code: `models/` directory
 
-### For Testing
-
-- [CLAUDE.md](./CLAUDE.md) - Testing strategy and commands
-- Test modes: `--mode=ultra_fast`, `--mode=dev`, `--mode=ci`, `--mode=full`
-- Tests: `tests/` directory with unit, component, integration layers
-
-### For Multilingual Support
-
-- [CLAUDE.md](./CLAUDE.md#multi-language-support) - Language system overview
-- Code: `utils/language_manager.py`
-- Templates: `translations/{language}/` directories
-
-### For Model Providers
-
-- [README.md](./README.md#model-provider-support) - OpenAI, Gemini, OpenRouter, Ollama
-- [GEMINI.md](./GEMINI.md) - Gemini-specific setup
-- Code: `experiment_agents/participant_agent.py`
 
 ---
 
@@ -800,33 +783,10 @@ All configurations are validated via Pydantic models:
 - [07_data_models.md](./docs/diagrams/07_data_models.md) - Data structures
 - [08_post_discussion_results_service_sequence.md](./docs/diagrams/08_post_discussion_results_service_sequence.md) - Results and rankings
 
-### Supporting Documentation
-- [README.md](./README.md) - Project overview and quickstart
-- [CLAUDE.md](./CLAUDE.md) - Development guidelines and testing
-- [GEMINI.md](./GEMINI.md) - Gemini model setup
 
 ---
 
-## Quick Reference
-
-### Common Development Tasks
-
-| Task | Starting Point |
-|------|----------------|
-| Add new justice principle | `models/principle_types.py` + translation files |
-| Modify discussion prompts | `DiscussionService` + `translations/` |
-| Change voting logic | `VotingService` |
-| Adjust memory management | `MemoryService` + `Phase2Settings` |
-| Update payoff calculation | `CounterfactualsService` + `DistributionGenerator` |
-| Modify preference aggregation logic | `PreferenceAggregationService` |
-| Update manipulator targeting | `ManipulatorService` |
-| Modify JSON output structure | `models/experiment_results.py` |
-| Configure transcript logging | `config/models.py` (transcript_logging settings) |
-| Add new language | Create `translations/{language}/` directory |
-| Modify agent behavior | `experiment_agents/participant_agent.py` |
-| Change configuration options | `config/models.py` + `Phase2Settings` |
-
-### Key Files Reference
+## Key Files Reference
 
 | Component | File Location | Lines of Interest |
 |-----------|---------------|-------------------|
@@ -848,15 +808,6 @@ All configurations are validated via Pydantic models:
 | JSON output | `models/experiment_results.py` | Data models |
 | Transcript logging | `utils/logging/transcript_logger.py` | Full file |
 
----
-
-## Contact and Contribution
-
-For questions about the architecture or contributions:
-- Review this guide and linked diagrams
-- Check [CLAUDE.md](./CLAUDE.md) for development guidelines
-- Follow existing code patterns and service ownership
-- Run test suite before submitting changes: `pytest --mode=ci`
 
 ---
 
