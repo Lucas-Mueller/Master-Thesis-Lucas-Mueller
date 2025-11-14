@@ -86,6 +86,7 @@ graph TB
 
     P1M --> PA
     P1M --> UA
+    P1M --> MS
     P2M --> PA
     P2M --> UA
 
@@ -120,11 +121,12 @@ graph TB
 
 **Layer 2: Core Orchestration**
 - `ExperimentManager`: Coordinates both phases, manages agent contexts
-- `Phase1Manager`: Orchestrates individual agent deliberation
-- `Phase2Manager`: Coordinates group discussion via services
+- `Phase1Manager`: Orchestrates individual agent deliberation (uses MemoryService, DistributionGenerator)
+- `Phase2Manager`: Coordinates group discussion via services (uses all five services)
 
-**Layer 3: Phase 2 Services** (Services-First Architecture)
-- Five specialized services with single responsibilities
+**Layer 3: Shared Services** (Services-First Architecture)
+- `MemoryService`: Used by both Phase 1 and Phase 2 for consistent memory management
+- Four Phase 2-specific services (SpeakingOrderService, DiscussionService, VotingService, CounterfactualsService)
 - Protocol-based dependency injection for testability
 - Configuration-driven behavior via `Phase2Settings`
 
@@ -213,20 +215,23 @@ Services **do not call each other directly** (except protocol-based dependencies
 | **SpeakingOrderService** | Turn management | • Determine speaking order<br/>• Apply finisher restrictions<br/>• Randomization strategies | None | Phase2Settings |
 | **DiscussionService** | Discussion orchestration | • Build discussion prompts<br/>• Validate statements<br/>• Manage history length<br/>• Format group composition | LanguageManager | Phase2Settings.public_history_max_length |
 | **VotingService** | Voting workflow | • Initiate voting<br/>• Coordinate confirmation<br/>• Manage secret ballot<br/>• Validate consensus | MemoryService | Phase2Settings voting configuration |
-| **MemoryService** | Memory management | • Update discussion memory<br/>• Update voting memory<br/>• Update results memory<br/>• Apply guidance styles<br/>• Truncate content | LanguageManager | Phase2Settings memory configuration |
+| **MemoryService** | Memory management (Phase 1 & 2) | • Update discussion memory<br/>• Update voting memory<br/>• Update results memory<br/>• Apply guidance styles<br/>• Truncate content | LanguageManager | Phase2Settings memory configuration |
 | **CounterfactualsService** | Post-discussion operations | • Apply chosen principle<br/>• Calculate payoffs<br/>• Calculate counterfactuals<br/>• Format results<br/>• Collect final rankings | MemoryService<br/>DistributionGenerator | Phase2Settings |
 
 ### Service Modification Guide
 
-**When adding or modifying Phase 2 behavior**, work with the appropriate service:
+**When adding or modifying behavior**, work with the appropriate service:
 
+**Phase 1 & Phase 2 Shared:**
+- **Memory update strategies** → `MemoryService` (used by both Phase1Manager and Phase2Manager)
+
+**Phase 2 Specific:**
 - **Speaking order changes** → `SpeakingOrderService`
 - **Discussion prompt updates** → `DiscussionService`
 - **Voting workflow changes** → `VotingService`
-- **Memory update strategies** → `MemoryService`
 - **Payoff or results logic** → `CounterfactualsService`
 
-**Never modify Phase2Manager directly** for feature changes. Phase2Manager should only orchestrate service calls, not implement business logic.
+**Important**: Never modify Phase1Manager or Phase2Manager directly for feature changes. Managers should only orchestrate service calls, not implement business logic.
 
 ---
 
