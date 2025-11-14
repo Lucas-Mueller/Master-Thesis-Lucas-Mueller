@@ -50,12 +50,10 @@ graph TB
         P2M[Phase2Manager<br/>Group Discussion]
     end
 
-    subgraph "Phase 2 Services (Protocol-Based)"
+    subgraph "Phase 2 Coordination Services"
         SOS[SpeakingOrderService<br/>Turn Management]
         DS[DiscussionService<br/>Prompts & Validation]
         VS[VotingService<br/>Voting Workflow]
-        MS[MemoryService<br/>Memory Updates]
-        CS[CounterfactualsService<br/>Payoffs & Rankings]
     end
 
     subgraph "Agent Layer"
@@ -67,6 +65,13 @@ graph TB
         LM[LanguageManager<br/>Multilingual Support]
         DG[DistributionGenerator<br/>Income Distributions]
         SM[SeedManager<br/>Reproducibility]
+        MS[MemoryService<br/>Shared Memory Management]
+        CS[CounterfactualsService<br/>Payoffs & Rankings]
+    end
+
+    subgraph "Data & Output Layer"
+        Results[ExperimentResults<br/>JSON Serialization]
+        TL[TranscriptLogger<br/>Optional Logging]
     end
 
     Main --> Config
@@ -96,7 +101,13 @@ graph TB
     CS --> LM
 
     P1M --> DG
+    P1M --> CS
     EM --> SM
+
+    EM --> Results
+    EM --> TL
+    P1M -.logs to.-> TL
+    P2M -.logs to.-> TL
 
     %% Styling
     classDef coreStyle fill:#E8F4F8,stroke:#4A90E2,stroke-width:2px
@@ -104,12 +115,14 @@ graph TB
     classDef agentStyle fill:#FFF4E6,stroke:#F5A623,stroke-width:2px
     classDef supportStyle fill:#E0F2F7,stroke:#00BCD4,stroke-width:2px
     classDef configStyle fill:#FFF0F5,stroke:#BD10E0,stroke-width:2px
+    classDef dataStyle fill:#FFF9E6,stroke:#F8B400,stroke-width:2px
 
     class Main,EM,P1M,P2M coreStyle
-    class SOS,DS,VS,MS,CS serviceStyle
+    class SOS,DS,VS serviceStyle
     class PA,UA agentStyle
-    class LM,DG,SM supportStyle
+    class LM,DG,SM,MS,CS supportStyle
     class Config configStyle
+    class Results,TL dataStyle
 ```
 
 ### Architecture Layers
@@ -120,13 +133,15 @@ graph TB
 - Environment-specific settings (API keys, model providers)
 
 **Layer 2: Core Orchestration**
-- `ExperimentManager`: Coordinates both phases, manages agent contexts
-- `Phase1Manager`: Orchestrates individual agent deliberation (uses MemoryService, DistributionGenerator)
-- `Phase2Manager`: Coordinates group discussion via services (uses all five services)
+- `ExperimentManager`: Coordinates both phases, manages agent contexts, outputs results
+- `Phase1Manager`: Orchestrates individual agent deliberation (uses support services)
+- `Phase2Manager`: Coordinates group discussion (uses coordination services + support services)
 
-**Layer 3: Shared Services** (Services-First Architecture)
-- `MemoryService`: Used by both Phase 1 and Phase 2 for consistent memory management
-- Four Phase 2-specific services (SpeakingOrderService, DiscussionService, VotingService, CounterfactualsService)
+**Layer 3: Phase 2 Coordination Services**
+- Three Phase 2-specific coordination services:
+  - `SpeakingOrderService`: Turn management and finisher restrictions
+  - `DiscussionService`: Prompt building and statement validation
+  - `VotingService`: Complete voting workflow coordination
 - Protocol-based dependency injection for testability
 - Configuration-driven behavior via `Phase2Settings`
 
@@ -135,32 +150,39 @@ graph TB
 - `UtilityAgent`: Response parsing and validation
 
 **Layer 5: Support Systems**
-- Multilingual support (English, Spanish, Mandarin)
-- Income distribution generation and payoff calculation
-- Reproducibility via comprehensive seeding
+- `MemoryService`: Shared memory management (Phase 1 & Phase 2)
+- `CounterfactualsService`: Payoff calculations, counterfactuals, rankings (Phase 1 & Phase 2)
+- `LanguageManager`: Multilingual support (English, Spanish, Mandarin)
+- `DistributionGenerator`: Income distribution generation
+- `SeedManager`: Reproducibility via comprehensive seeding
+
+**Layer 6: Data & Output Layer**
+- `ExperimentResults`: JSON serialization of complete experiment data
+- `TranscriptLogger`: Optional transcript logging for all agent interactions
 
 ---
 
 ## Phase 2 Services Architecture
 
-Phase 2 uses a **services-first architecture** where specialized services handle specific responsibilities. Phase2Manager acts as an orchestrator, delegating work to services.
+Phase 2 uses a **services-first architecture** with two types of services:
+1. **Coordination Services**: Phase 2-specific orchestration (SpeakingOrderService, DiscussionService, VotingService)
+2. **Support Services**: Shared utilities used by both phases (MemoryService, CounterfactualsService, etc.)
 
 ```mermaid
 graph LR
     P2M[Phase2Manager<br/>Orchestrator]
 
-    subgraph "Discussion Flow Services"
+    subgraph "Coordination Services (Phase 2 Only)"
         SOS[SpeakingOrderService]
         DS[DiscussionService]
-    end
-
-    subgraph "Voting & Memory Services"
         VS[VotingService]
-        MS[MemoryService]
     end
 
-    subgraph "Results Services"
+    subgraph "Support Services (Shared)"
+        MS[MemoryService]
         CS[CounterfactualsService]
+        LM[LanguageManager]
+        DG[DistributionGenerator]
     end
 
     P2M -->|1. Determine order| SOS
@@ -172,22 +194,17 @@ graph LR
 
     VS -.uses.-> MS
     CS -.uses.-> MS
-
-    DS -->|Prompts| LM[LanguageManager]
-    CS -->|Distributions| DG[DistributionGenerator]
+    DS -.uses.-> LM
+    CS -.uses.-> DG
 
     %% Styling
     classDef orchestratorStyle fill:#E8F4F8,stroke:#4A90E2,stroke-width:3px
-    classDef discussionStyle fill:#F0F9F4,stroke:#7ED321,stroke-width:2px
-    classDef votingStyle fill:#FFF4E6,stroke:#F5A623,stroke-width:2px
-    classDef resultsStyle fill:#E0F2F7,stroke:#00BCD4,stroke-width:2px
-    classDef supportStyle fill:#FFF0F5,stroke:#BD10E0,stroke-width:1px
+    classDef coordinationStyle fill:#F0F9F4,stroke:#7ED321,stroke-width:2px
+    classDef supportStyle fill:#E0F2F7,stroke:#00BCD4,stroke-width:2px
 
     class P2M orchestratorStyle
-    class SOS,DS discussionStyle
-    class VS,MS votingStyle
-    class CS resultsStyle
-    class LM,DG supportStyle
+    class SOS,DS,VS coordinationStyle
+    class MS,CS,LM,DG supportStyle
 ```
 
 ### Service Communication Pattern
@@ -208,28 +225,39 @@ Services **do not call each other directly** (except protocol-based dependencies
 
 ## Services Responsibilities
 
-### Complete Service Ownership Matrix
+### Phase 2 Coordination Services
 
 | Service | Primary Responsibility | Key Operations | Dependencies | Configuration |
 |---------|----------------------|----------------|--------------|---------------|
 | **SpeakingOrderService** | Turn management | • Determine speaking order<br/>• Apply finisher restrictions<br/>• Randomization strategies | None | Phase2Settings |
 | **DiscussionService** | Discussion orchestration | • Build discussion prompts<br/>• Validate statements<br/>• Manage history length<br/>• Format group composition | LanguageManager | Phase2Settings.public_history_max_length |
 | **VotingService** | Voting workflow | • Initiate voting<br/>• Coordinate confirmation<br/>• Manage secret ballot<br/>• Validate consensus | MemoryService | Phase2Settings voting configuration |
-| **MemoryService** | Memory management (Phase 1 & 2) | • Update discussion memory<br/>• Update voting memory<br/>• Update results memory<br/>• Apply guidance styles<br/>• Truncate content | LanguageManager | Phase2Settings memory configuration |
-| **CounterfactualsService** | Post-discussion operations | • Apply chosen principle<br/>• Calculate payoffs<br/>• Calculate counterfactuals<br/>• Format results<br/>• Collect final rankings | MemoryService<br/>DistributionGenerator | Phase2Settings |
+
+### Support Services (Shared Across Phases)
+
+| Service | Primary Responsibility | Key Operations | Used By | Configuration |
+|---------|----------------------|----------------|---------|---------------|
+| **MemoryService** | Memory management | • Update discussion memory<br/>• Update voting memory<br/>• Update results memory<br/>• Apply guidance styles<br/>• Truncate content | Phase1Manager<br/>Phase2Manager | Phase2Settings memory configuration |
+| **CounterfactualsService** | Payoffs & rankings | • Apply chosen principle<br/>• Calculate payoffs<br/>• Calculate counterfactuals<br/>• Format results<br/>• Collect final rankings | Phase1Manager<br/>Phase2Manager | Phase2Settings |
+| **LanguageManager** | Multilingual support | • Load translations<br/>• Get localized prompts<br/>• Format cultural context | Phase1Manager<br/>Phase2Manager<br/>Services | Language config |
+| **DistributionGenerator** | Income distributions | • Generate distributions<br/>• Apply principles<br/>• Calculate payoffs | Phase1Manager<br/>CounterfactualsService | Distribution ranges |
+| **SeedManager** | Reproducibility | • Initialize RNG<br/>• Provide seeded randomness | ExperimentManager | Seed value |
 
 ### Service Modification Guide
 
 **When adding or modifying behavior**, work with the appropriate service:
 
-**Phase 1 & Phase 2 Shared:**
-- **Memory update strategies** → `MemoryService` (used by both Phase1Manager and Phase2Manager)
-
-**Phase 2 Specific:**
+**Phase 2 Coordination Services (Phase 2 Only):**
 - **Speaking order changes** → `SpeakingOrderService`
 - **Discussion prompt updates** → `DiscussionService`
 - **Voting workflow changes** → `VotingService`
+
+**Support Services (Used by Phase 1 & Phase 2):**
+- **Memory update strategies** → `MemoryService`
 - **Payoff or results logic** → `CounterfactualsService`
+- **Multilingual prompts** → `LanguageManager`
+- **Income distributions** → `DistributionGenerator`
+- **Reproducibility/seeding** → `SeedManager`
 
 **Important**: Never modify Phase1Manager or Phase2Manager directly for feature changes. Managers should only orchestrate service calls, not implement business logic.
 
@@ -320,6 +348,77 @@ Complete experiment data:
 - All voting records
 - Final payoffs and counterfactuals
 ```
+
+---
+
+## Data & Output Layer
+
+The framework produces structured outputs for analysis and debugging:
+
+### ExperimentResults (JSON Output)
+
+**Structure**:
+```json
+{
+  "experiment_id": "uuid",
+  "timestamp": "ISO 8601",
+  "configuration": {
+    "agents": [...],
+    "phase2_settings": {...},
+    "seed": 42
+  },
+  "phase1_results": {
+    "participant_name": {
+      "initial_ranking": [...],
+      "post_explanation_ranking": [...],
+      "application_results": [...],
+      "final_ranking": [...],
+      "total_earnings": 0.0
+    }
+  },
+  "phase2_results": {
+    "consensus_reached": true/false,
+    "agreed_principle": {...},
+    "discussion_history": [...],
+    "voting_records": [...],
+    "payoffs": {...},
+    "assigned_classes": {...},
+    "alternative_earnings": {...},
+    "final_rankings": {...}
+  }
+}
+```
+
+**Output Location**: Configurable via command line (default: `results/experiment_TIMESTAMP.json`)
+
+**Usage**:
+```bash
+python main.py config/experiment.yaml results/my_experiment.json
+```
+
+### TranscriptLogger (Optional Detailed Logging)
+
+**Purpose**: Capture complete interaction history for debugging and analysis
+
+**Configuration** (in YAML):
+```yaml
+transcript_logging:
+  enabled: true
+  output_path: "transcripts/experiment_TIMESTAMP.txt"
+  include_instructions: false  # Optional: include system prompts
+  include_agent_responses: true  # Default: capture agent outputs
+```
+
+**Captures**:
+- All prompts sent to participant agents
+- Optional system instructions (if enabled)
+- Agent responses (if enabled)
+- Timestamps for each interaction
+- Phase and round context
+
+**Privacy Notice**: Agent responses may contain unexpected content. Document storage locations and access controls when enabling transcripts.
+
+**Performance**: Lightweight string serialization. Instruction capture has generation overhead.
 
 ---
 
@@ -618,6 +717,8 @@ All configurations are validated via Pydantic models:
 | Change voting logic | `VotingService` |
 | Adjust memory management | `MemoryService` + `Phase2Settings` |
 | Update payoff calculation | `CounterfactualsService` + `DistributionGenerator` |
+| Modify JSON output structure | `models/experiment_results.py` |
+| Configure transcript logging | `config/models.py` (transcript_logging settings) |
 | Add new language | Create `translations/{language}/` directory |
 | Modify agent behavior | `experiment_agents/participant_agent.py` |
 | Change configuration options | `config/models.py` + `Phase2Settings` |
@@ -639,6 +740,8 @@ All configurations are validated via Pydantic models:
 | Utility parsing | `experiment_agents/utility_agent.py` | Full file |
 | Language support | `utils/language_manager.py` | Full file |
 | Distributions | `utils/distribution_generator.py` | Full file |
+| JSON output | `models/experiment_results.py` | Data models |
+| Transcript logging | `utils/logging/transcript_logger.py` | Full file |
 
 ---
 
