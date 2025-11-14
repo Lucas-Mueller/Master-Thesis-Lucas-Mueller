@@ -1,7 +1,6 @@
 # Technical Architecture Guide
 
 **Purpose**: High-level technical architecture overview and entry point to detailed documentation
-**Audience**: Developers new to the codebase, architects, technical stakeholders
 **Layer**: 0 - Architectural Overview
 
 ---
