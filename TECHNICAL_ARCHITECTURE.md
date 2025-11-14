@@ -162,6 +162,79 @@ graph TB
 
 ---
 
+## Phase 1 Services Architecture
+
+Phase 1 orchestrates individual agent deliberation using **support services** for consistent operations. Phase1Manager coordinates all participants in parallel, with each participant going through identical sequential steps.
+
+**Key Characteristics**:
+- **Parallel execution**: All participants run Phase 1 simultaneously
+- **Support services**: Uses shared services (MemoryService, CounterfactualsService, LanguageManager, DistributionGenerator)
+- **Sequential steps**: Each participant completes 5 steps in order (initial ranking, explanation, post-explanation ranking, application rounds x4, final ranking)
+
+```mermaid
+graph LR
+    P1M[Phase1Manager<br/>Orchestrator<br/>Parallel Execution]
+
+    subgraph "Agent Layer"
+        PA[ParticipantAgent]
+        UA[UtilityAgent]
+    end
+
+    subgraph "Support Services (Shared)"
+        MS[MemoryService]
+        CS[CounterfactualsService]
+        LM[LanguageManager]
+        DG[DistributionGenerator]
+    end
+
+    P1M -->|1. Get localized prompts| LM
+    P1M -->|2. Generate distributions| DG
+    P1M -->|3. Generate response| PA
+    P1M -->|4. Parse response| UA
+    P1M -->|5. Update memory| MS
+    P1M -->|6. Calculate payoffs| DG
+
+    PA -.uses context from.-> MS
+    CS -.used for final rankings.-> P1M
+
+    %% Styling
+    classDef orchestratorStyle fill:#E8F4F8,stroke:#4A90E2,stroke-width:3px
+    classDef agentStyle fill:#FFF4E6,stroke:#F5A623,stroke-width:2px
+    classDef supportStyle fill:#E0F2F7,stroke:#00BCD4,stroke-width:2px
+
+    class P1M orchestratorStyle
+    class PA,UA agentStyle
+    class MS,CS,LM,DG supportStyle
+```
+
+### Service Communication Pattern
+
+Phase1Manager follows a **parallel execution pattern** where:
+1. All participants execute Phase 1 simultaneously (no dependencies between participants)
+2. Each participant goes through identical sequential steps:
+   - **Step 1.1**: Initial ranking (LanguageManager → ParticipantAgent → UtilityAgent → MemoryService)
+   - **Step 1.2**: Principle explanation (LanguageManager → ParticipantAgent → MemoryService)
+   - **Step 1.3**: Post-explanation ranking (LanguageManager → ParticipantAgent → UtilityAgent → MemoryService)
+   - **Step 1.4**: Application rounds x4 (LanguageManager → DistributionGenerator → ParticipantAgent → UtilityAgent → DistributionGenerator → MemoryService)
+   - **Step 1.5**: Final ranking (LanguageManager → ParticipantAgent → UtilityAgent → MemoryService)
+3. Services perform their specialized operations and return results
+4. Phase1Manager coordinates service calls but doesn't implement business logic
+
+**Parallel Benefits**:
+- Total execution time ≈ single participant time
+- No coordination overhead between participants
+- Independent memory and context for each participant
+
+**Support Services Usage**:
+- **LanguageManager**: Provides localized prompts for all 5 steps
+- **DistributionGenerator**: Creates income distributions and calculates payoffs (Step 1.4)
+- **MemoryService**: Updates participant memory after each step (consistent with Phase 2)
+- **ParticipantAgent**: Generates rankings and selections
+- **UtilityAgent**: Parses responses into structured data
+- **CounterfactualsService**: Optionally used for final ranking collection (if applicable)
+
+---
+
 ## Phase 2 Services Architecture
 
 Phase 2 uses a **services-first architecture** with two types of services:
