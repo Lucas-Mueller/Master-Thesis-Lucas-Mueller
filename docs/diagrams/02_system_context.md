@@ -4,7 +4,7 @@
 
 **Target Audience**: Researchers, system architects, first-time readers
 
-**Complexity Level**: ⭐ Executive (5-7 boxes)
+**Complexity Level**: Executive (5-7 boxes)
 
 ---
 

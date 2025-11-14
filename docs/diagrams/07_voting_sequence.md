@@ -4,7 +4,7 @@
 
 **Target Audience**: Developers implementing or debugging voting logic
 
-**Complexity Level**: ⭐⭐⭐ Detailed (20-25 interactions)
+**Complexity Level**: Detailed Detailed (20-25 interactions)
 
 ---
 

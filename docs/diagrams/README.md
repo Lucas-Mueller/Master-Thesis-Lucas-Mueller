@@ -5,9 +5,9 @@ This directory contains progressive architectural diagrams for the **Distributiv
 ## Quick Start
 
 **New to the project?** Start here:
-1. [01_experiment_overview.md](01_experiment_overview.md) - 60-second overview
+1. [01_experiment_overview.md](01_experiment_overview.md) - Quick overview
 2. [02_system_context.md](02_system_context.md) - External dependencies
-3. [04_phase2_services.md](04_phase2_services.md) - 🔥 Most important for developers
+3. [04_phase2_services.md](04_phase2_services.md) - Most important for developers
 
 **Working on a specific feature?** Jump to:
 - **Discussion logic**: [06_discussion_sequence.md](06_discussion_sequence.md)
@@ -19,7 +19,7 @@ This directory contains progressive architectural diagrams for the **Distributiv
 
 ## Diagram Hierarchy
 
-### Level 1: Executive Overview (⭐ 60 seconds)
+### Level 1: Executive Overview
 Quick orientation for researchers, managers, and first-time readers.
 
 | Diagram | Purpose | Complexity |
@@ -31,13 +31,13 @@ Quick orientation for researchers, managers, and first-time readers.
 
 ---
 
-### Level 2: Conceptual Architecture (⭐⭐ 5 minutes)
+### Level 2: Conceptual Architecture
 Understand the major components and their responsibilities.
 
 | Diagram | Purpose | Complexity |
 |---------|---------|------------|
 | [03_phase1_architecture.md](03_phase1_architecture.md) | Phase 1 parallel execution model | 10-12 boxes |
-| [04_phase2_services.md](04_phase2_services.md) | **Phase 2 services-first architecture** 🔥 | 12-15 boxes |
+| [04_phase2_services.md](04_phase2_services.md) | **Phase 2 services-first architecture** | 12-15 boxes |
 | [05_data_model_core.md](05_data_model_core.md) | Core data types and relationships | 8-10 classes |
 
 **Read these** if you're starting to work with the codebase or reviewing architecture decisions.
@@ -46,7 +46,7 @@ Understand the major components and their responsibilities.
 
 ---
 
-### Level 3: Detailed Workflows (⭐⭐⭐ 10-15 minutes)
+### Level 3: Detailed Workflows
 Deep dive into specific processes for implementation and debugging.
 
 | Diagram | Purpose | Complexity |
@@ -68,18 +68,14 @@ Deep dive into specific processes for implementation and debugging.
 3. [05_data_model_core.md](05_data_model_core.md) - What data is collected?
 4. Done! (Optional: Read TECHNICAL_README.md Section 1-2 for philosophical background)
 
-**Time**: ~10 minutes
-
 ---
 
 ### Path 2: "I'm a developer starting to work on the codebase"
 1. [01_experiment_overview.md](01_experiment_overview.md) - High-level flow
-2. [04_phase2_services.md](04_phase2_services.md) - 🔥 Services architecture (most important!)
+2. [04_phase2_services.md](04_phase2_services.md) - Services architecture (most important!)
 3. [03_phase1_architecture.md](03_phase1_architecture.md) - Phase 1 structure
 4. [05_data_model_core.md](05_data_model_core.md) - Core data types
 5. Done! (Optional: Read specific workflow diagrams as needed)
-
-**Time**: ~20 minutes
 
 ---
 
@@ -92,8 +88,6 @@ Deep dive into specific processes for implementation and debugging.
    - **Results features** → [09_payoff_calculation.md](09_payoff_calculation.md)
 3. Done! (Check CLAUDE.md "Service Ownership and Modification Guide")
 
-**Time**: ~15 minutes
-
 ---
 
 ### Path 4: "I'm debugging a specific issue"
@@ -102,8 +96,6 @@ Jump directly to the relevant workflow diagram:
 - **Voting not detecting consensus**: [07_voting_sequence.md](07_voting_sequence.md) § Consensus Detection
 - **Memory overflow errors**: [08_memory_flow.md](08_memory_flow.md) § Memory Overflow Prevention
 - **Unexpected payoffs**: [09_payoff_calculation.md](09_payoff_calculation.md) § Principle Application
-
-**Time**: 5-10 minutes per diagram
 
 ---
 
@@ -132,9 +124,9 @@ Jump directly to the relevant workflow diagram:
 
 ### Complexity Ratings
 
-- ⭐ **Executive**: 3-7 boxes, 60 seconds to understand
-- ⭐⭐ **Conceptual**: 8-15 boxes, 5 minutes to understand
-- ⭐⭐⭐ **Detailed**: 15-25 boxes, 10-15 minutes to understand
+- **Executive**: 3-7 boxes, quick to understand
+- **Conceptual**: 8-15 boxes, moderate detail
+- **Detailed**: 15-25 boxes, comprehensive detail
 
 ### Target Audiences
 
@@ -283,15 +275,15 @@ Before committing a new diagram:
 
 | # | File | Title | Level | Priority |
 |---|------|-------|-------|----------|
-| 1.1 | `01_experiment_overview.md` | Two-Phase Experiment Flow | ⭐ | Medium |
-| 1.2 | `02_system_context.md` | High-Level System Context | ⭐ | Medium |
-| 2.1 | `03_phase1_architecture.md` | Phase 1 Architecture | ⭐⭐ | Medium |
-| 2.2 | `04_phase2_services.md` | Phase 2 Services Architecture | ⭐⭐ | 🔥 **HIGHEST** |
-| 2.3 | `05_data_model_core.md` | Data Model Overview | ⭐⭐ | Medium |
-| 3.1 | `06_discussion_sequence.md` | Phase 2 Discussion Round | ⭐⭐⭐ | High |
-| 3.2 | `07_voting_sequence.md` | Voting Process Flow | ⭐⭐⭐ | High |
-| 3.3 | `08_memory_flow.md` | Memory Management Flow | ⭐⭐⭐ | High |
-| 3.4 | `09_payoff_calculation.md` | Payoff Calculation Process | ⭐⭐⭐ | Medium |
+| 1.1 | `01_experiment_overview.md` | Two-Phase Experiment Flow | Executive | Medium |
+| 1.2 | `02_system_context.md` | High-Level System Context | Executive | Medium |
+| 2.1 | `03_phase1_architecture.md` | Phase 1 Architecture | Conceptual | Medium |
+| 2.2 | `04_phase2_services.md` | Phase 2 Services Architecture | Conceptual | **HIGHEST** |
+| 2.3 | `05_data_model_core.md` | Data Model Overview | Conceptual | Medium |
+| 3.1 | `06_discussion_sequence.md` | Phase 2 Discussion Round | Detailed | High |
+| 3.2 | `07_voting_sequence.md` | Voting Process Flow | Detailed | High |
+| 3.3 | `08_memory_flow.md` | Memory Management Flow | Detailed | High |
+| 3.4 | `09_payoff_calculation.md` | Payoff Calculation Process | Detailed | Medium |
 
 ---
 
@@ -312,10 +304,10 @@ Before committing a new diagram:
 ## Success Metrics
 
 These diagrams are successful if:
-- ✅ New contributors understand architecture in < 15 minutes
+- ✅ New contributors understand architecture quickly
 - ✅ "How does X work?" questions are answered by pointing to diagrams
 - ✅ Code reviews reference diagrams for architectural decisions
-- ✅ Onboarding time decreases by 30-50%
+- ✅ Onboarding time is reduced significantly
 - ✅ Less confusion about service boundaries and responsibilities
 
 ---

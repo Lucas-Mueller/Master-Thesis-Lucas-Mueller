@@ -17,31 +17,31 @@ This document provides a comprehensive technical analysis of the **Technical Imp
 
 This technical README integrates **9 progressive architectural diagrams** organized by complexity:
 
-**⭐ Executive Overview (10 minutes)**
+**Executive Overview**
 - [Diagram 01: Two-Phase Experiment Flow](docs/diagrams/01_experiment_overview.md) - High-level experiment progression
 - [Diagram 02: System Context](docs/diagrams/02_system_context.md) - External integrations and multi-provider support
 
-**⭐⭐ Conceptual Architecture (20 minutes)**
+**Conceptual Architecture**
 - [Diagram 03: Phase 1 Architecture](docs/diagrams/03_phase1_architecture.md) - Parallel execution and seeding strategy
-- [Diagram 04: Phase 2 Services](docs/diagrams/04_phase2_services.md) - 🔥 **MOST IMPORTANT** - Services-first architecture
+- [Diagram 04: Phase 2 Services](docs/diagrams/04_phase2_services.md) - **MOST IMPORTANT** - Services-first architecture
 - [Diagram 05: Data Model Overview](docs/diagrams/05_data_model_core.md) - Core types and validation
 
-**⭐⭐⭐ Detailed Workflows (30 minutes)**
+**Detailed Workflows**
 - [Diagram 06: Discussion Round Sequence](docs/diagrams/06_discussion_sequence.md) - Complete discussion workflow
 - [Diagram 07: Voting Process Flow](docs/diagrams/07_voting_sequence.md) - Four-phase voting with multilingual support
 - [Diagram 08: Memory Management Flow](docs/diagrams/08_memory_flow.md) - Three-tier memory architecture
 - [Diagram 09: Payoff Calculation Process](docs/diagrams/09_payoff_calculation.md) - Principle application and counterfactuals
 
 **Recommended Reading Paths:**
-- **Researcher/Non-Technical**: Diagrams 01 → 02 → 05 (10 minutes)
-- **New Developer**: Diagrams 01 → **04** → 03 → 05 (20 minutes)
+- **Researcher/Non-Technical**: Diagrams 01 → 02 → 05
+- **New Developer**: Diagrams 01 → **04** → 03 → 05
 - **Debugging**: Navigate directly to relevant workflow diagram (06-09)
 
 ---
 
-## LEVEL 1: EXECUTIVE OVERVIEW ⭐
+## LEVEL 1: EXECUTIVE OVERVIEW
 
-*Reading time: 10 minutes • Audience: Researchers, managers, first-time readers*
+*Audience: Researchers, managers, first-time readers*
 
 ---
 
@@ -158,9 +158,9 @@ For **OLLAMA provider**: Creates a local Ollama instance client using the anthro
 
 ---
 
-## LEVEL 2: CONCEPTUAL ARCHITECTURE ⭐⭐
+## LEVEL 2: CONCEPTUAL ARCHITECTURE
 
-*Reading time: 20 minutes • Audience: Developers starting with codebase, architects reviewing design*
+*Audience: Developers starting with codebase, architects reviewing design*
 
 ---
 
@@ -198,7 +198,7 @@ The Phase 1 manager executes tasks for each participant in parallel using asynch
 
 ![Phase 2 Services Architecture](docs/diagrams/rendered/04_phase2_services_1.png)
 
-🔥 **MOST IMPORTANT DIAGRAM FOR DEVELOPERS**
+**MOST IMPORTANT DIAGRAM FOR DEVELOPERS**
 
 ### 4.1 Services-First Architecture Overview
 
@@ -547,9 +547,9 @@ Each agent entry includes:
 
 ---
 
-## LEVEL 3: DETAILED WORKFLOWS ⭐⭐⭐
+## LEVEL 3: DETAILED WORKFLOWS
 
-*Reading time: 30 minutes • Audience: Feature implementation, debugging, deep understanding*
+*Audience: Feature implementation, debugging, deep understanding*
 
 ---
 
@@ -597,7 +597,7 @@ A single discussion round consists of sequential agent statements with memory co
 **Step 2e: Memory Update** (MemoryService)
 - Truncates statement to maximum 300 characters
 - Formats with guidance style (narrative or structured)
-- Updates agent's memory via SelectiveMemoryManager (simple insertion, ~1 second)
+- Updates agent's memory via SelectiveMemoryManager (simple insertion)
 - Returns memory update result
 
 **3. Round Completion**:
@@ -822,13 +822,13 @@ The framework implements a three-tier memory architecture:
 
 **Two Update Strategies**:
 
-**update_memory_simple** - Direct Memory Insertion (fast, approximately 1 second):
+**update_memory_simple** - Direct Memory Insertion (fast):
 - Takes an agent, context, and summary string
 - Returns the memory update result string
 - Process: Directly appends the summary to agent.context.memory without LLM involvement
 - Used for: Discussion statements and status updates
 
-**update_memory_complex** - LLM-Mediated Memory Integration (slow, approximately 10 seconds):
+**update_memory_complex** - LLM-Mediated Memory Integration (slower):
 - Takes an agent, context, new_information string, and optional internal_reasoning string
 - Returns the agent's synthesized memory update string
 - Process: Asks the agent's LLM to integrate new information by providing a prompt like: "Here's what happened: {new_information}. Current memory: {existing_memory}. Integrate the new information into memory, updating beliefs..."
@@ -1131,7 +1131,7 @@ The testing framework provides **intelligent test acceleration** with layered ex
 - **Unit tests** (`tests/unit/`): Component-level testing
   - Individual service testing for isolated behavior validation
   - Protocol-based dependency injection for clean service testing
-  - Fast execution, no external dependencies (~7 seconds)
+  - Fast execution, no external dependencies
 - **Component tests** (`tests/component/`): Mid-level integration testing
   - Requires API key for LLM interactions
   - Enforces multilingual coverage (English, Spanish, Mandarin)
@@ -1150,7 +1150,7 @@ The testing framework provides **intelligent test acceleration** with layered ex
 ### 12.2 Strategic Mocking Layer
 
 - **Fast tests** (`tests/unit/test_fast_*`): Ultra-fast service boundary testing
-  - **43 tests in 0.04 seconds** with 0 API calls
+  - Minimal API calls required
   - **Response parsing tests**: Multilingual response validation with deterministic data
   - **Data flow tests**: Service integration testing with synthetic data
   - **Service interface tests**: Protocol-based boundary validation
@@ -1160,10 +1160,10 @@ The testing framework provides **intelligent test acceleration** with layered ex
 
 The enhanced test runner provides mode-based execution optimized for different development phases:
 
-- **Ultra-fast mode** (`--mode ultra_fast`): Unit tests only (~7 seconds, 99.3% improvement)
-- **Development mode** (`--mode dev`): Unit + fast tests (~5 minutes, 95% improvement)
-- **CI mode** (`--mode ci`): Comprehensive validation (~15 minutes, 85% improvement)
-- **Full mode** (`--mode full`): Complete validation (~30-45 minutes, 65% improvement)
+- **Ultra-fast mode** (`--mode ultra_fast`): Unit tests only
+- **Development mode** (`--mode dev`): Unit + fast tests
+- **CI mode** (`--mode ci`): Comprehensive validation
+- **Full mode** (`--mode full`): Complete validation
 
 ### 12.4 Test Configuration System
 
@@ -1174,11 +1174,11 @@ The enhanced test runner provides mode-based execution optimized for different d
 
 ### 12.5 Test Execution Patterns
 
-- **Daily development**: `pytest --mode=ultra_fast` (7 seconds)
-- **Pre-commit**: `pytest --mode=dev` (5 minutes)
-- **CI/CD pipeline**: `pytest --mode=ci` (15 minutes)
-- **Release validation**: `pytest --mode=full` (30-45 minutes)
-- **Service boundary testing**: `python -m pytest tests/unit/test_fast_*` (0.04 seconds)
+- **Daily development**: `pytest --mode=ultra_fast`
+- **Pre-commit**: `pytest --mode=dev`
+- **CI/CD pipeline**: `pytest --mode=ci`
+- **Release validation**: `pytest --mode=full`
+- **Service boundary testing**: `python -m pytest tests/unit/test_fast_*`
 - **Import validation**: Automatic module import testing across all layers
 
 ### 12.6 Key Test Files
@@ -1188,7 +1188,7 @@ The test suite is organized in the tests directory:
 **tests/unit/** directory:
 - test_fast_response_parsing.py: Multilingual voting parsing tests
 - test_fast_data_flows.py: Service integration tests with mocked dependencies
-- test_fast_*.py: Collection of 40+ fast tests executing in approximately 0.04 seconds
+- test_fast_*.py: Collection of fast tests
 
 **tests/component/** directory:
 - test_voting_service.py: Voting service integration tests
@@ -1208,37 +1208,35 @@ The test suite is organized in the tests directory:
 
 ### 13.1 Phase 1 Timing
 
-**Per participant timing**: Approximately 30-60 seconds per participant
+Timing varies based on model and configuration.
 
-**Total timing** (8 participants in parallel): Approximately 60 seconds total
+**Components**:
+- Initial ranking
+- Explanations
+- 4 application rounds
+- Memory updates
 
-**Breakdown by component**:
-- Initial ranking: 5-10 seconds
-- Explanations: 10-15 seconds
-- 4 application rounds: 15-30 seconds
-- Memory updates: 5-10 seconds
+Participants execute in parallel for efficiency.
 
 ### 13.2 Phase 2 Timing
 
-**Per round timing**: 2-4 minutes per round (depends on agent count)
+Timing varies based on agent count, model, and consensus speed.
 
-**Typical experiment timing** (10 rounds): 20-40 minutes total
-
-**Breakdown per round**:
-- Discussion phase (8 agents multiplied by 20-30 seconds each): 2-4 minutes
-- Voting check: 30 seconds
+**Components per round**:
+- Discussion phase (sequential agent statements)
+- Voting check
 - If voting initiated:
-  - Confirmation phase: 1-2 minutes
-  - Secret ballot (stage 1 plus stage 2): 2-3 minutes
-  - Consensus detection: Near-instant
+  - Confirmation phase
+  - Secret ballot (stage 1 plus stage 2)
+  - Consensus detection
 
 ### 13.3 Token Usage (GPT-4o)
 
 **Phase 1 token usage**: Approximately 50,000 tokens for 8 agents
 
-**Phase 2 token usage** (10 rounds): Approximately 200,000 tokens
+**Phase 2 token usage**: Approximately 200,000 tokens for a typical experiment
 
-**Total per experiment**: Approximately 250,000 tokens (costs approximately $10-15 at current GPT-4o pricing)
+**Total per experiment**: Approximately 250,000 tokens
 
 ---
 
@@ -1350,10 +1348,10 @@ Execute: python main.py config/fast.yaml results/test.json
 Execute: python main.py config/my_experiment.yaml results/my_output.json
 
 **Run test suites**:
-- Execute: pytest --mode=ultra_fast (completes in 7 seconds)
-- Execute: pytest --mode=dev (completes in 5 minutes)
-- Execute: pytest --mode=ci (completes in 15 minutes)
-- Execute: pytest --mode=full (completes in 30-45 minutes)
+- Execute: pytest --mode=ultra_fast
+- Execute: pytest --mode=dev
+- Execute: pytest --mode=ci
+- Execute: pytest --mode=full
 
 ---
 

@@ -1,10 +1,10 @@
 # Diagram 1.1: Two-Phase Experiment Flow
 
-**Purpose**: Provide a 60-second overview of the complete experiment structure
+**Purpose**: Provide a quick overview of the complete experiment structure
 
 **Target Audience**: Researchers, managers, first-time readers
 
-**Complexity Level**: ⭐ Executive (3-5 boxes)
+**Complexity Level**: Executive (3-5 boxes)
 
 ---
 
@@ -16,9 +16,9 @@ The Frohlich Experiment follows a simple two-phase structure where AI agents fir
 graph LR
     Start([Experiment Start])
 
-    Phase1[Phase 1: Individual Familiarization<br/>8 agents in parallel<br/>~60 seconds]
+    Phase1[Phase 1: Individual Familiarization<br/>8 agents in parallel]
 
-    Phase2[Phase 2: Group Discussion<br/>Sequential rounds<br/>~20-40 minutes]
+    Phase2[Phase 2: Group Discussion<br/>Sequential rounds]
 
     Results([Results & Payoffs<br/>Consensus + Earnings])
 
@@ -55,11 +55,11 @@ graph LR
 
 ## What Happens in Each Phase?
 
-| Phase | Duration | Key Activities | Parallelization |
-|-------|----------|----------------|-----------------|
-| Phase 1 | ~60 sec | Ranking, learning, application | ✅ Parallel (all 8 agents) |
-| Phase 2 | ~20-40 min | Discussion, voting, consensus | ❌ Sequential (turn-based) |
-| Results | ~30 sec | Payoff calculation, final rankings | ✅ Parallel (all 8 agents) |
+| Phase | Key Activities | Parallelization |
+|-------|----------------|-----------------|
+| Phase 1 | Ranking, learning, application | ✅ Parallel (all 8 agents) |
+| Phase 2 | Discussion, voting, consensus | ❌ Sequential (turn-based) |
+| Results | Payoff calculation, final rankings | ✅ Parallel (all 8 agents) |
 
 ---
 

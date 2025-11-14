@@ -4,7 +4,7 @@
 
 **Target Audience**: Developers starting to work with the codebase
 
-**Complexity Level**: ⭐⭐ Conceptual (10-12 boxes)
+**Complexity Level**: Conceptual Conceptual (10-12 boxes)
 
 ---
 

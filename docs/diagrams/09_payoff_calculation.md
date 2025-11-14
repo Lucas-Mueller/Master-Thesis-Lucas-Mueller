@@ -4,7 +4,7 @@
 
 **Target Audience**: Developers working with payoff logic or analyzing results
 
-**Complexity Level**: ⭐⭐⭐ Detailed (15-18 decision boxes)
+**Complexity Level**: Detailed Detailed (15-18 decision boxes)
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Target Audience**: Developers working with data structures
 
-**Complexity Level**: ⭐⭐ Conceptual (8-10 classes)
+**Complexity Level**: Conceptual Conceptual (8-10 classes)
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Target Audience**: Developers working with memory management
 
-**Complexity Level**: ⭐⭐⭐ Detailed (12-15 decision boxes)
+**Complexity Level**: Detailed Detailed (12-15 decision boxes)
 
 ---
 

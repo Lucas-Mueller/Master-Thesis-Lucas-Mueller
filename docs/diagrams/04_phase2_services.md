@@ -4,9 +4,9 @@
 
 **Target Audience**: Developers working with Phase 2 code
 
-**Complexity Level**: ⭐⭐ Conceptual (12-15 boxes)
+**Complexity Level**: Conceptual Conceptual (12-15 boxes)
 
-**Priority**: 🔥 HIGHEST - Most important diagram for understanding the codebase
+**Priority**: HIGHEST - Most important diagram for understanding the codebase
 
 ---
 
