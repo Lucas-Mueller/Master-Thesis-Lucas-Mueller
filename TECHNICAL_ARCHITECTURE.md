@@ -137,10 +137,12 @@ graph TB
 - `Phase2Manager`: Coordinates group discussion (uses coordination services + support services)
 
 **Layer 3: Phase 2 Coordination Services**
-- Three Phase 2-specific coordination services:
+- Five Phase 2-specific coordination services:
   - `SpeakingOrderService`: Turn management and finisher restrictions
   - `DiscussionService`: Prompt building and statement validation
   - `VotingService`: Complete voting workflow coordination
+  - `PreferenceAggregationService`: Borda count aggregation for hypothesis testing
+  - `ManipulatorService`: Manipulator target delivery for hypothesis testing
 - Protocol-based dependency injection for testability
 - Configuration-driven behavior via `Phase2Settings`
 
@@ -234,7 +236,7 @@ Phase1Manager follows a **parallel execution pattern** where:
 ## Phase 2 Services Architecture
 
 Phase 2 uses a **services-first architecture** with two types of services:
-1. **Coordination Services**: Phase 2-specific orchestration (SpeakingOrderService, DiscussionService, VotingService)
+1. **Coordination Services**: Phase 2-specific orchestration (SpeakingOrderService, DiscussionService, VotingService, PreferenceAggregationService, ManipulatorService)
 2. **Support Services**: Shared utilities used by both phases (MemoryService, CounterfactualsService, etc.)
 
 ```mermaid
@@ -245,6 +247,8 @@ graph LR
         SOS[SpeakingOrderService]
         DS[DiscussionService]
         VS[VotingService]
+        PAS[PreferenceAggregationService]
+        MAS[ManipulatorService]
     end
 
     subgraph "Support Services (Shared)"
@@ -260,11 +264,14 @@ graph LR
     P2M -->|4. Initiate voting| VS
     P2M -->|5. Calculate payoffs| CS
     P2M -->|6. Collect rankings| CS
+    P2M -->|7. Aggregate preferences| PAS
+    P2M -->|8. Inject manipulator target| MAS
 
     VS -.uses.-> MS
     CS -.uses.-> MS
     DS -.uses.-> LM
     CS -.uses.-> DG
+    MAS -.uses.-> LM
 
     %% Styling
     classDef orchestratorStyle fill:#E8F4F8,stroke:#4A90E2,stroke-width:3px
@@ -272,7 +279,7 @@ graph LR
     classDef supportStyle fill:#E0F2F7,stroke:#00BCD4,stroke-width:2px
 
     class P2M orchestratorStyle
-    class SOS,DS,VS coordinationStyle
+    class SOS,DS,VS,PAS,MAS coordinationStyle
     class MS,CS,LM,DG supportStyle
 ```
 
@@ -301,6 +308,8 @@ Services **do not call each other directly** (except protocol-based dependencies
 | **SpeakingOrderService** | Turn management | • Determine speaking order<br/>• Apply finisher restrictions<br/>• Randomization strategies | None | Phase2Settings |
 | **DiscussionService** | Discussion orchestration | • Build discussion prompts<br/>• Validate statements<br/>• Manage history length<br/>• Format group composition | LanguageManager | Phase2Settings.public_history_max_length |
 | **VotingService** | Voting workflow | • Initiate voting<br/>• Coordinate confirmation<br/>• Manage secret ballot<br/>• Validate consensus | MemoryService | Phase2Settings voting configuration |
+| **PreferenceAggregationService** | Preference aggregation (hypothesis testing) | • Aggregate Phase 1 rankings<br/>• Calculate Borda count scores<br/>• Identify least popular principle<br/>• Apply tiebreaker logic | LanguageManager (optional) | None |
+| **ManipulatorService** | Manipulator targeting (hypothesis testing) | • Inject target instructions<br/>• Format localized messages<br/>• Track delivery metadata<br/>• Validate configurations | LanguageManager | None |
 
 ### Support Services (Shared Across Phases)
 
@@ -320,6 +329,8 @@ Services **do not call each other directly** (except protocol-based dependencies
 - **Speaking order changes** → `SpeakingOrderService`
 - **Discussion prompt updates** → `DiscussionService`
 - **Voting workflow changes** → `VotingService`
+- **Preference aggregation logic (hypothesis testing)** → `PreferenceAggregationService`
+- **Manipulator targeting (hypothesis testing)** → `ManipulatorService`
 
 **Support Services - Shared (Used by Phase 1 & Phase 2):**
 - **Memory update strategies** → `MemoryService`
@@ -645,6 +656,8 @@ ExperimentConfiguration (Pydantic)
     ├─ income_class_probabilities: Dict
     ├─ distribution_range_phase1: Tuple
     ├─ distribution_range_phase2: Tuple
+    ├─ original_values_mode: OriginalValuesModeConfig
+    ├─ logging: LoggingConfig
     └─ seed: Optional[int]
 ```
 
@@ -685,6 +698,22 @@ distribution_range_phase2: [100, 1000]
 **4. Reproducibility**
 ```yaml
 seed: 42  # Ensures deterministic experiments
+```
+
+**5. Original Values Mode** (Phase 1 hypothesis testing)
+```yaml
+original_values_mode:
+  enabled: true  # Use original Frohlich & Oppenheimer values
+  # When enabled, Phase 1 uses specific distributions and probabilities
+  # from the original 1992 experiments for each round
+```
+
+**6. Logging Configuration**
+```yaml
+logging:
+  verbosity_level: "standard"  # Options: minimal, standard, detailed
+  use_colors: true             # Enable colored terminal output
+  show_progress_bars: true     # Display progress indicators
 ```
 
 ### Configuration Validation
@@ -789,6 +818,8 @@ All configurations are validated via Pydantic models:
 | Change voting logic | `VotingService` |
 | Adjust memory management | `MemoryService` + `Phase2Settings` |
 | Update payoff calculation | `CounterfactualsService` + `DistributionGenerator` |
+| Modify preference aggregation logic | `PreferenceAggregationService` |
+| Update manipulator targeting | `ManipulatorService` |
 | Modify JSON output structure | `models/experiment_results.py` |
 | Configure transcript logging | `config/models.py` (transcript_logging settings) |
 | Add new language | Create `translations/{language}/` directory |
@@ -807,6 +838,8 @@ All configurations are validated via Pydantic models:
 | Voting workflow | `core/services/voting_service.py` | Full file |
 | Memory updates | `core/services/memory_service.py` | Full file |
 | Payoffs & rankings | `core/services/counterfactuals_service.py` | 148-229, 1120-1341 |
+| Preference aggregation | `core/services/preference_aggregation_service.py` | Full file |
+| Manipulator targeting | `core/services/manipulator_service.py` | Full file |
 | Two-stage voting | `core/two_stage_voting_manager.py` | Full file |
 | Participant agents | `experiment_agents/participant_agent.py` | Full file |
 | Utility parsing | `experiment_agents/utility_agent.py` | Full file |
