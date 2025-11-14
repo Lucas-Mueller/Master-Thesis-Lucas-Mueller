@@ -680,7 +680,7 @@ phase2_settings:
   public_history_max_length: 100000
   statement_min_length: 10
   voting_confirmation_timeout: 120
-  memory_guidance_style: "narrative"  # or "structured"
+  memory_guidance_style: "structured"  # or "narrative"
 ```
 
 **3. Income Distribution**
@@ -765,7 +765,6 @@ All configurations are validated via Pydantic models:
 
 ### For Testing
 
-- [CLAUDE.md](./CLAUDE.md) - Testing strategy and commands
 - Test modes: `--mode=ultra_fast`, `--mode=dev`, `--mode=ci`, `--mode=full`
 - Tests: `tests/` directory with unit, component, integration layers
 
@@ -778,7 +777,6 @@ All configurations are validated via Pydantic models:
 ### For Model Providers
 
 - [README.md](./README.md#model-provider-support) - OpenAI, Gemini, OpenRouter, Ollama
-- [GEMINI.md](./GEMINI.md) - Gemini-specific setup
 - Code: `experiment_agents/participant_agent.py`
 
 ---
@@ -800,33 +798,11 @@ All configurations are validated via Pydantic models:
 - [07_data_models.md](./docs/diagrams/07_data_models.md) - Data structures
 - [08_post_discussion_results_service_sequence.md](./docs/diagrams/08_post_discussion_results_service_sequence.md) - Results and rankings
 
-### Supporting Documentation
-- [README.md](./README.md) - Project overview and quickstart
-- [CLAUDE.md](./CLAUDE.md) - Development guidelines and testing
-- [GEMINI.md](./GEMINI.md) - Gemini model setup
 
 ---
 
 ## Quick Reference
 
-### Common Development Tasks
-
-| Task | Starting Point |
-|------|----------------|
-| Add new justice principle | `models/principle_types.py` + translation files |
-| Modify discussion prompts | `DiscussionService` + `translations/` |
-| Change voting logic | `VotingService` |
-| Adjust memory management | `MemoryService` + `Phase2Settings` |
-| Update payoff calculation | `CounterfactualsService` + `DistributionGenerator` |
-| Modify preference aggregation logic | `PreferenceAggregationService` |
-| Update manipulator targeting | `ManipulatorService` |
-| Modify JSON output structure | `models/experiment_results.py` |
-| Configure transcript logging | `config/models.py` (transcript_logging settings) |
-| Add new language | Create `translations/{language}/` directory |
-| Modify agent behavior | `experiment_agents/participant_agent.py` |
-| Change configuration options | `config/models.py` + `Phase2Settings` |
-
-### Key Files Reference
 
 | Component | File Location | Lines of Interest |
 |-----------|---------------|-------------------|
@@ -854,7 +830,6 @@ All configurations are validated via Pydantic models:
 
 For questions about the architecture or contributions:
 - Review this guide and linked diagrams
-- Check [CLAUDE.md](./CLAUDE.md) for development guidelines
 - Follow existing code patterns and service ownership
 - Run test suite before submitting changes: `pytest --mode=ci`
 
