@@ -9,7 +9,7 @@ The folder `hypothesis_testing` contains the execution of the testing of the hyp
 ## Architecture
 
 The main application relies on the OpenAI Agents SDK (open source), and employs a service based architecture. 
-See [TECHNICAL_README.md](TECHNICAL_README.md) for detailed architecture documentation, service ownership guides, and testing strategies.
+See [TECHNICAL_ARCHITECTURE.md](TECHNICAL_ARCHITECTURE.md):  for detailed architecture documentation, service ownership guides, and testing strategies.
 
 ## Key Features
 
@@ -74,7 +74,7 @@ Experiment configurations are YAML files defining:
 - Income distribution settings and probabilities
 - Reproducibility seed for deterministic experiments
 
-See [TECHNICAL_ARCHITECTURE.md](TECHNICAL_ARCHITECTURE.md)for detailed configuration documentation.
+See çfor detailed configuration documentation.
 
 ## Project Structure
 
