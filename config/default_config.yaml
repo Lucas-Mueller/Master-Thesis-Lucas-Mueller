@@ -5,23 +5,22 @@ seed: 42
 agents:
   - name: "Sophie"
     personality: "You are an american college student."
-    model: "gemini-2.5-flash-lite"
+    model: "gpt-5-nano-2025-08-07"
     memory_character_limit: 50000
     reasoning_enabled: true
     temperature: 0
     
   - name: "Alice" 
     personality: "You are an american college student."
-    model:  "gemini-2.5-flash-lite"
+    model:  "gpt-5-nano-2025-08-07"
     temperature: 0
     memory_character_limit: 50000
     reasoning_enabled: true
 
     
 
-utility_agent_model: "gemini-2.5-flash-lite"
+utility_agent_model: "gpt-5-nano-2025-08-07"
 utility_agent_temperature: 0.0
-
 phase2_rounds: 3
 distribution_range_phase2: [4, 8]
 
