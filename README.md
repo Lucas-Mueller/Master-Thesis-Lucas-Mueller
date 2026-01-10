@@ -4,7 +4,7 @@
 
 This repository contains the codebase for the paper "Normcore", which replicates the distributive justice experiments from Frohlich & Oppenheimer (1992) "Choosing Justice: An Experimental Approach to Ethical Theory" using AI agents. The framework simulates a "veil of ignorance" scenario where AI agents engage in structured discussion to reach consensus on principles of distributive justice through formal voting mechanisms.
 
-The folder `hypothesis_testing` contains the execution of the testing of the hypothesis presented in the paper. The remaining folders contain files related to the experiment itself. On a high level, the application (`main.py`) takes in a `.yaml` file outlining the configuration (e.g., `default.yaml`), executes the experiments and returns a structured log file as `.JSON` and optionally the entire raw transcript of all agents interactions.
+The folder `experiment_execution` contains the execution of the testing of the hypothesis presented in the paper. The remaining folders contain files related to the experiment itself. On a high level, the application (`main.py`) takes in a `.yaml` file outlining the configuration (e.g., `default.yaml`), executes the experiments and returns a structured log file as `.JSON` and optionally the entire raw transcript of all agents interactions.
 
 ## Architecture
 
@@ -91,7 +91,7 @@ Normcore/
 ├── utils/                    # Utility modules
 ├── translations/             # Multilingual prompt templates
 ├── tests/                    # Test suite
-├── hypothesis_testing/       # Organized experimental conditions
+├── experiment_execution/       # Organized experimental conditions
 ├── docs/                     # Documentation and diagrams
 ├── main.py                   # Experiment runner entry point
 ├── TECHNICAL_ARCHITECTURE.md # Detailed technical documentation

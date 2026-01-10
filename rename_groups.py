@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-BASE = Path("hypothesis_testing/sensitivity_analysis_llm")
+BASE = Path("experiment_execution/sensitivity_analysis_llm")
 SUBDIRS = ["configs", "results", "terminal_outputs", "transcripts"]
 MAPPING = {
     "american": "group_1",

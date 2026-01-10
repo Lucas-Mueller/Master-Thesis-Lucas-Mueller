@@ -1,0 +1,53 @@
+CMD: ./.venv/bin/python ./main.py ./experiment_execution/hypothesis_6/configs/spanish/hypothesis_6_spanish_condition_16_config.yaml ./experiment_execution/hypothesis_6/results/spanish/hypothesis_6_spanish_condition_16_config_results.json
+════════════════════════════════════════════════════════════
+🧪 FROHLICH EXPERIMENT STARTING
+════════════════════════════════════════════════════════════
+Experiment ID: a907cf73
+Participants: 5
+Language: Spanish
+Max Phase 2 rounds: 10
+
+🤖 Initializing Agents...
+  ✅ Agent_0 (gemini-2.5-flash)
+  ✅ Agent_1 (gemini-2.5-pro)
+  ✅ Agent_2 (gemini-2.5-flash)
+  ✅ Agent_3 (gemini-2.5-flash)
+  ✅ Agent_4 (gemini-2.5-pro)
+
+✨ All agents ready
+
+📖 PHASE 1: Individual Familiarization
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running parallel familiarization for 5 participants...
+
+
+🎯 Phase 1 Complete - Duration: 4m 38s
+
+💬 PHASE 2: Group Discussion
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Beginning group discussion (max 10 rounds)...
+
+🗣️  Round 1
+🗳️  Voting initiated (Round 1)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 1 complete
+
+🗣️  Round 2
+   ✅ Round 2 complete
+
+🗣️  Round 3
+🗳️  Voting initiated (Round 3)
+🎉 Consensus Reached! Principle: maximizing_average_floor_constraint (constraint: $11000)
+
+🏁 Phase 2 Complete with consensus - Duration: 16m 29s
+   Rounds conducted: 3
+
+════════════════════════════════════════════════════════════
+✅ EXPERIMENT COMPLETED
+════════════════════════════════════════════════════════════
+Total Duration: 21m 25s
+Consensus: ✅ maximizing_average_floor_constraint
+
+
+RETURN CODE: 0  DURATION: 1286.8s

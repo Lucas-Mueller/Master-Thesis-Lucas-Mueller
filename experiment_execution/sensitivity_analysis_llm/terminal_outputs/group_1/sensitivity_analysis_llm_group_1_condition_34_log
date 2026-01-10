@@ -1,0 +1,72 @@
+CMD: ./.venv/bin/python ./main.py ./experiment_execution/hypothesis_2/configs/american/hypothesis_2_american_condition_34_config.yaml ./experiment_execution/hypothesis_2/results/american/hypothesis_2_american_condition_34_config_results.json
+════════════════════════════════════════════════════════════
+🧪 FROHLICH EXPERIMENT STARTING
+════════════════════════════════════════════════════════════
+Experiment ID: 0fc4dd65
+Participants: 3
+Language: English
+Max Phase 2 rounds: 10
+
+🤖 Initializing Agents...
+  ✅ Agent_1 (grok-4-fast)
+  ✅ Agent_2 (grok-4-fast)
+  ✅ Agent_3 (grok-code-fast-1)
+
+✨ All agents ready
+
+📖 PHASE 1: Individual Familiarization
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running parallel familiarization for 3 participants...
+
+
+🎯 Phase 1 Complete - Duration: 2m 25s
+
+💬 PHASE 2: Group Discussion
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Beginning group discussion (max 10 rounds)...
+
+🗣️  Round 1
+   ✅ Round 1 complete
+
+🗣️  Round 2
+   ✅ Round 2 complete
+
+🗣️  Round 3
+   ✅ Round 3 complete
+
+🗣️  Round 4
+   ✅ Round 4 complete
+
+🗣️  Round 5
+   ✅ Round 5 complete
+
+🗣️  Round 6
+   ✅ Round 6 complete
+
+🗣️  Round 7
+   ✅ Round 7 complete
+
+🗣️  Round 8
+   ✅ Round 8 complete
+
+🗣️  Round 9
+   ✅ Round 9 complete
+
+🗣️  Round 10
+🗳️  Voting initiated (Round 10)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 10 complete
+
+🏁 Phase 2 Complete without consensus - Duration: 25m 0s
+   Rounds conducted: 10
+
+════════════════════════════════════════════════════════════
+✅ EXPERIMENT COMPLETED
+════════════════════════════════════════════════════════════
+Total Duration: 27m 31s
+Consensus: ❌ Not reached
+Transcript saved: ./transcripts
+
+
+RETURN CODE: 0  DURATION: 1653.5s

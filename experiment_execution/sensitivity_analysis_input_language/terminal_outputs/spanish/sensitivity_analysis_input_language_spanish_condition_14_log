@@ -1,0 +1,95 @@
+CMD: ./.venv/bin/python ./main.py ./experiment_execution/hypothesis_6/configs/spanish/hypothesis_6_spanish_condition_14_config.yaml ./experiment_execution/hypothesis_6/results/spanish/hypothesis_6_spanish_condition_14_config_results.json
+════════════════════════════════════════════════════════════
+🧪 FROHLICH EXPERIMENT STARTING
+════════════════════════════════════════════════════════════
+Experiment ID: 030cd0c6
+Participants: 5
+Language: Spanish
+Max Phase 2 rounds: 10
+
+🤖 Initializing Agents...
+  ✅ Agent_0 (gemini-2.5-flash-lite)
+  ✅ Agent_1 (gemini-2.5-flash)
+  ✅ Agent_2 (gemini-2.5-flash-lite)
+  ✅ Agent_3 (gemini-2.5-pro)
+  ✅ Agent_4 (gemini-2.5-flash-lite)
+
+✨ All agents ready
+
+📖 PHASE 1: Individual Familiarization
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running parallel familiarization for 5 participants...
+
+
+🎯 Phase 1 Complete - Duration: 5m 8s
+
+💬 PHASE 2: Group Discussion
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Beginning group discussion (max 10 rounds)...
+
+🗣️  Round 1
+   ✅ Round 1 complete
+
+🗣️  Round 2
+   ✅ Round 2 complete
+
+🗣️  Round 3
+🗳️  Voting initiated (Round 3)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 3 complete
+
+🗣️  Round 4
+   ✅ Round 4 complete
+
+🗣️  Round 5
+🗳️  Voting initiated (Round 5)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 5 complete
+
+🗣️  Round 6
+🗳️  Voting initiated (Round 6)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 6 complete
+
+🗣️  Round 7
+🗳️  Voting initiated (Round 7)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 7 complete
+
+🗣️  Round 8
+   ✅ Round 8 complete
+
+🗣️  Round 9
+🗳️  Voting initiated (Round 9)
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 9 complete
+
+🗣️  Round 10
+🗳️  Voting initiated (Round 10)
+2025-10-08 04:59:39,525 - core.two_stage_voting_manager - ERROR - Two-stage voting failure - Agent_4 amount_specification: all 3 attempts exhausted
+2025-10-08 04:59:39,527 - core.two_stage_voting_manager - ERROR - Stage 2 (amount specification) failed for Agent_4
+2025-10-08 04:59:39,527 - core.two_stage_voting_manager - ERROR -   - Error type: retries_exhausted
+2025-10-08 04:59:39,527 - core.two_stage_voting_manager - ERROR -   - Attempts used: 3
+2025-10-08 04:59:39,527 - core.two_stage_voting_manager - ERROR -   - Raw response: ...
+2025-10-08 04:59:39,527 - core.two_stage_voting_manager - ERROR - Voting failed for 1 participants out of 5
+2025-10-08 04:59:39,527 - core.two_stage_voting_manager - ERROR -   - Failed: Agent_4
+⏳ No consensus yet - continuing discussion...
+
+   ✅ Round 10 complete
+
+🏁 Phase 2 Complete without consensus - Duration: 33m 51s
+   Rounds conducted: 10
+
+════════════════════════════════════════════════════════════
+✅ EXPERIMENT COMPLETED
+════════════════════════════════════════════════════════════
+Total Duration: 39m 7s
+Consensus: ❌ Not reached
+
+
+RETURN CODE: 0  DURATION: 2349.0s

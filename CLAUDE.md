@@ -215,8 +215,8 @@ python -m pytest -m "live"            # Run only live endpoint tests
 ### Batch Experiment Execution
 ```bash
 # Hypothesis testing framework provides utilities for batch execution
-# See hypothesis_testing/utils_hypothesis_testing/runner.py for batch execution utilities
-# Experiment configurations organized by hypothesis in hypothesis_testing/ directory:
+# See experiment_execution/utils_experiment_execution/runner.py for batch execution utilities
+# Experiment configurations organized by hypothesis in experiment_execution/ directory:
 # - main_experiment/: Main experimental conditions
 # - sensitivity_analysis_llm/: Sensitivity analysis (LLMs)
 # - sensitivity_analysis_input_language/: Sensitivity analysis (Input Language)
@@ -438,11 +438,11 @@ Common configurations are in `config/`:
 ## Project Structure
 
 ### Hypothesis Testing Framework
-The `hypothesis_testing/` directory contains organized experimental conditions:
+The `experiment_execution/` directory contains organized experimental conditions:
 - `main_experiment/`: Main experimental conditions
 - `sensitivity_analysis_llm/`: Sensitivity analysis (LLMs)
 - `sensitivity_analysis_input_language/`: Sensitivity analysis (Input Language)
-- `utils_hypothesis_testing/`: Shared utilities including `runner.py` for batch execution
+- `utils_experiment_execution/`: Shared utilities including `runner.py` for batch execution
 
 ### Specialized Components
 
@@ -461,7 +461,7 @@ The `hypothesis_testing/` directory contains organized experimental conditions:
 - `utils/cultural_adaptation.py`: Multilingual number formatting and cultural context
 - `experiment_agents/`: Participant and utility agent implementations
 - `utils/experiment_runner.py`: Utility for batch experiment execution
-- `hypothesis_testing/utils_hypothesis_testing/runner.py`: Framework for hypothesis testing workflows
+- `experiment_execution/utils_experiment_execution/runner.py`: Framework for hypothesis testing workflows
 
 #### **Test Acceleration Infrastructure (NEW)**
 - `tests/support/config_factory.py`: Optimized test configuration generation

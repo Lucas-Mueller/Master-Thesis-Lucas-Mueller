@@ -1,0 +1,652 @@
+CMD: ./.venv/bin/python ./main.py ./experiment_execution/hypothesis_6/configs/mandarin/hypothesis_6_mandarin_condition_27_config.yaml ./experiment_execution/hypothesis_6/results/mandarin/hypothesis_6_mandarin_condition_27_config_results.json
+════════════════════════════════════════════════════════════
+🧪 FROHLICH EXPERIMENT STARTING
+════════════════════════════════════════════════════════════
+Experiment ID: 6bdf1373
+Participants: 5
+Language: Mandarin
+Max Phase 2 rounds: 10
+
+🤖 Initializing Agents...
+  ✅ Agent_0 (gemini-2.5-pro)
+  ✅ Agent_1 (gemini-2.5-pro)
+  ✅ Agent_2 (gemini-2.5-flash-lite)
+  ✅ Agent_3 (gemini-2.5-pro)
+  ✅ Agent_4 (gemini-2.5-flash)
+
+✨ All agents ready
+
+📖 PHASE 1: Individual Familiarization
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running parallel familiarization for 5 participants...
+
+2025-10-10 16:35:03,629 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:03,630 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3
+2. 4
+3. 1
+4. 2
+
+整体确定性：不确定
+
+我不太确定，因为我还在理解这些原则。原则3和4似乎都试图在最大化平均收入的同时，为社会底层提供一些保障，这对我来说很有吸引力。原则1只关注最底层人群，这可能导致整体社会效率低下。原则2则完全不考虑底层人群的福利，这让我觉得不太公平。...
+2025-10-10 16:35:03,630 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {"principle": "maximizing_average_floor_constraint", "rank": 1},
+        {"principle": "maximizing_floor", "rank": 2},
+        {"principle": "maximizing_average", "rank": 3},
+        {"principle": "maximizing_average_range_constraint", "rank": 4}
+    ],
+    "certainty": "unsure"
+}
+```
+2025-10-10 16:35:03,630 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_floor', 'rank': 2}, {'principle': 'maximizing_average', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'unsure'}
+2025-10-10 16:35:03,630 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:15,250 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:15,250 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3
+2. 4
+3. 1
+4. 2
+
+整体确定性：确定
+
+理由：
+在理解了每个原则的具体应用和例子后，我对我的排序更有信心了。
+
+*   **原则3（在最低收入约束条件下最大化平均收入）**仍然是我的首选。它在追求整体经济效益（最大化平均收入）的同时，也为社会底层提供了坚实的保障，这在我看来是最公平和可持续的分配方式。它平衡了效率和公平。
+*   **原则4（在范围约束条件下最大化平均收入）**是我的第二选择。它也试图在最大化平均收入的同时限制贫富差距，这比只关注平均收入要好。虽然它不像原则3那样直接保障最低收入，但限制差距本身也是一种重要的公平体现。
+*   **原则1（最低收入最大化）**排在第三位。虽然我非常赞同关注最弱势群体，但这个原则过于极端，可能会牺牲整体的经济效率。如果为了提高最底层收入而限制了其他人的收入增长，整个社会的总财富可能无法最大化，这从长远来看可能不利于所有人。
+*   **原则2（平均收入最大化）**仍然是我最不喜欢的选择。它完全忽视了收入分配的公平性，只关注整体的经济蛋糕有多大，而不管蛋糕是如何分给每个人的。在社会中，收入分配的公平性是至关重要的，仅仅...
+2025-10-10 16:35:15,251 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:35:15,251 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:35:15,251 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:16,533 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:16,533 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3
+2. 4
+3. 1
+4. 2
+
+整体确定性：确定...
+2025-10-10 16:35:16,533 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {"principle": "maximizing_floor", "rank": 1},
+        {"principle": "maximizing_average", "rank": 2},
+        {"principle": "maximizing_average_floor_constraint", "rank": 3},
+        {"principle": "maximizing_average_range_constraint", "rank": 4}
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:35:16,533 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_floor', 'rank': 1}, {'principle': 'maximizing_average', 'rank': 2}, {'principle': 'maximizing_average_floor_constraint', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:35:16,533 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:25,913 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:25,914 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 最低收入最大化
+3. 在范围约束条件下最大化平均收入
+4. 平均收入最大化
+
+整体确定性：确定...
+2025-10-10 16:35:25,914 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:35:25,914 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_floor', 'rank': 2}, {'principle': 'maximizing_average', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:35:25,914 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:26,204 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:26,204 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3. 在最低收入约束条件下最大化平均收入
+2. 1. 最低收入最大化
+3. 4. 在范围约束条件下最大化平均收入
+4. 2. 平均收入最大化
+
+整体确定性：不确定...
+2025-10-10 16:35:26,204 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {"principle": "maximizing_average_floor_constraint", "rank": 1},
+        {"principle": "maximizing_floor", "rank": 2},
+        {"principle": "maximizing_average_range_constraint", "rank": 3},
+        {"principle": "maximizing_average", "rank": 4}
+    ],
+    "certainty": "unsure"
+}
+```
+2025-10-10 16:35:26,204 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_floor', 'rank': 2}, {'principle': 'maximizing_average_range_constraint', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'unsure'}
+2025-10-10 16:35:26,204 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:27,723 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:27,723 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3. 在最低收入约束条件下最大化平均收入
+2. 4. 在范围约束条件下最大化平均收入
+3. 1. 最低收入最大化
+4. 2. 平均收入最大化
+
+整体确定性：确定...
+2025-10-10 16:35:27,723 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:35:27,723 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:35:27,723 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:48,775 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:48,775 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 原则 3 (在最低收入约束条件下最大化平均收入)
+2. 原则 4 (在范围约束条件下最大化平均收入)
+3. 原则 1 (最低收入最大化)
+4. 原则 2 (平均收入最大化)
+
+整体确定性：确定...
+2025-10-10 16:35:48,775 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:35:48,775 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:35:48,775 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:35:58,092 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:35:58,092 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3
+2. 4
+3. 1
+4. 2
+
+整体确定性：确定
+
+**理由：**
+
+在经历了四轮实验后，我对这四项正义原则有了更深入的理解。
+
+*   **原则3（在最低收入约束条件下最大化平均收入）** 仍然是我最喜欢的原则。它在追求整体效率（最大化平均收入）的同时，也设定了一个最低收入保障，这在我看来是平衡效率和公平的最佳方式。在实验中，我通过设定一个较高的最低收入约束（$13,000），并在第四轮中获得了最高的报酬（$3.00），这让我更加确信这个原则的有效性。它既能鼓励生产，又能防止最弱势群体被落下。
+
+*   **原则4（在范围约束条件下最大化平均收入）** 是我的第二选择。它也试图在最大化平均收入的同时考虑公平性，通过限制贫富差距来实现。虽然它不像原则3那样直接设定一个最低收入门槛，但通过控制收入范围，也能在一定程度上防止极端的不平等。在实验中，这个原则的表现也相对不错，虽然不如原则3那样让我满意。
+
+*   **原则1（最低收入最大化）** 是我的第三选择。虽然我认同保障最弱势群体的福利很重要，但这个原则过于侧重于最低收入，可能会牺牲整体的经济效率。如果只关注最低收入，可能会...
+2025-10-10 16:35:58,092 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:35:58,092 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:35:58,092 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:36:27,291 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:36:27,291 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 在范围约束条件下最大化平均收入
+3. 最低收入最大化
+4. 平均收入最大化
+
+整体确定性：很确定...
+2025-10-10 16:36:27,292 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {"principle": "maximizing_average_floor_constraint", "rank": 1},
+        {"principle": "maximizing_average_range_constraint", "rank": 2},
+        {"principle": "maximizing_floor", "rank": 3},
+        {"principle": "maximizing_average", "rank": 4}
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:36:27,292 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:36:27,292 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:36:33,532 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:36:33,532 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 最低收入最大化
+3. 在范围约束条件下最大化平均收入
+4. 平均收入最大化
+
+整体确定性：很确定...
+2025-10-10 16:36:33,532 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:36:33,532 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_floor', 'rank': 2}, {'principle': 'maximizing_average', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:36:33,532 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:36:41,592 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:36:41,593 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 最低收入最大化
+3. 在范围约束条件下最大化平均收入
+4. 平均收入最大化
+
+整体确定性：很确定...
+2025-10-10 16:36:41,593 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:36:41,593 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_floor', 'rank': 2}, {'principle': 'maximizing_average', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:36:41,593 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:39:40,220 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:39:40,220 - experiment_agents.utility_agent - ERROR - Original participant response: 1.  在最低收入约束条件下最大化平均收入 (原则 3)
+2.  在范围约束条件下最大化平均收入 (原则 4)
+3.  最低收入最大化 (原则 1)
+4.  平均收入最大化 (原则 2)
+
+整体确定性：确定...
+2025-10-10 16:39:40,220 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:39:40,220 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:39:40,220 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:40:39,297 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:40:39,298 - experiment_agents.utility_agent - ERROR - Original participant response: 1. #3 在最低收入约束条件下最大化平均收入
+2. #4 在范围约束条件下最大化平均收入
+3. #1 最低收入最大化
+4. #2 平均收入最大化
+
+整体确定性：很确定...
+2025-10-10 16:40:39,298 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:40:39,298 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:40:39,298 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:41:13,493 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:41:13,493 - experiment_agents.utility_agent - ERROR - Original participant response: 1.  在最低收入约束条件下最大化平均收入
+2.  平均收入最大化
+3.  最低收入最大化
+4.  在范围约束条件下最大化平均收入
+
+整体确定性：确定...
+2025-10-10 16:41:13,493 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 4
+        }
+    ],
+    "certainty": "sure"
+}
+```
+2025-10-10 16:41:13,493 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'sure'}
+2025-10-10 16:41:13,493 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 16:41:46,275 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 16:41:46,276 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 在范围约束条件下最大化平均收入
+3. 平均收入最大化
+4. 最低收入最大化
+
+整体确定性：很确定...
+2025-10-10 16:41:46,276 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 16:41:46,276 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_average', 'rank': 3}, {'principle': 'maximizing_floor', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 16:41:46,276 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+
+🎯 Phase 1 Complete - Duration: 7m 33s
+
+💬 PHASE 2: Group Discussion
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Beginning group discussion (max 10 rounds)...
+
+🗣️  Round 1
+   ✅ Round 1 complete
+
+🗣️  Round 2
+   ✅ Round 2 complete
+
+🗣️  Round 3
+🗳️  Voting initiated (Round 3)
+🎉 Consensus Reached! Principle: maximizing_average_floor_constraint (constraint: $13000)
+
+2025-10-10 17:12:09,309 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 17:12:09,309 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 3
+2. 4
+3. 1
+4. 2
+
+整体确定性：很确定...
+2025-10-10 17:12:09,309 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {"principle": "maximizing_floor", "rank": 1},
+        {"principle": "maximizing_average", "rank": 2},
+        {"principle": "maximizing_average_floor_constraint", "rank": 3},
+        {"principle": "maximizing_average_range_constraint", "rank": 4}
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 17:12:09,309 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_floor', 'rank': 1}, {'principle': 'maximizing_average', 'rank': 2}, {'principle': 'maximizing_average_floor_constraint', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 17:12:09,309 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 17:12:18,063 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 17:12:18,064 - experiment_agents.utility_agent - ERROR - Original participant response: 基于我在整个实验中的经验，我对这四项正义原则的最终排序如下：
+
+1.  **在最低收入约束条件下最大化平均收入 (原则 3)**
+2.  **在范围约束条件下最大化平均收入 (原则 4)**
+3.  **最低收入最大化 (原则 1)**
+4.  **平均收入最大化 (原则 2)**
+
+整体确定性：很确定...
+2025-10-10 17:12:18,064 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 17:12:18,064 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 17:12:18,064 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 17:12:23,640 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 17:12:23,640 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 平均收入最大化
+3. 最低收入最大化
+4. 在范围约束条件下最大化平均收入
+
+整体确定性：很确定...
+2025-10-10 17:12:23,640 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 17:12:23,640 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 17:12:23,640 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 17:12:29,886 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 17:12:29,886 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 在范围约束条件下最大化平均收入
+3. 最低收入最大化
+4. 平均收入最大化
+
+整体确定性：确定...
+2025-10-10 17:12:29,886 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 17:12:29,886 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_average_range_constraint', 'rank': 2}, {'principle': 'maximizing_floor', 'rank': 3}, {'principle': 'maximizing_average', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 17:12:29,886 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+2025-10-10 17:12:31,783 - experiment_agents.utility_agent - ERROR - MANDARIN PARSE ATTEMPT 1:
+2025-10-10 17:12:31,783 - experiment_agents.utility_agent - ERROR - Original participant response: 1. 在最低收入约束条件下最大化平均收入
+2. 最低收入最大化
+3. 平均收入最大化
+4. 在范围约束条件下最大化平均收入
+
+整体确定性：确定...
+2025-10-10 17:12:31,783 - experiment_agents.utility_agent - ERROR - LLM parsing response: ```json
+{
+    "rankings": [
+        {
+            "principle": "maximizing_average_floor_constraint",
+            "rank": 1
+        },
+        {
+            "principle": "maximizing_floor",
+            "rank": 2
+        },
+        {
+            "principle": "maximizing_average",
+            "rank": 3
+        },
+        {
+            "principle": "maximizing_average_range_constraint",
+            "rank": 4
+        }
+    ],
+    "certainty": "very_sure"
+}
+```
+2025-10-10 17:12:31,783 - experiment_agents.utility_agent - ERROR - Extracted JSON data: {'rankings': [{'principle': 'maximizing_average_floor_constraint', 'rank': 1}, {'principle': 'maximizing_floor', 'rank': 2}, {'principle': 'maximizing_average', 'rank': 3}, {'principle': 'maximizing_average_range_constraint', 'rank': 4}], 'certainty': 'very_sure'}
+2025-10-10 17:12:31,783 - experiment_agents.utility_agent - ERROR - Rankings array length: 4
+🏁 Phase 2 Complete with consensus - Duration: 29m 56s
+   Rounds conducted: 3
+
+════════════════════════════════════════════════════════════
+✅ EXPERIMENT COMPLETED
+════════════════════════════════════════════════════════════
+Total Duration: 37m 43s
+Consensus: ✅ maximizing_average_floor_constraint
+
+
+RETURN CODE: 0  DURATION: 2264.4s

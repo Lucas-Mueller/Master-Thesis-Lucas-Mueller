@@ -141,7 +141,7 @@ graph TB
   - `DiscussionService`: Prompt building and statement validation
   - `VotingService`: Complete voting workflow coordination
   - `PreferenceAggregationService`: Borda count aggregation for hypothesis testing
-  - `ManipulatorService`: Manipulator target delivery for hypothesis testing
+  - `ManipulatorService`: Manipulator target delivery for hypothesis testing (This service was used for a condition not included in the paper due to length constraints)
 - Protocol-based dependency injection for testability
 - Configuration-driven behavior via `Phase2Settings`
 
@@ -823,15 +823,3 @@ All configurations are validated via Pydantic models:
 | Transcript logging | `utils/logging/transcript_logger.py` | Full file |
 
 ---
-
-## Contact and Contribution
-
-For questions about the architecture or contributions:
-- Review this guide and linked diagrams
-- Follow existing code patterns and service ownership
-- Run test suite before submitting changes: `pytest --mode=ci`
-
----
-
-**Last Updated**: 2025-11-14
-**Maintained by**: Anonymous Author
