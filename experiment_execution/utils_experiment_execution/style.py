@@ -1,4 +1,11 @@
-"""Centralised journal-friendly visual identity helpers for hypothesis notebooks."""
+"""Centralised journal-friendly visual identity helpers for hypothesis notebooks.
+
+Design System Notes
+- Bluish Green `#009260` anchors positive and consensus outcomes.
+- Dark Gray `#48535A`, Medium Gray `#7F8990`, and Light Gray `#EBEBE4` support typography, baselines, and gridlines.
+- Figures target <=12" width, grid-on-y by default, and aligned bar/heatmap annotations.
+- Preference colours map consistently across waves and cohorts for direct comparison.
+"""
 
 from __future__ import annotations
 
