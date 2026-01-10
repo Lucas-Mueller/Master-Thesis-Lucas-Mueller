@@ -727,7 +727,6 @@ All configurations are validated via Pydantic models:
 
 ## Navigation Guide
 
-### For New Developers
 
 **Start Here**:
 1. This document (TECHNICAL_ARCHITECTURE.md) - Understand overall architecture
