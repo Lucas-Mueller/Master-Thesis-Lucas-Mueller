@@ -1,6 +1,6 @@
 # Rendered Diagrams (PNG Format)
 
-This directory contains PNG renderings of all Mermaid diagrams for the **Distributive Justice Experiment Framework** (Master Thesis of Lucas Mueller).
+This directory contains PNG renderings of all Mermaid diagrams for the **Distributive Justice Experiment Framework** (Master Thesis of Anonymous Author).
 
 ## Overview
 

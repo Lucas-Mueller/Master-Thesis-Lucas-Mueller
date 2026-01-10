@@ -127,7 +127,8 @@ class TranscriptLogger:
 
         path = Path(chosen_path)
         if not path.is_absolute():
-            path = Path.cwd() / path
+            from utils.path_utils import get_project_root
+            path = get_project_root() / path
 
         path.parent.mkdir(parents=True, exist_ok=True)
         self._experiment_transcript.experiment_metadata["saved_at"] = datetime.now(timezone.utc).isoformat()

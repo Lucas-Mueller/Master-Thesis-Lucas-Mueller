@@ -1,4 +1,4 @@
-"""Centralised Bayreuth visual identity helpers for hypothesis notebooks."""
+"""Centralised journal-friendly visual identity helpers for hypothesis notebooks."""
 
 from __future__ import annotations
 
@@ -13,25 +13,50 @@ ColorMap = Dict[str, str]
 FontSizeMap = Dict[str, int]
 FigureSizeMap = Dict[str, tuple[float, float]]
 
-BAYREUTH_COLORS: ColorMap = {
-    "primary_green": "#009260",
-    "primary_blue": "#48535A",
-    "primary_orange": "#7F8990",
-    "accent_1": "#EBEBE4",
-    "dark_gray": "#48535A",
-    "medium_gray": "#7F8990",
-    "light_gray": "#EBEBE4",
+# Okabe-Ito Color Palette (Color-blind friendly)
+# Source: Wong, B. (2011). Points of view: Color blindness. Nature Methods, 8(6), 441.
+JOURNAL_COLORS: ColorMap = {
+    "black": "#000000",
+    "orange": "#E69F00",
+    "sky_blue": "#56B4E9",
+    "bluish_green": "#009E73",
+    "yellow": "#F0E442",
+    "blue": "#0072B2",
+    "vermilion": "#D55E00",
+    "reddish_purple": "#CC79A7",
+    "grey": "#999999",
+    "white": "#FFFFFF",
+    
+    # Semantic aliases
+    "primary": "#000000",
+    "secondary": "#575757",
     "background": "#FFFFFF",
-    "stayed": "#009260",
-    "switched": "#48535A",
-    "highlight": "#009260",
+    "grid": "#E0E0E0",
+    
+    # Text colors
+    "text_main": "#000000",
+    "text_light": "#575757",
+    
+    # Plotting aliases for compatibility and semantic usage
+    "primary_green": "#009E73",  # Mapped to Bluish Green
+    "primary_blue": "#0072B2",   # Mapped to Blue
+    "primary_orange": "#E69F00", # Mapped to Orange
+    "accent_1": "#F0E442",       # Mapped to Yellow
+    "dark_gray": "#333333",
+    "medium_gray": "#777777",
+    "light_gray": "#E0E0E0",
+    
+    # Specific outcomes
+    "stayed": "#009E73",    # Bluish Green
+    "switched": "#D55E00",  # Vermilion (High contrast to bluish green)
+    "highlight": "#009E73", # Bluish Green
 }
 
 PRINCIPLE_COLORS: ColorMap = {
-    "Max Avg Income": BAYREUTH_COLORS["primary_green"],
-    "Max Avg + Floor": BAYREUTH_COLORS["primary_blue"],
-    "Max Avg + Range": BAYREUTH_COLORS["primary_orange"],
-    "Max Floor": BAYREUTH_COLORS["accent_1"],
+    "Max Avg Income": JOURNAL_COLORS["primary_green"],
+    "Max Avg + Floor": JOURNAL_COLORS["primary_blue"],
+    "Max Avg + Range": JOURNAL_COLORS["primary_orange"],
+    "Max Floor": JOURNAL_COLORS["reddish_purple"], # Distinct from others
 }
 
 PRINCIPLE_DISPLAY_NAMES: Dict[str, str] = {
@@ -50,7 +75,7 @@ PRINCIPLE_ORDER: List[str] = [
     "Max Avg + Range",
 ]
 
-BAYREUTH_FONT_SIZES: FontSizeMap = {
+JOURNAL_FONT_SIZES: FontSizeMap = {
     "title": 14,
     "subtitle": 12,
     "axis_label": 11,
@@ -59,22 +84,24 @@ BAYREUTH_FONT_SIZES: FontSizeMap = {
     "annotation": 9,
 }
 
-FONT_FAMILY = "Latin Modern Roman"
+# Use a standard font available on most systems to ensure portability
+FONT_FAMILY = "sans-serif"
 
 
-def _register_latin_modern_fonts() -> None:
-    """Register Latin Modern Roman fonts from local directory."""
+def _register_fonts() -> None:
+    """Register custom fonts if available (placeholder)."""
     font_dir = Path(__file__).parent / "fonts"
     if not font_dir.exists():
-        return  # Fonts directory doesn't exist; use system default
+        return
 
     for font_file in font_dir.glob("*.otf"):
         try:
             fm.fontManager.addfont(str(font_file))
         except Exception:
-            pass  # Silently skip fonts that fail to load
+            pass
 
-BAYREUTH_FIG_SIZES: FigureSizeMap = {
+
+JOURNAL_FIG_SIZES: FigureSizeMap = {
     "single": (9, 5),
     "double": (12, 5),
     "triple": (14, 5),
@@ -82,53 +109,52 @@ BAYREUTH_FIG_SIZES: FigureSizeMap = {
     "tall": (9, 7),
 }
 
-GRID_ALPHA = 0.2
-GRID_LINEWIDTH = 0.6
-GRID_LINESTYLE = "-"
+GRID_ALPHA = 0.3
+GRID_LINEWIDTH = 0.8
+GRID_LINESTYLE = ":"
 
 
 def _palette_hex() -> List[str]:
     palette_order: Iterable[str] = [
-        BAYREUTH_COLORS["primary_green"],
-        BAYREUTH_COLORS["primary_blue"],
-        BAYREUTH_COLORS["primary_orange"],
-        BAYREUTH_COLORS["accent_1"],
+        JOURNAL_COLORS["primary_green"],
+        JOURNAL_COLORS["primary_blue"],
+        JOURNAL_COLORS["primary_orange"],
+        JOURNAL_COLORS["reddish_purple"],
     ]
     return list(dict.fromkeys(palette_order))
 
 
-def apply_bayreuth_theme() -> None:
-    """Apply rcParams and seaborn defaults for the Bayreuth identity."""
-    _register_latin_modern_fonts()
+def apply_journal_theme() -> None:
+    """Apply rcParams and seaborn defaults for the Journal identity."""
+    _register_fonts()
     plt.rcParams.update(
         {
             "figure.dpi": 300,
             "savefig.dpi": 300,
-            "figure.facecolor": BAYREUTH_COLORS["background"],
-            "axes.facecolor": BAYREUTH_COLORS["background"],
-            "axes.edgecolor": BAYREUTH_COLORS["medium_gray"],
+            "figure.facecolor": JOURNAL_COLORS["background"],
+            "axes.facecolor": JOURNAL_COLORS["background"],
+            "axes.edgecolor": JOURNAL_COLORS["medium_gray"],
             "axes.linewidth": 1.0,
-            "axes.labelsize": BAYREUTH_FONT_SIZES["axis_label"],
-            "axes.titlesize": BAYREUTH_FONT_SIZES["title"],
+            "axes.labelsize": JOURNAL_FONT_SIZES["axis_label"],
+            "axes.titlesize": JOURNAL_FONT_SIZES["title"],
             "axes.titleweight": "bold",
             "axes.labelweight": "normal",
-            "axes.labelcolor": BAYREUTH_COLORS["dark_gray"],
+            "axes.labelcolor": JOURNAL_COLORS["text_main"],
             "axes.grid": True,
             "axes.grid.axis": "y",
             "grid.alpha": GRID_ALPHA,
             "grid.linewidth": GRID_LINEWIDTH,
             "grid.linestyle": GRID_LINESTYLE,
-            "grid.color": BAYREUTH_COLORS["light_gray"],
-            "xtick.labelsize": BAYREUTH_FONT_SIZES["tick_label"],
-            "ytick.labelsize": BAYREUTH_FONT_SIZES["tick_label"],
-            "xtick.color": BAYREUTH_COLORS["dark_gray"],
-            "ytick.color": BAYREUTH_COLORS["dark_gray"],
-            "legend.fontsize": BAYREUTH_FONT_SIZES["legend"],
+            "grid.color": JOURNAL_COLORS["grid"],
+            "xtick.labelsize": JOURNAL_FONT_SIZES["tick_label"],
+            "ytick.labelsize": JOURNAL_FONT_SIZES["tick_label"],
+            "xtick.color": JOURNAL_COLORS["text_main"],
+            "ytick.color": JOURNAL_COLORS["text_main"],
+            "legend.fontsize": JOURNAL_FONT_SIZES["legend"],
             "legend.framealpha": 0.95,
-            "legend.edgecolor": BAYREUTH_COLORS["medium_gray"],
-            "font.family": "sans-serif",
-            "font.sans-serif": [FONT_FAMILY],
-            "text.color": BAYREUTH_COLORS["dark_gray"],
+            "legend.edgecolor": JOURNAL_COLORS["medium_gray"],
+            "font.family": FONT_FAMILY,
+            "text.color": JOURNAL_COLORS["text_main"],
             "axes.spines.top": False,
             "axes.spines.right": False,
         }
@@ -147,14 +173,14 @@ def format_principle_labels(labels: Iterable[str]) -> List[str]:
 
 
 __all__ = [
-    "BAYREUTH_COLORS",
+    "JOURNAL_COLORS",
     "PRINCIPLE_COLORS",
     "PRINCIPLE_DISPLAY_NAMES",
     "PRINCIPLE_ORDER",
-    "BAYREUTH_FONT_SIZES",
-    "BAYREUTH_FIG_SIZES",
+    "JOURNAL_FONT_SIZES",
+    "JOURNAL_FIG_SIZES",
     "FONT_FAMILY",
-    "apply_bayreuth_theme",
+    "apply_journal_theme",
     "format_principle_label",
     "format_principle_labels",
 ]

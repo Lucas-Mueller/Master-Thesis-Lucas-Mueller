@@ -29,12 +29,12 @@ from .visualizations import (
     plot_voting_attempts_summary,
 )
 from .style import (
-    BAYREUTH_COLORS,
-    BAYREUTH_FIG_SIZES,
-    BAYREUTH_FONT_SIZES,
+    JOURNAL_COLORS,
+    JOURNAL_FIG_SIZES,
+    JOURNAL_FONT_SIZES,
     PRINCIPLE_COLORS,
     PRINCIPLE_DISPLAY_NAMES,
-    apply_bayreuth_theme,
+    apply_journal_theme,
     format_principle_label,
     format_principle_labels,
 )
@@ -58,12 +58,12 @@ __all__ = [
     "plot_long_term_stability",
     "plot_long_term_margin",
     "plot_long_term_stability_grid",
-    "BAYREUTH_COLORS",
-    "BAYREUTH_FIG_SIZES",
-    "BAYREUTH_FONT_SIZES",
+    "JOURNAL_COLORS",
+    "JOURNAL_FIG_SIZES",
+    "JOURNAL_FONT_SIZES",
     "PRINCIPLE_COLORS",
     "PRINCIPLE_DISPLAY_NAMES",
-    "apply_bayreuth_theme",
+    "apply_journal_theme",
     "format_principle_label",
     "format_principle_labels",
 ]

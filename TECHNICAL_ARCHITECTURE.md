@@ -835,4 +835,4 @@ For questions about the architecture or contributions:
 ---
 
 **Last Updated**: 2025-11-14
-**Maintained by**: Lucas Mueller
+**Maintained by**: Anonymous Author

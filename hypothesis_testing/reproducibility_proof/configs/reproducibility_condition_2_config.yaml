@@ -33,4 +33,4 @@ transcript_logging:
   include_instructions: false
   include_input_prompts: true
   include_agent_responses: true
-  output_path: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/reproducibility_proof_gemini/transcripts/reproducibility_condition_2_transcript.json
+  output_path: ./hypothesis_testing/reproducibility_proof_gemini/transcripts/reproducibility_condition_2_transcript.json

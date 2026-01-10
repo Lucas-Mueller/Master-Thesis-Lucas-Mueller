@@ -646,9 +646,13 @@ class AgentCentricLogger:
         
         # Ensure parent directory exists
         output_file = Path(output_path)
+        if not output_file.is_absolute():
+            from utils.path_utils import get_project_root
+            output_file = get_project_root() / output_file
+
         output_file.parent.mkdir(parents=True, exist_ok=True)
         
-        with open(output_path, 'w') as f:
+        with open(output_file, 'w') as f:
             json.dump(target_state.to_dict(), f, indent=2, default=self._json_serializer)
     
     def get_agent_log(self, agent_name: str) -> Optional[AgentExperimentLog]:

@@ -14,7 +14,7 @@ import pandas as pd
 import seaborn as sns
 from matplotlib.patches import Patch
 
-from .style import BAYREUTH_COLORS, BAYREUTH_FIG_SIZES, BAYREUTH_FONT_SIZES
+from .style import JOURNAL_COLORS, JOURNAL_FIG_SIZES, JOURNAL_FONT_SIZES
 import matplotlib.colors as mcolors
 from matplotlib.cm import ScalarMappable
 
@@ -60,9 +60,9 @@ def plot_income_preference_bars(
     if summary_df.empty:
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     category_order = summary_df["Income Class"].tolist()
     palette = [colors["switched"], colors["stayed"]]
@@ -187,9 +187,9 @@ def plot_income_composition(
     if count_long.empty:
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     palette = [colors["switched"], colors["stayed"]]
     category_order = list(dict.fromkeys(count_long["Income Class"]))
@@ -354,9 +354,9 @@ def plot_rounds_to_outcome(
         print(f"No consensus runs with recorded round counts for {title_suffix}.")
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     rounds_int = consensus_rounds["rounds_to_outcome"].astype(int)
     max_observed = int(rounds_int.max())
@@ -429,7 +429,7 @@ def plot_rounds_to_outcome_grouped(
     """
     Render a grouped bar chart of consensus rounds across cohorts.
 
-    Use `annotation_fontsize` to override the count-label size per bar (default follows Bayreuth scale).
+    Use `annotation_fontsize` to override the count-label size per bar (default follows Journal scale).
     Set `show_title=False` to suppress the chart title when embedding alongside others.
     Use `group_label` to customize the legend title (default "Language").
     """
@@ -437,10 +437,10 @@ def plot_rounds_to_outcome_grouped(
         print("No cohorts provided for grouped consensus timing plot.")
         return
 
-    colors = colors or BAYREUTH_COLORS
-    base_fonts = font_sizes or BAYREUTH_FONT_SIZES
+    colors = colors or JOURNAL_COLORS
+    base_fonts = font_sizes or JOURNAL_FONT_SIZES
     font_sizes = _scale_font_sizes(base_fonts, font_scale)
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
     effective_annotation_size = (
         max(1, int(round(annotation_fontsize))) if annotation_fontsize is not None else font_sizes["annotation"]
     )
@@ -593,10 +593,10 @@ def plot_floor_constraint_distribution_grouped(
         print("No cohorts provided for grouped constraint plot.")
         return
 
-    colors = colors or BAYREUTH_COLORS
-    base_fonts = font_sizes or BAYREUTH_FONT_SIZES
+    colors = colors or JOURNAL_COLORS
+    base_fonts = font_sizes or JOURNAL_FONT_SIZES
     font_sizes = _scale_font_sizes(base_fonts, font_scale)
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
     effective_annotation_size = (
         max(1, int(round(annotation_fontsize))) if annotation_fontsize is not None else font_sizes["annotation"]
     )
@@ -782,9 +782,9 @@ def plot_floor_constraint_distribution(
         print(f"No successful votes with numeric constraints found for {title_suffix}.")
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     amounts = parameter_votes["agreed_constraint"].values
     bin_width = 1000
@@ -850,9 +850,9 @@ def plot_voting_attempts_summary(
         print(f"No voting metrics available for {title_suffix}.")
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     metrics = run_metrics.copy()
     metrics["success_rate"] = metrics.apply(
@@ -933,9 +933,9 @@ def plot_preference_stability(
         print(f"No transition data available for {title_suffix}.")
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     transitions = [
         ("wave1", "wave2", "W1→W2"),
@@ -997,9 +997,9 @@ def plot_transition_heatmaps(
     if transition_df.empty:
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     fig, axes = plt.subplots(1, 3, figsize=fig_sizes["triple"])
     transitions = [
@@ -1104,9 +1104,9 @@ def plot_long_term_stability(
     if transition_df.empty:
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     counts = pd.crosstab(transition_df["wave1"], transition_df["wave4"], margins=False)
     counts.index = counts.index.map(format_principle_label)
@@ -1211,9 +1211,9 @@ def plot_long_term_margin(
     if transition_df.empty:
         return
 
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     counts = pd.crosstab(transition_df["wave1"], transition_df["wave4"], margins=False)
     counts.index = counts.index.map(format_principle_label)
@@ -1320,9 +1320,9 @@ def plot_long_term_stability_grid(
     fig_sizes: Optional[FigureSizeMap] = None,
 ) -> None:
     """Render counts/percentage heatmaps for multiple cohorts in a stacked layout."""
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     if not transition_datasets:
         print("No cohorts provided for comparison.")
@@ -1454,9 +1454,9 @@ def plot_long_term_counts_grid(
     axis_title_fontsize: Optional[float] = None,
 ) -> None:
     """Render counts-only stability heatmaps for multiple cohorts."""
-    colors = colors or BAYREUTH_COLORS
-    font_sizes = font_sizes or BAYREUTH_FONT_SIZES
-    fig_sizes = fig_sizes or BAYREUTH_FIG_SIZES
+    colors = colors or JOURNAL_COLORS
+    font_sizes = font_sizes or JOURNAL_FONT_SIZES
+    fig_sizes = fig_sizes or JOURNAL_FIG_SIZES
 
     if not transition_datasets:
         print("No cohorts provided for comparison.")
