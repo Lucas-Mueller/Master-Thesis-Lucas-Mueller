@@ -217,10 +217,9 @@ python -m pytest -m "live"            # Run only live endpoint tests
 # Hypothesis testing framework provides utilities for batch execution
 # See hypothesis_testing/utils_hypothesis_testing/runner.py for batch execution utilities
 # Experiment configurations organized by hypothesis in hypothesis_testing/ directory:
-# - hypothesis_1/: 33 different experimental conditions
-# - hypothesis_2/: Cultural variations (American, Chinese)
-# - hypothesis_3/: Income inequality variations (low, medium, high)
-# - hypothesis_6/: Additional experimental conditions
+# - main_experiment/: Main experimental conditions
+# - sensitivity_analysis_llm/: Sensitivity analysis (LLMs)
+# - sensitivity_analysis_input_language/: Sensitivity analysis (Input Language)
 
 # Custom batch scripts can leverage utils/experiment_runner.py for automation
 ```
@@ -440,10 +439,9 @@ Common configurations are in `config/`:
 
 ### Hypothesis Testing Framework
 The `hypothesis_testing/` directory contains organized experimental conditions:
-- `hypothesis_1/`: 33 different experimental conditions
-- `hypothesis_2/`: Cultural variations (American, Chinese)
-- `hypothesis_3/`: Income inequality variations (low, medium, high)
-- `hypothesis_6/`: Additional experimental conditions
+- `main_experiment/`: Main experimental conditions
+- `sensitivity_analysis_llm/`: Sensitivity analysis (LLMs)
+- `sensitivity_analysis_input_language/`: Sensitivity analysis (Input Language)
 - `utils_hypothesis_testing/`: Shared utilities including `runner.py` for batch execution
 
 ### Specialized Components
