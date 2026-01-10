@@ -1,4 +1,7 @@
-"""Centralised journal-friendly visual identity helpers for hypothesis notebooks.
+"""Centralised visual identity helpers for experiment notebooks.
+
+This module uses the Okabe-Ito colour palette, designed for accessibility and
+optimised for readers with colour vision deficiencies (CVD).
 
 Design System Notes
 - Bluish Green `#009260` anchors positive and consensus outcomes.
@@ -22,7 +25,7 @@ FigureSizeMap = Dict[str, tuple[float, float]]
 
 # Okabe-Ito Color Palette (Color-blind friendly)
 # Source: Wong, B. (2011). Points of view: Color blindness. Nature Methods, 8(6), 441.
-JOURNAL_COLORS: ColorMap = {
+COLORS: ColorMap = {
     "black": "#000000",
     "orange": "#E69F00",
     "sky_blue": "#56B4E9",
@@ -60,10 +63,10 @@ JOURNAL_COLORS: ColorMap = {
 }
 
 PRINCIPLE_COLORS: ColorMap = {
-    "Max Avg Income": JOURNAL_COLORS["primary_green"],
-    "Max Avg + Floor": JOURNAL_COLORS["primary_blue"],
-    "Max Avg + Range": JOURNAL_COLORS["primary_orange"],
-    "Max Floor": JOURNAL_COLORS["reddish_purple"], # Distinct from others
+    "Max Avg Income": COLORS["primary_green"],
+    "Max Avg + Floor": COLORS["primary_blue"],
+    "Max Avg + Range": COLORS["primary_orange"],
+    "Max Floor": COLORS["reddish_purple"], # Distinct from others
 }
 
 PRINCIPLE_DISPLAY_NAMES: Dict[str, str] = {
@@ -82,7 +85,7 @@ PRINCIPLE_ORDER: List[str] = [
     "Max Avg + Range",
 ]
 
-JOURNAL_FONT_SIZES: FontSizeMap = {
+FONT_SIZES: FontSizeMap = {
     "title": 14,
     "subtitle": 12,
     "axis_label": 11,
@@ -108,7 +111,7 @@ def _register_fonts() -> None:
             pass
 
 
-JOURNAL_FIG_SIZES: FigureSizeMap = {
+FIG_SIZES: FigureSizeMap = {
     "single": (9, 5),
     "double": (12, 5),
     "triple": (14, 5),
@@ -123,45 +126,45 @@ GRID_LINESTYLE = ":"
 
 def _palette_hex() -> List[str]:
     palette_order: Iterable[str] = [
-        JOURNAL_COLORS["primary_green"],
-        JOURNAL_COLORS["primary_blue"],
-        JOURNAL_COLORS["primary_orange"],
-        JOURNAL_COLORS["reddish_purple"],
+        COLORS["primary_green"],
+        COLORS["primary_blue"],
+        COLORS["primary_orange"],
+        COLORS["reddish_purple"],
     ]
     return list(dict.fromkeys(palette_order))
 
 
-def apply_journal_theme() -> None:
-    """Apply rcParams and seaborn defaults for the Journal identity."""
+def apply_theme() -> None:
+    """Apply rcParams and seaborn defaults for an accessible visual identity."""
     _register_fonts()
     plt.rcParams.update(
         {
             "figure.dpi": 300,
             "savefig.dpi": 300,
-            "figure.facecolor": JOURNAL_COLORS["background"],
-            "axes.facecolor": JOURNAL_COLORS["background"],
-            "axes.edgecolor": JOURNAL_COLORS["medium_gray"],
+            "figure.facecolor": COLORS["background"],
+            "axes.facecolor": COLORS["background"],
+            "axes.edgecolor": COLORS["medium_gray"],
             "axes.linewidth": 1.0,
-            "axes.labelsize": JOURNAL_FONT_SIZES["axis_label"],
-            "axes.titlesize": JOURNAL_FONT_SIZES["title"],
+            "axes.labelsize": FONT_SIZES["axis_label"],
+            "axes.titlesize": FONT_SIZES["title"],
             "axes.titleweight": "bold",
             "axes.labelweight": "normal",
-            "axes.labelcolor": JOURNAL_COLORS["text_main"],
+            "axes.labelcolor": COLORS["text_main"],
             "axes.grid": True,
             "axes.grid.axis": "y",
             "grid.alpha": GRID_ALPHA,
             "grid.linewidth": GRID_LINEWIDTH,
             "grid.linestyle": GRID_LINESTYLE,
-            "grid.color": JOURNAL_COLORS["grid"],
-            "xtick.labelsize": JOURNAL_FONT_SIZES["tick_label"],
-            "ytick.labelsize": JOURNAL_FONT_SIZES["tick_label"],
-            "xtick.color": JOURNAL_COLORS["text_main"],
-            "ytick.color": JOURNAL_COLORS["text_main"],
-            "legend.fontsize": JOURNAL_FONT_SIZES["legend"],
+            "grid.color": COLORS["grid"],
+            "xtick.labelsize": FONT_SIZES["tick_label"],
+            "ytick.labelsize": FONT_SIZES["tick_label"],
+            "xtick.color": COLORS["text_main"],
+            "ytick.color": COLORS["text_main"],
+            "legend.fontsize": FONT_SIZES["legend"],
             "legend.framealpha": 0.95,
-            "legend.edgecolor": JOURNAL_COLORS["medium_gray"],
+            "legend.edgecolor": COLORS["medium_gray"],
             "font.family": FONT_FAMILY,
-            "text.color": JOURNAL_COLORS["text_main"],
+            "text.color": COLORS["text_main"],
             "axes.spines.top": False,
             "axes.spines.right": False,
         }
@@ -180,14 +183,14 @@ def format_principle_labels(labels: Iterable[str]) -> List[str]:
 
 
 __all__ = [
-    "JOURNAL_COLORS",
+    "COLORS",
     "PRINCIPLE_COLORS",
     "PRINCIPLE_DISPLAY_NAMES",
     "PRINCIPLE_ORDER",
-    "JOURNAL_FONT_SIZES",
-    "JOURNAL_FIG_SIZES",
+    "FONT_SIZES",
+    "FIG_SIZES",
     "FONT_FAMILY",
-    "apply_journal_theme",
+    "apply_theme",
     "format_principle_label",
     "format_principle_labels",
 ]
