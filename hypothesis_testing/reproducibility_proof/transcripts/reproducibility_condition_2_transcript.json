@@ -2,7 +2,7 @@
   "experiment_metadata": {
     "experiment_id": "7476f52e-50a1-41c5-acc9-d8b4d8acd843",
     "created_at": "2025-10-16T10:37:41.636391+00:00",
-    "config_file": "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/reproducibility_proof_gemini/configs/reproducibility_condition_2_config.yaml",
+    "config_file": "./hypothesis_testing/reproducibility_proof_gemini/configs/reproducibility_condition_2_config.yaml",
     "last_updated": "2025-10-16T10:40:17.056822+00:00",
     "saved_at": "2025-10-16T10:40:17.878334+00:00"
   },

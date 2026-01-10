@@ -1,4 +1,4 @@
-CMD: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/bin/python /Users/lucasmuller/Desktop/Githubg/Rawls_v3/main.py /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/reproducibility_proof_gemini/configs/reproducibility_condition_2_config.yaml /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/reproducibility_proof_gemini/results/reproducibility_condition_2_config_results.json
+CMD: ./.venv/bin/python ./main.py ./hypothesis_testing/reproducibility_proof_gemini/configs/reproducibility_condition_2_config.yaml ./hypothesis_testing/reproducibility_proof_gemini/results/reproducibility_condition_2_config_results.json
 ════════════════════════════════════════════════════════════
 🧪 FROHLICH EXPERIMENT STARTING
 ════════════════════════════════════════════════════════════
@@ -47,7 +47,7 @@ Beginning group discussion (max 5 rounds)...
 ════════════════════════════════════════════════════════════
 Total Duration: 2m 36s
 Consensus: ❌ Not reached
-Transcript saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/reproducibility_proof_gemini/transcripts/reproducibility_condition_2_transcript.json
+Transcript saved: ./hypothesis_testing/reproducibility_proof_gemini/transcripts/reproducibility_condition_2_transcript.json
 
 
 RETURN CODE: 0  DURATION: 157.5s

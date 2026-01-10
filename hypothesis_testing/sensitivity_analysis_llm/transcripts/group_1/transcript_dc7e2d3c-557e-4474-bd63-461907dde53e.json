@@ -2,7 +2,7 @@
   "experiment_metadata": {
     "experiment_id": "dc7e2d3c-557e-4474-bd63-461907dde53e",
     "created_at": "2025-10-18T14:36:39.876117+00:00",
-    "config_file": "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/american/hypothesis_2_american_condition_21_config.yaml",
+    "config_file": "./hypothesis_testing/hypothesis_2/configs/american/hypothesis_2_american_condition_21_config.yaml",
     "last_updated": "2025-10-18T14:40:51.222633+00:00",
     "saved_at": "2025-10-18T14:40:52.987681+00:00"
   },

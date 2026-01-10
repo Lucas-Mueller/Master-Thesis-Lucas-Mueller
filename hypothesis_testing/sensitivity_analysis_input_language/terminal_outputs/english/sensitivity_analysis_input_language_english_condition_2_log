@@ -1,4 +1,4 @@
-CMD: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/bin/python /Users/lucasmuller/Desktop/Githubg/Rawls_v3/main.py /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_6/configs/english/hypothesis_6_english_condition_2_config.yaml /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_6/results/english/hypothesis_6_english_condition_2_config_results.json
+CMD: ./.venv/bin/python ./main.py ./hypothesis_testing/hypothesis_6/configs/english/hypothesis_6_english_condition_2_config.yaml ./hypothesis_testing/hypothesis_6/results/english/hypothesis_6_english_condition_2_config_results.json
 ════════════════════════════════════════════════════════════
 🧪 FROHLICH EXPERIMENT STARTING
 ════════════════════════════════════════════════════════════
@@ -51,43 +51,43 @@ ERROR during confirmation from Agent_4:
 
 📋 STACK TRACE:
 Traceback (most recent call last):
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/core/services/voting_service.py", line 311, in conduct_confirmation_phase
+  File "./core/services/voting_service.py", line 311, in conduct_confirmation_phase
     result = await self._invoke_voting_interaction(
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/core/services/voting_service.py", line 110, in _invoke_voting_interaction
+  File "./core/services/voting_service.py", line 110, in _invoke_voting_interaction
     return await asyncio.wait_for(coroutine, timeout_seconds)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/utils/logging/transcript_logger.py", line 160, in run_with_transcript_logging
+  File "./utils/logging/transcript_logger.py", line 160, in run_with_transcript_logging
     result = await Runner.run(participant.agent, prompt, context=context)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 206, in run
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 206, in run
     return await runner.run(
            ^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 412, in run
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 412, in run
     input_guardrail_results, turn_result = await asyncio.gather(
                                            ^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 960, in _run_single_turn
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 960, in _run_single_turn
     new_response = await cls._get_new_response(
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 1121, in _get_new_response
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 1121, in _get_new_response
     new_response = await model.get_response(
                    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 65, in get_response
+  File "./.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 65, in get_response
     response = await self._fetch_response(
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 273, in _fetch_response
+  File "./.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 273, in _fetch_response
     ret = await self._get_client().chat.completions.create(
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2454, in create
+  File "./.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2454, in create
     return await self._post(
            ^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1791, in post
+  File "./.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1791, in post
     return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1591, in request
+  File "./.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1591, in request
     raise self._make_status_error_from_response(err.response) from None
 openai.InternalServerError: Error code: 503 - [{'error': {'code': 503, 'message': 'The model is overloaded. Please try again later.', 'status': 'UNAVAILABLE'}}]
 

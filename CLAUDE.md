@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the Master Thesis of Anonymous Author which entails the presented code repo. The repo is a Python-based framework for conducting experiments with AI agents simulating distributive justice scenarios. It's a replication of the experiments of Frohlich & Oppenheimer (1992) (Choosing Justice: An Experimental Approach to Ethical Theory) and implements a "veil of ignorance" scenario where AI agents engage in two-phase experiments to reach consensus on principles of justice.
+This is the codebase for the paper "Normcore" which entails the presented code repo. The repo is a Python-based framework for conducting experiments with AI agents simulating distributive justice scenarios. It's a replication of the experiments of Frohlich & Oppenheimer (1992) (Choosing Justice: An Experimental Approach to Ethical Theory) and implements a "veil of ignorance" scenario where AI agents engage in two-phase experiments to reach consensus on principles of justice.
 
 The framework uses OpenAI Agents SDK for participant agents and integrates sophisticated voting systems, multilingual support, and comprehensive experiment orchestration.
 

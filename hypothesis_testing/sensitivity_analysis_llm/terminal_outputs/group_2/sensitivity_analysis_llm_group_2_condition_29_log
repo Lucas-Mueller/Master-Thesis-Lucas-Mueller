@@ -1,5 +1,5 @@
-CMD: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/bin/python /Users/lucasmuller/Desktop/Githubg/Rawls_v3/main.py /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_29_config.yaml /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
-[TECH] Loading configuration from: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_29_config.yaml
+CMD: ./.venv/bin/python ./main.py ./hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_29_config.yaml ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
+[TECH] Loading configuration from: ./hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_29_config.yaml
 2025-10-14 14:33:14,536 - utils.seed_manager - INFO - Generated seed 51049252 from configuration hash
 2025-10-14 14:33:14,536 - utils.language_manager - INFO - Language set to: English
 [TECH] Language set to: English
@@ -574,55 +574,55 @@ ERROR during confirmation from Agent_3:
 
 📋 STACK TRACE:
 Traceback (most recent call last):
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/core/services/voting_service.py", line 311, in conduct_confirmation_phase
+  File "./core/services/voting_service.py", line 311, in conduct_confirmation_phase
     result = await self._invoke_voting_interaction(
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/core/services/voting_service.py", line 110, in _invoke_voting_interaction
+  File "./core/services/voting_service.py", line 110, in _invoke_voting_interaction
     return await asyncio.wait_for(coroutine, timeout_seconds)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/utils/logging/transcript_logger.py", line 160, in run_with_transcript_logging
+  File "./utils/logging/transcript_logger.py", line 160, in run_with_transcript_logging
     result = await Runner.run(participant.agent, prompt, context=context)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 206, in run
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 206, in run
     return await runner.run(
            ^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 412, in run
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 412, in run
     input_guardrail_results, turn_result = await asyncio.gather(
                                            ^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 960, in _run_single_turn
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 960, in _run_single_turn
     new_response = await cls._get_new_response(
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/run.py", line 1121, in _get_new_response
+  File "./.venv/lib/python3.11/site-packages/agents/run.py", line 1121, in _get_new_response
     new_response = await model.get_response(
                    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 65, in get_response
+  File "./.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 65, in get_response
     response = await self._fetch_response(
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 273, in _fetch_response
+  File "./.venv/lib/python3.11/site-packages/agents/models/openai_chatcompletions.py", line 273, in _fetch_response
     ret = await self._get_client().chat.completions.create(
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2454, in create
+  File "./.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2454, in create
     return await self._post(
            ^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1791, in post
+  File "./.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1791, in post
     return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1596, in request
+  File "./.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1596, in request
     return await self._process_response(
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1685, in _process_response
+  File "./.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1685, in _process_response
     return await api_response.parse()
            ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_response.py", line 430, in parse
+  File "./.venv/lib/python3.11/site-packages/openai/_response.py", line 430, in parse
     parsed = self._parse(to=to)
              ^^^^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/openai/_response.py", line 265, in _parse
+  File "./.venv/lib/python3.11/site-packages/openai/_response.py", line 265, in _parse
     data = response.json()
            ^^^^^^^^^^^^^^^
-  File "/Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/lib/python3.11/site-packages/httpx/_models.py", line 832, in json
+  File "./.venv/lib/python3.11/site-packages/httpx/_models.py", line 832, in json
     return jsonlib.loads(self.content, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py", line 346, in loads
@@ -709,19 +709,19 @@ json.decoder.JSONDecodeError: Expecting value: line 1939 column 1 (char 10659)
      Agent_3: $4.35
 
 [TECH] Experiment 3e33d002-30fe-4b17-ad12-3ff335756f4a completed successfully in 4803.47 seconds
-[TECH] Transcript saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_3e33d002-30fe-4b17-ad12-3ff335756f4a.json
-2025-10-14 15:53:23,912 - core.experiment_manager - INFO - Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
+[TECH] Transcript saved to: ./transcript_3e33d002-30fe-4b17-ad12-3ff335756f4a.json
+2025-10-14 15:53:23,912 - core.experiment_manager - INFO - Results saved to: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
 2025-10-14 15:53:23,912 - core.experiment_manager - INFO - Seed used: 51049252 (generated)
-[TECH] Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
+[TECH] Results saved to: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
 [DEBUG] Trace: https://platform.openai.com/logs/trace?trace_id=trace_123e8e41bf734d8b8055ea0f4860f289
 ════════════════════════════════════════════════════════════
 ✅ EXPERIMENT COMPLETED
 ════════════════════════════════════════════════════════════
 Total Duration: 1h 20m
 Consensus: ❌ Not reached
-Transcript saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_3e33d002-30fe-4b17-ad12-3ff335756f4a.json
+Transcript saved: ./transcript_3e33d002-30fe-4b17-ad12-3ff335756f4a.json
 Errors: None
-Results saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
+Results saved: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_29_config_results.json
 🔗 Trace: https://platform.openai.com/logs/trace?trace_id=trace_123e8e41bf734d8b8055ea0f4860f289
 
 

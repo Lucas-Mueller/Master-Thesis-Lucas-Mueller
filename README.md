@@ -1,10 +1,10 @@
-# Master Thesis: AI Agents and Distributive Justice
+# Normcore: AI Agents and Distributive Justice
 
 ## Overview
 
-This repository contains the implementation for Anonymous Author's master thesis, which replicates the distributive justice experiments from Frohlich & Oppenheimer (1992) "Choosing Justice: An Experimental Approach to Ethical Theory" using AI agents. The framework simulates a "veil of ignorance" scenario where AI agents engage in structured discussion to reach consensus on principles of distributive justice through formal voting mechanisms.
+This repository contains the codebase for the paper "Normcore", which replicates the distributive justice experiments from Frohlich & Oppenheimer (1992) "Choosing Justice: An Experimental Approach to Ethical Theory" using AI agents. The framework simulates a "veil of ignorance" scenario where AI agents engage in structured discussion to reach consensus on principles of distributive justice through formal voting mechanisms.
 
-The folder `hypothesis_testing` contains the execution of the testing of the hypothesis presented in the thesis. The remaining folders contain files related to the experiment itself. On a high level, the application (`main.py`) takes in a `.yaml` file outlining the configuration (e.g., `default.yaml`), executes the experiments and returns a structured log file as `.JSON` and optionally the entire raw transcript of all agents interactions.
+The folder `hypothesis_testing` contains the execution of the testing of the hypothesis presented in the paper. The remaining folders contain files related to the experiment itself. On a high level, the application (`main.py`) takes in a `.yaml` file outlining the configuration (e.g., `default.yaml`), executes the experiments and returns a structured log file as `.JSON` and optionally the entire raw transcript of all agents interactions.
 
 ## Architecture
 
@@ -79,7 +79,7 @@ See [TECHNICAL_ARCHITECTURE.md](TECHNICAL_ARCHITECTURE.md)for detailed configura
 ## Project Structure
 
 ```
-Master_Thesis_Anonymous/
+Normcore/
 ├── config/                   # Experiment configuration files (YAML)
 ├── core/                     # Core experiment orchestration
 │   ├── services/             # Phase 2 services architecture
@@ -112,6 +112,6 @@ Frohlich, N., & Oppenheimer, J. A. (1992). *Choosing Justice: An Experimental Ap
 
 ## License
 
-This repository is part of a master's thesis. Please contact Anonymous Author for usage permissions.
+This repository is codebase for the paper "Normcore". Please contact Anonymous Author for usage permissions.
 
 

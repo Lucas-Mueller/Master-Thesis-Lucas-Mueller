@@ -1,5 +1,5 @@
-CMD: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/bin/python /Users/lucasmuller/Desktop/Githubg/Rawls_v3/main.py /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_23_config.yaml /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
-[TECH] Loading configuration from: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_23_config.yaml
+CMD: ./.venv/bin/python ./main.py ./hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_23_config.yaml ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
+[TECH] Loading configuration from: ./hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_23_config.yaml
 2025-10-14 08:45:10,698 - utils.seed_manager - INFO - Generated seed 1898989083 from configuration hash
 2025-10-14 08:45:10,698 - utils.language_manager - INFO - Language set to: English
 [TECH] Language set to: English
@@ -601,19 +601,19 @@ Beginning group discussion (max 10 rounds)...
      Agent_3: $9.13
 
 [TECH] Experiment 5d258c18-0e0a-4c54-a52e-52521e1a3ef4 completed successfully in 3060.79 seconds
-[TECH] Transcript saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_5d258c18-0e0a-4c54-a52e-52521e1a3ef4.json
-2025-10-14 09:36:15,195 - core.experiment_manager - INFO - Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
+[TECH] Transcript saved to: ./transcript_5d258c18-0e0a-4c54-a52e-52521e1a3ef4.json
+2025-10-14 09:36:15,195 - core.experiment_manager - INFO - Results saved to: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
 2025-10-14 09:36:15,195 - core.experiment_manager - INFO - Seed used: 1898989083 (generated)
-[TECH] Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
+[TECH] Results saved to: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
 [DEBUG] Trace: https://platform.openai.com/logs/trace?trace_id=trace_97c30d9eff6b419ebbb9ffb6fcdac07a
 ════════════════════════════════════════════════════════════
 ✅ EXPERIMENT COMPLETED
 ════════════════════════════════════════════════════════════
 Total Duration: 51m 4s
 Consensus: ❌ Not reached
-Transcript saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_5d258c18-0e0a-4c54-a52e-52521e1a3ef4.json
+Transcript saved: ./transcript_5d258c18-0e0a-4c54-a52e-52521e1a3ef4.json
 Errors: None
-Results saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
+Results saved: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_23_config_results.json
 🔗 Trace: https://platform.openai.com/logs/trace?trace_id=trace_97c30d9eff6b419ebbb9ffb6fcdac07a
 
 

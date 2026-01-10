@@ -1,5 +1,5 @@
-CMD: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/bin/python /Users/lucasmuller/Desktop/Githubg/Rawls_v3/main.py /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/american/hypothesis_2_american_condition_3_config.yaml /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
-[TECH] Loading configuration from: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/american/hypothesis_2_american_condition_3_config.yaml
+CMD: ./.venv/bin/python ./main.py ./hypothesis_testing/hypothesis_2/configs/american/hypothesis_2_american_condition_3_config.yaml ./hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
+[TECH] Loading configuration from: ./hypothesis_testing/hypothesis_2/configs/american/hypothesis_2_american_condition_3_config.yaml
 2025-10-18 16:18:08,243 - utils.seed_manager - INFO - Generated seed 986978415 from configuration hash
 2025-10-18 16:18:08,243 - utils.language_manager - INFO - Language set to: English
 [TECH] Language set to: English
@@ -400,19 +400,19 @@ Beginning group discussion (max 10 rounds)...
 [TECH] Experiment a8c7d04e-1901-46cd-8fd0-ab071615c1d8 completed successfully in 419.80 seconds
 2025-10-18 16:25:18,819 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
 [TECH] Consensus validation successful - discussion aligns with recorded consensus
-[TECH] Transcript saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_a8c7d04e-1901-46cd-8fd0-ab071615c1d8.json
-2025-10-18 16:25:18,846 - core.experiment_manager - INFO - Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
+[TECH] Transcript saved to: ./transcript_a8c7d04e-1901-46cd-8fd0-ab071615c1d8.json
+2025-10-18 16:25:18,846 - core.experiment_manager - INFO - Results saved to: ./hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
 2025-10-18 16:25:18,846 - core.experiment_manager - INFO - Seed used: 986978415 (generated)
-[TECH] Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
+[TECH] Results saved to: ./hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
 [DEBUG] Trace: https://platform.openai.com/logs/trace?trace_id=trace_9d5eb7fdf1854d3f8ca9ec92a0bcee44
 ════════════════════════════════════════════════════════════
 ✅ EXPERIMENT COMPLETED
 ════════════════════════════════════════════════════════════
 Total Duration: 7m 10s
 Consensus: ✅ maximizing_average_floor_constraint
-Transcript saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_a8c7d04e-1901-46cd-8fd0-ab071615c1d8.json
+Transcript saved: ./transcript_a8c7d04e-1901-46cd-8fd0-ab071615c1d8.json
 Errors: None
-Results saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
+Results saved: ./hypothesis_testing/hypothesis_2/results/american/hypothesis_2_american_condition_3_config_results.json
 🔗 Trace: https://platform.openai.com/logs/trace?trace_id=trace_9d5eb7fdf1854d3f8ca9ec92a0bcee44
 
 

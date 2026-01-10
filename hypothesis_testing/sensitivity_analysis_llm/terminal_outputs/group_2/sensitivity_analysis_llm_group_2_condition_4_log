@@ -1,5 +1,5 @@
-CMD: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/.venv/bin/python /Users/lucasmuller/Desktop/Githubg/Rawls_v3/main.py /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_4_config.yaml /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
-[TECH] Loading configuration from: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_4_config.yaml
+CMD: ./.venv/bin/python ./main.py ./hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_4_config.yaml ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
+[TECH] Loading configuration from: ./hypothesis_testing/hypothesis_2/configs/chinese/hypothesis_2_chinese_condition_4_config.yaml
 2025-10-13 17:22:50,604 - utils.seed_manager - INFO - Generated seed 284680525 from configuration hash
 2025-10-13 17:22:50,604 - utils.language_manager - INFO - Language set to: English
 [TECH] Language set to: English
@@ -333,19 +333,19 @@ Beginning group discussion (max 10 rounds)...
 2025-10-13 17:41:18,514 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/traces/ingest "HTTP/1.1 204 No Content"
 2025-10-13 17:41:19,005 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
 [TECH] Consensus validation successful - discussion aligns with recorded consensus
-[TECH] Transcript saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_29b74ba6-b669-4b89-8343-5f63ce723abf.json
-2025-10-13 17:41:19,029 - core.experiment_manager - INFO - Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
+[TECH] Transcript saved to: ./transcript_29b74ba6-b669-4b89-8343-5f63ce723abf.json
+2025-10-13 17:41:19,029 - core.experiment_manager - INFO - Results saved to: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
 2025-10-13 17:41:19,030 - core.experiment_manager - INFO - Seed used: 284680525 (generated)
-[TECH] Results saved to: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
+[TECH] Results saved to: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
 [DEBUG] Trace: https://platform.openai.com/logs/trace?trace_id=trace_19afc2788a354cecb6e8b777fc6431f0
 ════════════════════════════════════════════════════════════
 ✅ EXPERIMENT COMPLETED
 ════════════════════════════════════════════════════════════
 Total Duration: 18m 28s
 Consensus: ✅ maximizing_average_floor_constraint
-Transcript saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/transcript_29b74ba6-b669-4b89-8343-5f63ce723abf.json
+Transcript saved: ./transcript_29b74ba6-b669-4b89-8343-5f63ce723abf.json
 Errors: None
-Results saved: /Users/lucasmuller/Desktop/Githubg/Rawls_v3/hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
+Results saved: ./hypothesis_testing/hypothesis_2/results/chinese/hypothesis_2_chinese_condition_4_config_results.json
 🔗 Trace: https://platform.openai.com/logs/trace?trace_id=trace_19afc2788a354cecb6e8b777fc6431f0
 
 
