@@ -110,8 +110,5 @@ This implementation is based on:
 
 Frohlich, N., & Oppenheimer, J. A. (1992). *Choosing Justice: An Experimental Approach to Ethical Theory*. University of California Press.
 
-## License
-
-This repository is codebase for the paper "Normcore". Please contact Anonymous Author for usage permissions.
 
 
