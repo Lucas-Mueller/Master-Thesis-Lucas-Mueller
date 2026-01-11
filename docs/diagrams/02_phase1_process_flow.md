@@ -1,7 +1,5 @@
 # Diagram 02: Phase 1 Complete Process Flow
 
-**Purpose**: Detailed view of Phase 1 individual deliberation with all 5 steps
-**Audience**: Researchers, developers implementing Phase 1 features
 **Layer**: 1 - High-Level Process Flow
 
 ---
@@ -137,7 +135,6 @@ flowchart TD
 
 **Code**: `phase1_manager.py:581-625`
 
-**⚠️ Critical Note**: This step was previously missing from documentation but exists in implementation.
 
 ---
 

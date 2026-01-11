@@ -1,7 +1,5 @@
 # Diagram 04: Phase 1 Service Sequence (Detailed)
 
-**Purpose**: Service-level interactions during Phase 1 execution
-**Audience**: Developers implementing Phase 1 features, debugging
 **Layer**: 2 - Detailed Service Interactions
 
 ---

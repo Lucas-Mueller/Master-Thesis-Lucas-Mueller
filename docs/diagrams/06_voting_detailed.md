@@ -1,7 +1,5 @@
 # Diagram 06: Voting Process Detailed Sequence
 
-**Purpose**: Service-level interactions during the complete voting workflow
-**Audience**: Developers implementing voting features, debugging
 **Layer**: 2 - Detailed Service Interactions
 
 ---
@@ -399,30 +397,6 @@ memory_service.update_voting_memory(
 2. If all retries fail: Mark agent vote as "timeout"
 3. Consensus detection treats timeout as "no consensus"
 4. Round continues (no blocking failure)
-
----
-
-## Performance Characteristics
-
-### Timing (per phase, 5 agents)
-
-| Phase | Duration | Parallelization | Bottleneck |
-|-------|----------|-----------------|------------|
-| Initiation | 15-45 sec | Sequential (early exit) | LLM calls |
-| Confirmation | 15-30 sec | Parallel | LLM calls |
-| Ballot Stage 1 | 20-30 sec | Parallel | LLM calls |
-| Ballot Stage 2 | 15-25 sec | Parallel (filtered) | LLM calls |
-| Consensus | < 0.1 sec | Synchronous | Computation |
-| **Total** | **1.5-2.5 min** | Mixed | LLM latency |
-
-### API Calls Per Voting Attempt
-
-- **Initiation**: 1-N calls (sequential, early exit)
-- **Confirmation**: N calls (parallel)
-- **Stage 1 ballot**: N calls (parallel)
-- **Stage 2 ballot**: 0-N calls (filtered, only principles 3 & 4)
-
-**Total**: ~2N to 3N API calls per voting attempt (N = number of agents)
 
 ---
 

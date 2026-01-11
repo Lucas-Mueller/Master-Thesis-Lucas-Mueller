@@ -1,7 +1,5 @@
 # Diagram 08: Post-Discussion Results Service Sequence (Detailed)
 
-**Purpose**: Service-level interactions for applying principle, calculating payoffs, and collecting final rankings
-**Audience**: Developers implementing Phase 2 results features, debugging post-discussion flows
 **Layer**: 2 - Detailed Service Interactions
 
 ---

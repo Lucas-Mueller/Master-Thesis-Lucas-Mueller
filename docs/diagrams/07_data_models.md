@@ -1,7 +1,5 @@
 # Diagram 07: Core Data Models
 
-**Purpose**: Key data structures used throughout the experiment framework
-**Audience**: Developers implementing features, understanding data flow
 **Layer**: 2 - Detailed Implementation Reference
 
 ---

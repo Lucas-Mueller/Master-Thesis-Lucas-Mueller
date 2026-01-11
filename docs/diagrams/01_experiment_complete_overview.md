@@ -1,7 +1,6 @@
 # Diagram 01: Complete Experiment Overview
 
-**Purpose**: High-level view of the two-phase experiment structure
-**Audience**: Researchers, managers, new developers
+
 **Layer**: 1 - High-Level Process Flow
 
 ---

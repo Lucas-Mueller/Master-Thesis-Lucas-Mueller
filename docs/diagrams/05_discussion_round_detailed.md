@@ -1,7 +1,5 @@
 # Diagram 05: Discussion Round Detailed Sequence
 
-**Purpose**: Service-level interactions during a single Phase 2 discussion round
-**Audience**: Developers implementing discussion features, debugging
 **Layer**: 2 - Detailed Service Interactions
 
 ---
