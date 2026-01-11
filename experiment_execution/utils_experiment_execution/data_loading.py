@@ -491,6 +491,247 @@ def build_group_dataset(
     )
 
 
+# -----------------------------------------------------------------------------
+# Preference Analysis Helpers
+# -----------------------------------------------------------------------------
+
+
+def create_preference_ordering_table(
+    ranking_long_df: pd.DataFrame, wave_name: str
+) -> pd.DataFrame:
+    """Create a frequency table of complete preference orderings for a specific wave.
+
+    Args:
+        ranking_long_df: DataFrame with all ranking data (must have columns:
+            wave_label, run_id, agent, principle_label, rank).
+        wave_name: Name of the wave to analyze (e.g., "Wave 1 - Initial").
+
+    Returns:
+        DataFrame showing each unique ordering and its frequency, with columns:
+        Preference Ordering, Count, Percentage.
+    """
+    # Filter to the specific wave
+    wave_data = ranking_long_df[ranking_long_df["wave_label"] == wave_name].copy()
+
+    if wave_data.empty:
+        return pd.DataFrame({"Note": [f"No data available for {wave_name}"]})
+
+    # Create ordering strings for each agent
+    orderings = []
+    for (run_id, agent), group in wave_data.groupby(["run_id", "agent"]):
+        # Sort by rank to get the ordering
+        sorted_group = group.sort_values("rank")
+        ordering = tuple(sorted_group["principle_label"].tolist())
+        orderings.append({
+            "run_id": run_id,
+            "agent": agent,
+            "ordering": ordering,
+        })
+
+    ordering_df = pd.DataFrame(orderings)
+
+    # Count frequency of each ordering
+    freq_table = ordering_df.groupby("ordering").size().reset_index(name="Count")
+    freq_table = freq_table.sort_values("Count", ascending=False).reset_index(drop=True)
+
+    # Calculate percentage
+    total = freq_table["Count"].sum()
+    freq_table["Percentage"] = (freq_table["Count"] / total * 100).round(1)
+
+    # Format the ordering as a readable string (1st > 2nd > 3rd > 4th)
+    def format_ordering(ordering_tuple):
+        if len(ordering_tuple) == 4:
+            return f"{ordering_tuple[0]} > {ordering_tuple[1]} > {ordering_tuple[2]} > {ordering_tuple[3]}"
+        return str(ordering_tuple)
+
+    freq_table["Preference Ordering"] = freq_table["ordering"].apply(format_ordering)
+
+    # Reorder columns for display
+    freq_table = freq_table[["Preference Ordering", "Count", "Percentage"]]
+
+    return freq_table
+
+
+def prepare_switcher_analysis(
+    transition_df: pd.DataFrame, income_df: pd.DataFrame
+) -> pd.DataFrame:
+    """Merge transition and income data, categorize agents by switching behavior.
+
+    Args:
+        transition_df: DataFrame with columns: run_id, agent, wave1, wave2, wave3, wave4.
+        income_df: DataFrame with columns: run_id, agent, income_class_raw, income_class.
+
+    Returns:
+        DataFrame with switcher analysis columns including:
+        - switched_w1_w2, switched_w2_w3, switched_w3_w4: Boolean switches per transition
+        - switched_any: Boolean indicating if agent switched at any point
+        - switched_w1_w4: Boolean indicating if wave1 differs from wave4
+        - num_switches: Count of total switches (0-3)
+        - switcher_category: Category label based on switching frequency
+    """
+    # Merge income data with transition data
+    switcher_analysis = transition_df.merge(income_df, on=["run_id", "agent"], how="left")
+
+    # Identify switchers: agents who changed their top choice at ANY point
+    switcher_analysis["switched_w1_w2"] = (
+        switcher_analysis["wave1"] != switcher_analysis["wave2"]
+    )
+    switcher_analysis["switched_w2_w3"] = (
+        switcher_analysis["wave2"] != switcher_analysis["wave3"]
+    )
+    switcher_analysis["switched_w3_w4"] = (
+        switcher_analysis["wave3"] != switcher_analysis["wave4"]
+    )
+    switcher_analysis["switched_any"] = (
+        switcher_analysis["switched_w1_w2"]
+        | switcher_analysis["switched_w2_w3"]
+        | switcher_analysis["switched_w3_w4"]
+    )
+    switcher_analysis["switched_w1_w4"] = (
+        switcher_analysis["wave1"] != switcher_analysis["wave4"]
+    )
+
+    # Count switches per agent
+    switcher_analysis["num_switches"] = (
+        switcher_analysis["switched_w1_w2"].astype(int)
+        + switcher_analysis["switched_w2_w3"].astype(int)
+        + switcher_analysis["switched_w3_w4"].astype(int)
+    )
+
+    # Categorize agents
+    def categorize_switcher(row):
+        if row["num_switches"] == 0:
+            return "Loyal (No switches)"
+        elif row["num_switches"] == 1:
+            return "Minor switcher (1 switch)"
+        elif row["num_switches"] == 2:
+            return "Moderate switcher (2 switches)"
+        else:
+            return "Major switcher (3+ switches)"
+
+    switcher_analysis["switcher_category"] = switcher_analysis.apply(
+        categorize_switcher, axis=1
+    )
+
+    return switcher_analysis
+
+
+def summarize_income_preferences(
+    switcher_analysis: pd.DataFrame,
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Create summary tables comparing income distribution by preference stability.
+
+    Args:
+        switcher_analysis: DataFrame from prepare_switcher_analysis with columns:
+            income_class, switched_any, and other switcher analysis columns.
+
+    Returns:
+        Tuple of (summary_df, count_long, share_long, composition_percent_long):
+        - summary_df: Wide-format comparison table with counts and percentages
+        - count_long: Long-format counts for plotting
+        - share_long: Long-format within-group shares for plotting
+        - composition_percent_long: Long-format within-income-class shares for plotting
+    """
+    # Create comparison table
+    switchers = switcher_analysis[switcher_analysis["switched_any"] == True]
+    maintainers = switcher_analysis[switcher_analysis["switched_any"] == False]
+
+    income_comparison = pd.DataFrame({
+        "Income Class": ["Low", "Medium-Low", "Medium", "Medium-High", "High"],
+    })
+
+    # Calculate counts and percentages for agents who changed preference
+    switcher_income_counts = switchers["income_class"].value_counts()
+    income_comparison["Changed Preference Count"] = (
+        income_comparison["Income Class"]
+        .map(switcher_income_counts)
+        .fillna(0)
+        .astype(int)
+    )
+    income_comparison["Changed Preference %"] = (
+        income_comparison["Changed Preference Count"] / len(switchers) * 100
+    ).round(1) if len(switchers) > 0 else 0.0
+
+    # Calculate counts and percentages for agents who maintained preference
+    maintainer_income_counts = maintainers["income_class"].value_counts()
+    income_comparison["Maintained Preference Count"] = (
+        income_comparison["Income Class"]
+        .map(maintainer_income_counts)
+        .fillna(0)
+        .astype(int)
+    )
+    income_comparison["Maintained Preference %"] = (
+        income_comparison["Maintained Preference Count"] / len(maintainers) * 100
+    ).round(1) if len(maintainers) > 0 else 0.0
+
+    # Calculate difference between groups (percentage points)
+    income_comparison["Diff Changed vs Maintained (pp)"] = (
+        income_comparison["Changed Preference %"]
+        - income_comparison["Maintained Preference %"]
+    ).round(1)
+
+    # Create long-format data for plotting
+    count_columns = {
+        "Changed Preference Count": "Changed Preference",
+        "Maintained Preference Count": "Maintained Preference",
+    }
+    share_columns = {
+        "Changed Preference %": "Changed Preference",
+        "Maintained Preference %": "Maintained Preference",
+    }
+
+    count_wide = income_comparison[["Income Class", *count_columns.keys()]].rename(
+        columns=count_columns
+    )
+    share_wide = income_comparison[["Income Class", *share_columns.keys()]].rename(
+        columns=share_columns
+    )
+
+    count_long = count_wide.melt(
+        id_vars="Income Class",
+        value_vars=list(count_columns.values()),
+        var_name="Preference Group",
+        value_name="Count",
+    )
+
+    share_long = share_wide.melt(
+        id_vars="Income Class",
+        value_vars=list(share_columns.values()),
+        var_name="Preference Group",
+        value_name="Share",
+    )
+
+    # Create within-income-class composition data
+    composition_summary = income_comparison.copy()
+    composition_summary["Total Agents"] = (
+        composition_summary["Changed Preference Count"]
+        + composition_summary["Maintained Preference Count"]
+    )
+
+    composition_long = composition_summary.melt(
+        id_vars=["Income Class", "Total Agents"],
+        value_vars=["Changed Preference Count", "Maintained Preference Count"],
+        var_name="Preference Group",
+        value_name="Count",
+    )
+
+    composition_long["Preference Group"] = composition_long["Preference Group"].replace({
+        "Changed Preference Count": "Changed Preference",
+        "Maintained Preference Count": "Maintained Preference",
+    })
+    composition_long["Percent"] = np.where(
+        composition_long["Total Agents"] > 0,
+        (composition_long["Count"] / composition_long["Total Agents"]) * 100,
+        0,
+    )
+
+    composition_percent_long = composition_long[
+        ["Income Class", "Preference Group", "Percent"]
+    ].copy()
+
+    return income_comparison, count_long, share_long, composition_percent_long
+
+
 __all__ = [
     "load_experiment_runs",
     "categorize_result",
@@ -503,4 +744,7 @@ __all__ = [
     "create_transition_matrix",
     "GroupDataset",
     "build_group_dataset",
+    "create_preference_ordering_table",
+    "prepare_switcher_analysis",
+    "summarize_income_preferences",
 ]

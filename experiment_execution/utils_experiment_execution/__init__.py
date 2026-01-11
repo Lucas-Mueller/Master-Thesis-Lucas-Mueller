@@ -50,6 +50,8 @@ from .constants import (
 )
 from .data_loading import (
     load_experiment_runs,
+    categorize_result,
+    fisher_freeman_halton_pvalue_r,
     extract_run_metrics,
     extract_vote_rounds,
     extract_rankings,
@@ -58,6 +60,9 @@ from .data_loading import (
     create_transition_matrix,
     GroupDataset,
     build_group_dataset,
+    create_preference_ordering_table,
+    prepare_switcher_analysis,
+    summarize_income_preferences,
 )
 
 __all__ = [
@@ -102,6 +107,8 @@ __all__ = [
     "WAVE_ORDER",
     # data_loading
     "load_experiment_runs",
+    "categorize_result",
+    "fisher_freeman_halton_pvalue_r",
     "extract_run_metrics",
     "extract_vote_rounds",
     "extract_rankings",
@@ -110,5 +117,8 @@ __all__ = [
     "create_transition_matrix",
     "GroupDataset",
     "build_group_dataset",
+    "create_preference_ordering_table",
+    "prepare_switcher_analysis",
+    "summarize_income_preferences",
 ]
 
