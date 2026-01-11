@@ -77,7 +77,7 @@ Agents discuss and reach consensus:
 
 ---
 
-## Related Files
+## Related Code
 
 - `core/experiment_manager.py` - Orchestrates both phases
 - `core/phase1_manager.py` - Phase 1 implementation
@@ -85,8 +85,8 @@ Agents discuss and reach consensus:
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Deep Dive Phase 1**: [02_phase1_process_flow.md](./02_phase1_process_flow.md)
-- **Deep Dive Phase 2**: [03_phase2_process_flow.md](./03_phase2_process_flow.md)
-- **Service Architecture**: [04_phase1_service_sequence.md](./04_phase1_service_sequence.md)
+- **[02] Phase 1 Process Flow**: Deep dive into individual deliberation
+- **[03] Phase 2 Process Flow**: Deep dive into group discussion
+- **[04] Phase 1 Service Sequence**: Technical service interactions

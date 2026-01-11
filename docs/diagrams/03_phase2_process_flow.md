@@ -284,7 +284,7 @@ Phase2Results:
 
 ---
 
-## Related Files
+## Related Code
 
 - `core/phase2_manager.py` - Phase 2 orchestration
 - `core/services/speaking_order_service.py` - Turn management
@@ -295,9 +295,9 @@ Phase2Results:
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Discussion Details**: [05_discussion_round_detailed.md](./05_discussion_round_detailed.md)
-- **Voting Details**: [06_voting_detailed.md](./06_voting_detailed.md)
-- **Data Models**: [07_data_models.md](./07_data_models.md)
-- **Phase 1 Process**: [02_phase1_process_flow.md](./02_phase1_process_flow.md)
+- **[05] Discussion Round Detailed**: Detailed sequence for discussion and memory
+- **[06] Voting Detailed**: Detailed sequence for voting process
+- **[07] Data Models**: Core data structures reference
+- **[02] Phase 1 Process Flow**: Individual deliberation process (Phase 1)

@@ -259,7 +259,7 @@ This step is **critical** for understanding preference evolution:
 
 ---
 
-## Related Files
+## Related Code
 
 - `core/phase1_manager.py` - Complete orchestration (lines 199-625)
 - `experiment_agents/participant_agent.py` - Agent implementation
@@ -270,8 +270,8 @@ This step is **critical** for understanding preference evolution:
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Phase 2 Service Details**: [05_discussion_round_detailed.md](./05_discussion_round_detailed.md)
-- **Data Models**: [07_data_models.md](./07_data_models.md)
-- **High-Level Process**: [02_phase1_process_flow.md](./02_phase1_process_flow.md)
+- **[05] Discussion Round Detailed**: Detailed sequence for discussion and memory
+- **[07] Data Models**: Core data structures reference
+- **[02] Phase 1 Process Flow**: Individual deliberation process (Phase 1)

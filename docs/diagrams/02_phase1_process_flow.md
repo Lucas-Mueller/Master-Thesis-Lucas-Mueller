@@ -165,7 +165,7 @@ Phase1Results:
 
 ---
 
-## Related Files
+## Related Code
 
 - `core/phase1_manager.py` - Complete Phase 1 orchestration
 - `experiment_agents/participant_agent.py` - Agent implementation
@@ -174,8 +174,8 @@ Phase1Results:
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Phase 2 Process**: [03_phase2_process_flow.md](./03_phase2_process_flow.md)
-- **Service Details**: [04_phase1_service_sequence.md](./04_phase1_service_sequence.md)
-- **Data Models**: [07_data_models.md](./07_data_models.md)
+- **[03] Phase 2 Process Flow**: Group discussion process (Phase 2)
+- **[04] Phase 1 Service Sequence**: Technical service interactions for Phase 1
+- **[07] Data Models**: Core data structures reference

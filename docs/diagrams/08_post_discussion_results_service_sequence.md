@@ -360,7 +360,7 @@ phase2_results = Phase2Results(
 
 ---
 
-## Related Files
+## Related Code
 
 - `core/services/counterfactuals_service.py` - Complete service implementation
 - `core/services/memory_service.py` - Memory update logic
@@ -372,9 +372,9 @@ phase2_results = Phase2Results(
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Voting Process Details**: [06_voting_detailed.md](./06_voting_detailed.md)
-- **Discussion Round Details**: [05_discussion_round_detailed.md](./05_discussion_round_detailed.md)
-- **Data Models**: [07_data_models.md](./07_data_models.md)
-- **High-Level Architecture**: [TECHNICAL_ARCHITECTURE.md](../../TECHNICAL_ARCHITECTURE.md)
+- **[06] Voting Detailed**: Detailed sequence for voting process
+- **[05] Discussion Round Detailed**: Detailed sequence for discussion and memory
+- **[07] Data Models**: Core data structures reference
+- **[TECHNICAL_ARCHITECTURE]**: High-Level Architecture Overview

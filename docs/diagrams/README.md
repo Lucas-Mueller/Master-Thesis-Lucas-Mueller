@@ -30,6 +30,7 @@ This directory contains comprehensive visual documentation for the Frohlich Expe
 | 05 | [Discussion Round Detailed](05_discussion_round_detailed.md) | Complete discussion workflow with memory management | Developers, Debugging |
 | 06 | [Voting Process Detailed](06_voting_detailed.md) | Four-phase voting with multilingual support | Developers, Debugging |
 | 07 | [Data Models](07_data_models.md) | Core data structures and relationships | Developers |
+| 08 | [Post-Discussion Results](08_post_discussion_results_service_sequence.md) | Results calculation, delivery, and final ranking | Developers |
 
 ---
 
@@ -223,6 +224,7 @@ Before committing diagram changes:
 | **2** | 05 | [05_discussion_round_detailed.md](05_discussion_round_detailed.md) | Discussion Round Detailed | High |
 | **2** | 06 | [06_voting_detailed.md](06_voting_detailed.md) | Voting Process Detailed | High |
 | **2** | 07 | [07_data_models.md](07_data_models.md) | Core Data Models | Medium |
+| **2** | 08 | [08_post_discussion_results_service_sequence.md](08_post_discussion_results_service_sequence.md) | Post-Discussion Results Service Sequence | Medium |
 
 ---
 
@@ -239,4 +241,4 @@ These diagrams are successful if:
 
 *Last Updated*: 2025-01-14
 *Diagram Structure*: 2-Layer (01-07)
-*Total Diagrams*: 7 (3 Layer 1 + 4 Layer 2)
+*Total Diagrams*: 8 (3 Layer 1 + 5 Layer 2)

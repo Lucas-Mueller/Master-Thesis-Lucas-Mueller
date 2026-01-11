@@ -512,7 +512,7 @@ flowchart LR
 
 ---
 
-## Related Files
+## Related Code
 
 **Data Models**:
 - `models/phase1_models.py` - Phase1Results, ApplicationRoundResult
@@ -527,8 +527,9 @@ flowchart LR
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Phase 1 Process**: [02_phase1_process_flow.md](./02_phase1_process_flow.md)
-- **Phase 2 Process**: [03_phase2_process_flow.md](./03_phase2_process_flow.md)
-- **Service Details**: [04_phase1_service_sequence.md](./04_phase1_service_sequence.md), [05_discussion_round_detailed.md](./05_discussion_round_detailed.md)
+- **[02] Phase 1 Process Flow**: Individual deliberation process (Phase 1)
+- **[03] Phase 2 Process Flow**: Group discussion process (Phase 2)
+- **[04] Phase 1 Service Sequence**: Technical service interactions for Phase 1
+- **[05] Discussion Round Detailed**: Detailed sequence for discussion and memory

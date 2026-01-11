@@ -336,7 +336,7 @@ Round Complete → Proceed to Voting Attempt
 
 ---
 
-## Related Files
+## Related Code
 
 - `core/phase2_manager.py` - Discussion orchestration (lines 677-900)
 - `core/services/speaking_order_service.py` - Turn management
@@ -346,8 +346,8 @@ Round Complete → Proceed to Voting Attempt
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Voting Details**: [06_voting_detailed.md](./06_voting_detailed.md)
-- **High-Level Process**: [03_phase2_process_flow.md](./03_phase2_process_flow.md)
-- **Data Models**: [07_data_models.md](./07_data_models.md)
+- **[06] Voting Detailed**: Detailed sequence for voting process
+- **[03] Phase 2 Process Flow**: Group discussion process (Phase 2)
+- **[07] Data Models**: Core data structures reference

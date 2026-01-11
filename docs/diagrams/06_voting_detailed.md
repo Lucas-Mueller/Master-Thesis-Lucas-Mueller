@@ -447,7 +447,7 @@ constraint_tolerance: 0.05              # Constraint comparison tolerance
 
 ---
 
-## Related Files
+## Related Code
 
 **Core Implementation**:
 - `core/services/voting_service.py` - Main voting orchestration
@@ -464,8 +464,8 @@ constraint_tolerance: 0.05              # Constraint comparison tolerance
 
 ---
 
-## Next Steps
+## Related Documentation
 
-- **Discussion Details**: [05_discussion_round_detailed.md](./05_discussion_round_detailed.md)
-- **Data Models**: [07_data_models.md](./07_data_models.md)
-- **High-Level Process**: [03_phase2_process_flow.md](./03_phase2_process_flow.md)
+- **[05] Discussion Round Detailed**: Detailed sequence for discussion and memory
+- **[07] Data Models**: Core data structures reference
+- **[03] Phase 2 Process Flow**: Group discussion process (Phase 2)
