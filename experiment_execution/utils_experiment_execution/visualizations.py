@@ -1204,7 +1204,7 @@ def plot_long_term_margin(
     fig_sizes: Optional[FigureSizeMap] = None,
     principle_display_order: Sequence[str],
     format_principle_label: FormatLabelFunc,
-    title_suffix: str,
+    title_suffix: str = "",
     title: Optional[str] = None,
 ) -> None:
     """Plot counts heatmap with margin totals for long-term stability."""
@@ -1239,7 +1239,13 @@ def plot_long_term_margin(
         linecolor="white",
         vmin=0,
         cbar_kws={"shrink": 0.9},
+        annot_kws={"size": font_sizes["annotation"]},
     )
+    
+    # Explicitly set colorbar tick label len
+    if len(ax.collections) > 0:
+        cbar = ax.collections[0].colorbar
+        cbar.ax.tick_params(labelsize=font_sizes["legend"])
     ax.set_xlabel("Final Preference", fontsize=font_sizes["axis_label"], labelpad=8)
     ax.set_ylabel("Initial Preference", fontsize=font_sizes["axis_label"], labelpad=8)
     ax.set_xticklabels(
@@ -1292,18 +1298,22 @@ def plot_long_term_margin(
 
     ax.set_ylim(len(principle_display_order), 0)
     ax.set_xlim(0, num_cols + 0.2)
+    
+    # Resolve title: explicit title > title_suffix generated > None
+    figure_title = title
+    if figure_title is None and title_suffix:
+         figure_title = f"Long-Term Stability (Counts + Margins) ({title_suffix})"
 
-    figure_title = _resolve_title(
-        title,
-        f"Long-Term Stability (Counts + Margins) ({title_suffix})",
-    )
-    fig.suptitle(
-        figure_title,
-        fontsize=font_sizes["title"],
-        fontweight="bold",
-        y=0.98,
-    )
-    fig.tight_layout(rect=[0, 0, 1, 0.92])
+    if figure_title:
+        fig.suptitle(
+            figure_title,
+            fontsize=font_sizes["title"],
+            fontweight="bold",
+            y=0.98,
+        )
+        fig.tight_layout(rect=[0, 0, 1, 0.92])
+    else:
+        fig.tight_layout()
     plt.show()
     plt.close(fig)
 
@@ -1452,6 +1462,9 @@ def plot_long_term_counts_grid(
     fig_sizes: Optional[FigureSizeMap] = None,
     colorbar_mode: str = "per-axis",
     axis_title_fontsize: Optional[float] = None,
+    wspace: float = 0.12,
+    cbar_space: float = 0.02,
+    right_margin: float = 0.92,
 ) -> None:
     """Render counts-only stability heatmaps for multiple cohorts."""
     colors = colors or COLORS
@@ -1506,20 +1519,20 @@ def plot_long_term_counts_grid(
 
     adjust_kwargs: Dict[str, float] = {}
     if orientation == "horizontal":
-        adjust_kwargs["wspace"] = 0.12
+        adjust_kwargs["wspace"] = wspace
     else:
         adjust_kwargs["hspace"] = 0.35
 
     cbar_ax = None
     colorbar_norm = None
     if colorbar_mode == "shared" and data_max > 0:
-        adjust_kwargs["right"] = 0.92
+        adjust_kwargs["right"] = right_margin
         colorbar_norm = mcolors.Normalize(vmin=0, vmax=data_max if data_max > 0 else 1)
 
     if adjust_kwargs:
         fig.subplots_adjust(**adjust_kwargs)
     if colorbar_mode == "shared" and data_max > 0:
-        cbar_ax = fig.add_axes([0.92, 0.2, 0.02, 0.6])
+        cbar_ax = fig.add_axes([right_margin + cbar_space, 0.2, 0.02, 0.6])
 
     for idx, ((label, transition_df), counts, ax) in enumerate(
         zip(transition_datasets, valid_counts, axes_flat)
@@ -1543,7 +1556,6 @@ def plot_long_term_counts_grid(
         else:
             show_cbar = False
             heatmap_kwargs = {}
-        annot_font = max(6, int(font_sizes["annotation"] * 0.9))
         sns.heatmap(
             counts,
             annot=True,
@@ -1555,7 +1567,7 @@ def plot_long_term_counts_grid(
             linecolor="white",
             vmin=0,
             vmax=data_max if data_max > 0 else None,
-            annot_kws={"fontsize": annot_font},
+            annot_kws={"size": font_sizes["annotation"]},
             **heatmap_kwargs,
         )
         ax.set_aspect("equal", adjustable="box")
@@ -1581,7 +1593,7 @@ def plot_long_term_counts_grid(
             fontsize=font_sizes["annotation"],
         )
         if colorbar_mode == "per-axis" and show_cbar:
-            ax.collections[0].colorbar.ax.tick_params(labelsize=font_sizes["tick_label"])
+            ax.collections[0].colorbar.ax.tick_params(labelsize=font_sizes["legend"])
 
         row_totals = counts.sum(axis=1)
         col_totals = counts.sum(axis=0)
@@ -1629,7 +1641,8 @@ def plot_long_term_counts_grid(
     if colorbar_mode == "shared" and data_max > 0 and cbar_ax is not None:
         sm = ScalarMappable(norm=colorbar_norm, cmap="Greens")
         sm.set_array([])
-        fig.colorbar(sm, cax=cbar_ax)
+        cbar = fig.colorbar(sm, cax=cbar_ax)
+        cbar.ax.tick_params(labelsize=font_sizes["legend"])
 
     if title is not None:
         fig.suptitle(title, fontsize=font_sizes["title"], fontweight="bold", y=0.96)
