@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import warnings
 from matplotlib.patches import Patch
 
 from .style import COLORS, FIG_SIZES, FONT_SIZES
@@ -1646,9 +1647,13 @@ def plot_long_term_counts_grid(
 
     if title is not None:
         fig.suptitle(title, fontsize=font_sizes["title"], fontweight="bold", y=0.96)
-        fig.tight_layout(rect=[0, 0, 0.93 if colorbar_mode == "shared" else 1, 0.92])
+        rect_param = [0, 0, 0.93 if colorbar_mode == "shared" else 1, 0.92]
     else:
-        fig.tight_layout(rect=[0, 0, 0.93 if colorbar_mode == "shared" else 1, 1])
+        rect_param = [0, 0, 0.93 if colorbar_mode == "shared" else 1, 1]
+    
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        fig.tight_layout(rect=rect_param)
     plt.show()
     plt.close(fig)
 
