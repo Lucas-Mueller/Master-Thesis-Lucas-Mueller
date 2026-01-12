@@ -768,7 +768,7 @@ All configurations are validated via Pydantic models:
 
 ### For Multilingual Support
 
-- [CLAUDE.md](./CLAUDE.md#multi-language-support) - Language system overview
+- [README.md](./README.md) - Project overview
 - Code: `utils/language_manager.py`
 - Templates: `translations/{language}/` directories
 

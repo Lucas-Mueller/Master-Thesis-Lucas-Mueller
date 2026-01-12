@@ -188,7 +188,7 @@ Before committing diagram changes:
 
 - **[TECHNICAL_README.md](../../TECHNICAL_README.md)**: Complete technical documentation with 2-layer structure
 - **[README.md](../../README.md)**: Project overview and quick start
-- **[CLAUDE.md](../../CLAUDE.md)**: Developer guide and conventions
+
 
 ---
 
