@@ -94,8 +94,8 @@ FONT_SIZES: FontSizeMap = {
     "annotation": 9,
 }
 
-# Use a standard font available on most systems to ensure portability
-FONT_FAMILY = "sans-serif"
+# User requested Linux Libertine
+FONT_FAMILY = "serif"
 
 
 def _register_fonts() -> None:
@@ -104,7 +104,7 @@ def _register_fonts() -> None:
     if not font_dir.exists():
         return
 
-    for font_file in font_dir.glob("*.otf"):
+    for font_file in list(font_dir.glob("*.otf")) + list(font_dir.glob("*.ttf")):
         try:
             fm.fontManager.addfont(str(font_file))
         except Exception:
@@ -136,6 +136,9 @@ def _palette_hex() -> List[str]:
 
 def apply_theme() -> None:
     """Apply rcParams and seaborn defaults for an accessible visual identity."""
+    # Apply seaborn theme first to avoid overwriting custom rcParams
+    sns.set_theme(style="whitegrid", context="paper", palette=_palette_hex())
+    
     _register_fonts()
     plt.rcParams.update(
         {
@@ -163,13 +166,14 @@ def apply_theme() -> None:
             "legend.fontsize": FONT_SIZES["legend"],
             "legend.framealpha": 0.95,
             "legend.edgecolor": COLORS["medium_gray"],
-            "font.family": FONT_FAMILY,
+            "font.family": "serif",
+            "text.usetex": True,
+            "text.latex.preamble": r"\usepackage{libertine}",
             "text.color": COLORS["text_main"],
             "axes.spines.top": False,
             "axes.spines.right": False,
         }
     )
-    sns.set_theme(style="whitegrid", context="paper", palette=_palette_hex())
 
 
 def format_principle_label(name: str) -> str:

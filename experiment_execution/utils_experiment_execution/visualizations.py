@@ -15,9 +15,11 @@ import seaborn as sns
 import warnings
 from matplotlib.patches import Patch
 
-from .style import COLORS, FIG_SIZES, FONT_SIZES
+from .style import COLORS, FIG_SIZES, FONT_SIZES, apply_theme
 import matplotlib.colors as mcolors
 from matplotlib.cm import ScalarMappable
+
+apply_theme()
 
 
 ColorMap = Dict[str, str]
@@ -147,7 +149,7 @@ def plot_income_preference_bars(
                 label = f"{value:.0f}"
                 offset = 0.5
             else:
-                label = f"{value:.1f}%"
+                label = f"{value:.1f}\%"
                 offset = 1.0
             ax.text(
                 value + offset,
@@ -282,7 +284,7 @@ def plot_income_composition(
         fontweight="bold",
         pad=8,
     )
-    axes[1].set_xlabel("Share of Income Class (%)", fontsize=font_sizes["axis_label"], labelpad=6)
+    axes[1].set_xlabel("Share of Income Class (\%)", fontsize=font_sizes["axis_label"], labelpad=6)
     axes[1].set_ylabel("")
     axes[1].set_xlim(0, 115)
     axes[1].grid(axis="x", color=colors["light_gray"], linewidth=0.6)
@@ -308,7 +310,7 @@ def plot_income_composition(
         axes[1].text(
             x,
             y,
-            f"{percent:.0f}%",
+            f"{percent:.0f}\%",
             va="center",
             ha=ha,
             fontsize=font_sizes["annotation"] + 1,
@@ -654,7 +656,7 @@ def plot_floor_constraint_distribution_grouped(
     def _format_bin_label(lower: float, upper: float) -> str:
         lower_k = lower / 1000
         upper_k = upper / 1000
-        return f"${lower_k:.0f}k–${upper_k:.0f}k"
+        return f"\${lower_k:.0f}k–\${upper_k:.0f}k"
 
     bin_labels = [_format_bin_label(bin_edges[i], bin_edges[i + 1]) for i in range(num_bins)]
 
@@ -697,8 +699,8 @@ def plot_floor_constraint_distribution_grouped(
     def format_constraint(amount: float) -> str:
         amount_k = amount / 1000
         if abs(amount_k - round(amount_k)) < 1e-6:
-            return f"${int(round(amount_k))}k"
-        return f"${amount_k:.1f}k"
+            return f"\${int(round(amount_k))}k"
+        return f"\${amount_k:.1f}k"
 
     max_count = 0
     for idx, label in enumerate(ordered_labels):
@@ -745,7 +747,7 @@ def plot_floor_constraint_distribution_grouped(
     ax.set_ylabel("Number of Runs", fontsize=font_sizes["axis_label"], labelpad=10)
     ax.set_xticks(x)
     if use_amount_scale_xticks:
-        scale_labels = [f"${int(round(bin_edges[i + 1] / 1000))}k" for i in range(num_bins)]
+        scale_labels = [f"\${int(round(bin_edges[i + 1] / 1000))}k" for i in range(num_bins)]
         ax.set_xticklabels(scale_labels)
     else:
         ax.set_xticklabels(bin_labels)
@@ -815,7 +817,7 @@ def plot_floor_constraint_distribution(
                 color=colors["dark_gray"],
             )
     ax.set_xticks(bins)
-    ax.set_xticklabels([f"${int(b/1000)}k" for b in bins])
+    ax.set_xticklabels([f"\${int(b/1000)}k" for b in bins])
     ax.set_xlabel("Floor Constraint Amount", fontsize=font_sizes["axis_label"], labelpad=10)
     ax.set_ylabel("Number of Runs", fontsize=font_sizes["axis_label"], labelpad=10)
     ax.set_ylim(0, counts.max() + 2.5)
@@ -1040,7 +1042,7 @@ def plot_transition_heatmaps(
             for j, col_label in enumerate(matrix.columns):
                 count = matrix.iloc[i, j]
                 pct = matrix_pct.iloc[i, j]
-                text = f"{int(count)}\\n({pct:.0f}%)" if count > 0 and not np.isnan(pct) else ""
+                text = f"{int(count)}\\n({pct:.0f}\%)" if count > 0 and not np.isnan(pct) else ""
                 weight = "bold" if i == j and count > 0 else "normal"
                 color = "white" if count > matrix.values.max() * 0.6 else colors["dark_gray"]
                 ax.text(
@@ -1150,7 +1152,7 @@ def plot_long_term_stability(
     )
     axes[1].set_title("Percentages", fontsize=font_sizes["subtitle"], fontweight="bold", pad=8)
     for text in axes[1].texts:
-        text.set_text(text.get_text() + "%")
+        text.set_text(text.get_text() + "\%")
 
     for ax in axes:
         ax.set_xlabel("Final Preference", fontsize=font_sizes["axis_label"], labelpad=8)
@@ -1427,7 +1429,7 @@ def plot_long_term_stability_grid(
             pad=8,
         )
         for text in ax_percent.texts:
-            text.set_text(text.get_text() + "%")
+            text.set_text(text.get_text() + "\%")
         ax_percent.set_xlabel("Final Preference", fontsize=font_sizes["axis_label"], labelpad=8)
         ax_percent.set_ylabel("")
         ax_percent.set_xticklabels(
