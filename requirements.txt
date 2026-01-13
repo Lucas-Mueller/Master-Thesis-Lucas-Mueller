@@ -29,3 +29,4 @@ pydocstyle
 # R programming language 
 # R package "languageserver" 
 # Python 3.11+    
+scienceplots

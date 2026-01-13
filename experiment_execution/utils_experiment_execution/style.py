@@ -18,48 +18,46 @@ from typing import Dict, Iterable, List
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import seaborn as sns
+import scienceplots  # Register scienceplots styles
+
+# Configuration for scienceplots styles
+# e.g. ['science', 'ieee'] for IEEE standard, or ['science', 'nature'] for Nature
+# Styles to apply (in order). 
+# 'std-colors' provides the vibrant color cycle (Blue, Green, Orange, Red, Purple...)
+SCIENCE_PLOT_STYLES: List[str] = ["science", "ieee", "std-colors"]
 
 ColorMap = Dict[str, str]
 FontSizeMap = Dict[str, int]
 FigureSizeMap = Dict[str, tuple[float, float]]
 
-# Okabe-Ito Color Palette (Color-blind friendly)
-# Source: Wong, B. (2011). Points of view: Color blindness. Nature Methods, 8(6), 441.
+# Map semantic keys to the SciencePlots 'std-colors' cycle (C0, C1, etc.)
+# C0: Blue (#0C5DA5) - Primary / Neutral
+# C1: Green (#00B945) - Positive / Stayed
+# C2: Orange (#FF9500) - Warning / Switched / Difference
+# C3: Red (#FF2C00) - Error / Negative
+# C4: Purple (#845B97) - Secondary
 COLORS: ColorMap = {
+    # Semantics
+    "primary_blue": "C0",    # was #0072B2 (Okabe Blue)
+    "primary_green": "C1",   # was #009E73 (Okabe Green)
+    "primary_orange": "C2",  # New: Orange for warning/difference
+    "primary_red": "C3",     # was #D55E00 (Okabe Red)
+    "reddish_purple": "C4",  # New: Purple for secondary accent
+    "light_gray": "#E6E6E6", # Keep grays hardcoded as they aren't in the cycle usually
+    "medium_gray": "#999999",
+    "dark_gray": "#333333",
     "black": "#000000",
-    "orange": "#E69F00",
-    "sky_blue": "#56B4E9",
-    "bluish_green": "#009E73",
-    "yellow": "#F0E442",
-    "blue": "#0072B2",
-    "vermilion": "#D55E00",
-    "reddish_purple": "#CC79A7",
-    "grey": "#999999",
     "white": "#FFFFFF",
     
-    # Semantic aliases
-    "primary": "#000000",
-    "secondary": "#575757",
-    "background": "#FFFFFF",
-    "grid": "#E0E0E0",
-    
-    # Text colors
+    # Text/Grid
     "text_main": "#000000",
     "text_light": "#575757",
+    "grid": "#E0E0E0",
+    "background": "#FFFFFF",
     
-    # Plotting aliases for compatibility and semantic usage
-    "primary_green": "#009E73",  # Mapped to Bluish Green
-    "primary_blue": "#0072B2",   # Mapped to Blue
-    "primary_orange": "#E69F00", # Mapped to Orange
-    "accent_1": "#F0E442",       # Mapped to Yellow
-    "dark_gray": "#333333",
-    "medium_gray": "#777777",
-    "light_gray": "#E0E0E0",
-    
-    # Specific outcomes
-    "stayed": "#009E73",    # Bluish Green
-    "switched": "#D55E00",  # Vermilion (High contrast to bluish green)
-    "highlight": "#009E73", # Bluish Green
+    # Domain-specific
+    "stayed": "C1",          # Green for stability/consensus
+    "switched": "C2",        # Orange for change/instability (Visual distinction from C1)
 }
 
 PRINCIPLE_COLORS: ColorMap = {
@@ -135,41 +133,60 @@ def _palette_hex() -> List[str]:
 
 
 def apply_theme() -> None:
-    """Apply rcParams and seaborn defaults for an accessible visual identity."""
+    """Apply RC params from scienceplots and our custom overrides."""
     _register_fonts()
+    
+    # 1. Apply scienceplots styles first (if configured)
+    # This sets strict academic standards (fonts, ticks, sizes)
+    if SCIENCE_PLOT_STYLES:
+        plt.style.use(SCIENCE_PLOT_STYLES)
+
+    # 2. Apply project-specific identity (colors, accessibility)
+    # We override only what's necessary to maintain our color identity
+    # while respecting the structural styling of scienceplots.
     plt.rcParams.update(
         {
             "figure.dpi": 300,
             "savefig.dpi": 300,
-            "figure.facecolor": COLORS["background"],
-            "axes.facecolor": COLORS["background"],
+            # We keep our background colors? Scienceplots usually assumes white.
+            # "figure.facecolor": COLORS["background"],
+            # "axes.facecolor": COLORS["background"],
+            
             "axes.edgecolor": COLORS["medium_gray"],
-            "axes.linewidth": 1.0,
-            "axes.labelsize": FONT_SIZES["axis_label"],
-            "axes.titlesize": FONT_SIZES["title"],
+            "axes.linewidth": 0.8, # Slightly thinner to match science style usually
+            
+            # Keep our accessible font sizes if they don't conflict too largely
+            # Scienceplots often sets these specifically for column widths.
+            # We'll trust scienceplots for sizes unless we really need to force them.
+            # "axes.labelsize": FONT_SIZES["axis_label"],
+            
             "axes.titleweight": "bold",
-            "axes.labelweight": "normal",
             "axes.labelcolor": COLORS["text_main"],
-            "axes.grid": True,
-            "axes.grid.axis": "y",
-            "grid.alpha": GRID_ALPHA,
-            "grid.linewidth": GRID_LINEWIDTH,
-            "grid.linestyle": GRID_LINESTYLE,
-            "grid.color": COLORS["grid"],
-            "xtick.labelsize": FONT_SIZES["tick_label"],
-            "ytick.labelsize": FONT_SIZES["tick_label"],
+            
+            # Scienceplots 'ieee' style usually has no grid. 
+            # Uncomment if we explicitly want to force the grid back on.
+            # "axes.grid": True,
+            # "axes.grid.axis": "y",
+            # "grid.alpha": GRID_ALPHA,
+            # "grid.linewidth": GRID_LINEWIDTH,
+            # "grid.linestyle": GRID_LINESTYLE,
+            # "grid.color": COLORS["grid"],
+            
             "xtick.color": COLORS["text_main"],
             "ytick.color": COLORS["text_main"],
-            "legend.fontsize": FONT_SIZES["legend"],
-            "legend.framealpha": 0.95,
-            "legend.edgecolor": COLORS["medium_gray"],
-            "font.family": FONT_FAMILY,
             "text.color": COLORS["text_main"],
-            "axes.spines.top": False,
-            "axes.spines.right": False,
+            
+            # Ensure we don't accidentally override the font family scienceplots just set
+            # "font.family": FONT_FAMILY,
         }
     )
-    sns.set_theme(style="whitegrid", context="paper", palette=_palette_hex())
+    
+    # Set seaborn theme but try to preserve the style we just set
+    # sns.set_theme often resets matplotlib rcParams. 
+    # NOTE: We use set_context instead of set_theme to avoid overriding the 
+    # detailed rcParams set by scienceplots. We DO NOT set the palette here,
+    # relying on the 'std-colors' style cycle instead.
+    sns.set_context("paper", font_scale=1.0)
 
 
 def format_principle_label(name: str) -> str:
