@@ -13,11 +13,12 @@ Design System Notes
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Dict, Iterable, List, Optional
 
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import seaborn as sns
+import scienceplots  # Required for v2.0.0+
 
 ColorMap = Dict[str, str]
 FontSizeMap = Dict[str, int]
@@ -62,12 +63,10 @@ COLORS: ColorMap = {
     "highlight": "#009E73", # Bluish Green
 }
 
-PRINCIPLE_COLORS: ColorMap = {
-    "Max Avg Income": COLORS["primary_green"],
-    "Max Avg + Floor": COLORS["primary_blue"],
-    "Max Avg + Range": COLORS["primary_orange"],
-    "Max Floor": COLORS["reddish_purple"], # Distinct from others
-}
+# Delegate color assignment to scienceplots default cycle
+# Colors are automatically assigned from plt.rcParams['axes.prop_cycle']
+# This provides colorblind-safe colors without manual mapping (IEEE compliant)
+PRINCIPLE_COLORS: Optional[ColorMap] = None
 
 PRINCIPLE_DISPLAY_NAMES: Dict[str, str] = {
     "Max Avg Income": "Max. Avg. Income",
@@ -111,12 +110,17 @@ def _register_fonts() -> None:
             pass
 
 
+# IEEE Publication Standards
+# Single-column: 3.5 inches | Double-column: 7.16 inches
+# Aspect ratios: 4:3 (default), 3:2, or custom
 FIG_SIZES: FigureSizeMap = {
-    "single": (9, 5),
-    "double": (12, 5),
-    "triple": (14, 5),
-    "wide_single": (11, 5),
-    "tall": (9, 7),
+    "single": (3.5, 2.625),      # IEEE single-column (4:3 ratio)
+    "double": (7.16, 5.37),      # IEEE double-column (4:3 ratio)
+    "triple": (7.16, 2.5),       # IEEE triple-panel (full width, compact)
+    "single_tall": (3.5, 4.0),   # IEEE single-column portrait
+    "double_wide": (7.16, 3.5),  # IEEE double-column landscape
+    "tall": (3.5, 4.5),          # IEEE single-column extra tall
+    "wide_single": (7.16, 3.5),  # Alias for double_wide
 }
 
 GRID_ALPHA = 0.3
@@ -135,41 +139,28 @@ def _palette_hex() -> List[str]:
 
 
 def apply_theme() -> None:
-    """Apply rcParams and seaborn defaults for an accessible visual identity."""
-    _register_fonts()
-    plt.rcParams.update(
-        {
-            "figure.dpi": 300,
-            "savefig.dpi": 300,
-            "figure.facecolor": COLORS["background"],
-            "axes.facecolor": COLORS["background"],
-            "axes.edgecolor": COLORS["medium_gray"],
-            "axes.linewidth": 1.0,
-            "axes.labelsize": FONT_SIZES["axis_label"],
-            "axes.titlesize": FONT_SIZES["title"],
-            "axes.titleweight": "bold",
-            "axes.labelweight": "normal",
-            "axes.labelcolor": COLORS["text_main"],
-            "axes.grid": True,
-            "axes.grid.axis": "y",
-            "grid.alpha": GRID_ALPHA,
-            "grid.linewidth": GRID_LINEWIDTH,
-            "grid.linestyle": GRID_LINESTYLE,
-            "grid.color": COLORS["grid"],
-            "xtick.labelsize": FONT_SIZES["tick_label"],
-            "ytick.labelsize": FONT_SIZES["tick_label"],
-            "xtick.color": COLORS["text_main"],
-            "ytick.color": COLORS["text_main"],
-            "legend.fontsize": FONT_SIZES["legend"],
-            "legend.framealpha": 0.95,
-            "legend.edgecolor": COLORS["medium_gray"],
-            "font.family": FONT_FAMILY,
-            "text.color": COLORS["text_main"],
-            "axes.spines.top": False,
-            "axes.spines.right": False,
-        }
-    )
-    sns.set_theme(style="whitegrid", context="paper", palette=_palette_hex())
+    """
+    Apply SciencePlots 'science' + 'ieee' styles for IEEE journal compliance.
+
+    IEEE Style Characteristics:
+    - Single-column figure width (3.5" IEEE standard)
+    - Black-and-white compatible color cycles
+    - LaTeX rendering for professional typography
+    - 600 DPI for publication quality
+
+    Note: Requires LaTeX installation for full rendering.
+    """
+    _register_fonts()  # Keep custom fonts available for LaTeX compatibility
+
+    # Apply scienceplots base styles (science + IEEE)
+    plt.style.use(['science', 'ieee'])
+
+    # Override specific settings for thesis needs
+    plt.rcParams.update({
+        "figure.dpi": 600,           # IEEE publication standard (600 DPI)
+        "savefig.dpi": 600,          # Match figure DPI
+        "figure.figsize": (3.5, 2.625),  # IEEE single-column width (4:3 ratio)
+    })
 
 
 def format_principle_label(name: str) -> str:

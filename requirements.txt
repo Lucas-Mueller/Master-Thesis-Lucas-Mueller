@@ -6,6 +6,7 @@ PyYAML
 numpy
 matplotlib
 seaborn
+scienceplots
 tqdm
 scipy
 pytest-regressions
@@ -25,6 +26,9 @@ sphinx>=7.0.0
 sphinx-rtd-theme
 furo
 pydocstyle
+
+
+scienceplots
 
 # R programming language 
 # R package "languageserver" 

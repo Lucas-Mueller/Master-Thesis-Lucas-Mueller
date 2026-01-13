@@ -249,7 +249,53 @@ TEST_CONFIG_OVERRIDE=config/test_ultra_fast.yaml  # Override configuration globa
 # R package "languageserver" is also recommended
 
 # Python 3.11+ is required
+
+# LaTeX installation (required for scienceplots IEEE styling)
+# Already installed on system: /Library/TeX/texbin/latex
 ```
+
+### Visualization System (SciencePlots + IEEE Styling)
+
+The project uses **SciencePlots** for IEEE journal-ready publication figures.
+
+**Key Features:**
+- **IEEE Compliance**: Single-column (3.5") and double-column (7.16") figure sizes
+- **High Resolution**: 600 DPI for publication quality
+- **LaTeX Rendering**: Professional typography for labels and equations
+- **Colorblind-Safe**: Automatic color cycling from professionally validated palette
+
+**Theme Application:**
+```python
+from experiment_execution.utils_experiment_execution import apply_theme
+import matplotlib.pyplot as plt
+
+# Apply IEEE theme once at notebook start
+apply_theme()
+
+# All subsequent plots use IEEE styling automatically
+fig, ax = plt.subplots()
+ax.plot(x, y)
+plt.savefig('figure.pdf', dpi=600, bbox_inches='tight')
+```
+
+**Figure Size Presets (IEEE Standards):**
+- `FIG_SIZES["single"]`: (3.5, 2.625) - IEEE single-column
+- `FIG_SIZES["double"]`: (7.16, 5.37) - IEEE double-column
+- `FIG_SIZES["single_tall"]`: (3.5, 4.0) - Portrait orientation
+- `FIG_SIZES["double_wide"]`: (7.16, 3.5) - Landscape orientation
+
+**Color System:**
+- `PRINCIPLE_COLORS = None` - Colors automatically assigned from scienceplots' colorblind-safe cycle
+- `COLORS` dictionary retained for semantic colors (backgrounds, grids, text)
+- IEEE style provides black-and-white compatible color schemes for print publications
+
+**LaTeX Requirements:**
+- LaTeX must be installed for full text rendering (already available on system)
+- Use `no-latex` fallback style if LaTeX issues occur: `plt.style.use(['science', 'no-latex'])`
+
+**Resources:**
+- SciencePlots GitHub: https://github.com/garrettj403/SciencePlots
+- IEEE Graphics Guidelines: https://ieeeauthorcenter.ieee.org/publish-with-ieee/ieee-editorial-style-manual/
 
 ### Documentation
 ```bash

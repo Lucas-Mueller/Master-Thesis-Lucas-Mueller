@@ -222,9 +222,11 @@ def plot_income_composition(
     axes[0].spines["left"].set_color(colors["medium_gray"])
     axes[0].spines["bottom"].set_color(colors["medium_gray"])
 
+    # Use scienceplots color cycle for legend
+    prop_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
     legend_handles = [
-        Patch(facecolor=colors["switched"], edgecolor=colors["primary_blue"], label="Changed Pref."),
-        Patch(facecolor=colors["stayed"], edgecolor=colors["primary_blue"], label="Maintained Pref."),
+        Patch(facecolor=prop_cycle[1], edgecolor='black', label="Changed Pref."),  # red
+        Patch(facecolor=prop_cycle[2], edgecolor='black', label="Maintained Pref."),  # blue
     ]
     axes[0].legend(
         handles=legend_handles,
@@ -368,8 +370,8 @@ def plot_rounds_to_outcome(
     bars = ax.bar(
         counts.index,
         counts.values,
-        color=colors["primary_green"],
-        edgecolor=colors["dark_gray"],
+        # Use scienceplots default color
+        edgecolor='black',
         alpha=0.85,
         linewidth=1.2,
     )
@@ -745,7 +747,7 @@ def plot_floor_constraint_distribution_grouped(
     ax.set_ylabel("Number of Runs", fontsize=font_sizes["axis_label"], labelpad=10)
     ax.set_xticks(x)
     if use_amount_scale_xticks:
-        scale_labels = [f"${int(round(bin_edges[i + 1] / 1000))}k" for i in range(num_bins)]
+        scale_labels = [f"\\${int(round(bin_edges[i + 1] / 1000))}k" for i in range(num_bins)]  # Escape $ for LaTeX
         ax.set_xticklabels(scale_labels)
     else:
         ax.set_xticklabels(bin_labels)
@@ -797,10 +799,10 @@ def plot_floor_constraint_distribution(
     counts, bin_edges, _ = ax.hist(
         amounts,
         bins=bins,
-        color=colors["primary_green"],
-        edgecolor=colors["primary_blue"],
+        # Use scienceplots default color cycle (no explicit color)
         alpha=0.85,
         linewidth=1.2,
+        edgecolor='black',
     )
     for count, edge in zip(counts, bin_edges[:-1]):
         if count > 0:
@@ -815,7 +817,7 @@ def plot_floor_constraint_distribution(
                 color=colors["dark_gray"],
             )
     ax.set_xticks(bins)
-    ax.set_xticklabels([f"${int(b/1000)}k" for b in bins])
+    ax.set_xticklabels([f"\\${int(b/1000)}k" for b in bins])  # Escape $ for LaTeX
     ax.set_xlabel("Floor Constraint Amount", fontsize=font_sizes["axis_label"], labelpad=10)
     ax.set_ylabel("Number of Runs", fontsize=font_sizes["axis_label"], labelpad=10)
     ax.set_ylim(0, counts.max() + 2.5)
@@ -871,8 +873,7 @@ def plot_voting_attempts_summary(
     sns.histplot(
         attempts,
         bins=attempt_bins if max_attempts > 0 else 1,
-        color=colors["primary_blue"],
-        edgecolor=colors["dark_gray"],
+        edgecolor='black',
         ax=axes[0],
     )
     axes[0].set_title(
@@ -889,8 +890,7 @@ def plot_voting_attempts_summary(
     sns.histplot(
         valid_rates,
         bins=rate_bins,
-        color=colors["primary_green"],
-        edgecolor=colors["dark_gray"],
+        edgecolor='black',
         ax=axes[1],
     )
     axes[1].set_title(
@@ -958,8 +958,10 @@ def plot_preference_stability(
     )
 
     fig, ax = plt.subplots(figsize=fig_sizes["single"])
-    palette = {"Stayed": colors["stayed"], "Switched": colors["switched"]}
-    sns.barplot(data=stats_long, x="Transition", y="Count", hue="Status", palette=palette, ax=ax)
+    # Use scienceplots color cycle
+    prop_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
+    palette = {"Stayed": prop_cycle[2], "Switched": prop_cycle[1]}  # blue for stayed, red for switched
+    sns.barplot(data=stats_long, x="Transition", y="Count", hue="Status", palette=palette, ax=ax, edgecolor='black')
     effective_title = _resolve_title(
         title,
         f"Preference Stability Across Waves ({title_suffix})",
@@ -1052,6 +1054,7 @@ def plot_transition_heatmaps(
                     fontsize=font_sizes["annotation"] - 1,
                     fontweight=weight,
                     color=color,
+                    usetex=False,  # Disable LaTeX for heatmap annotations
                 )
 
         stay = int(matrix.values.diagonal().sum())
@@ -1289,7 +1292,7 @@ def plot_long_term_margin(
     ax.text(
         num_cols + 0.1,
         -0.25,
-        "Σ",
+        r"$\Sigma$",  # LaTeX-compatible sigma symbol
         ha="left",
         va="center",
         fontsize=font_sizes["legend"] + 2,
@@ -1628,7 +1631,7 @@ def plot_long_term_counts_grid(
         ax.text(
             num_cols + 0.05,
             -0.3,
-            "Σ",
+            r"$\Sigma$",  # LaTeX-compatible sigma symbol
             ha="left",
             va="center",
             fontsize=font_sizes["legend"] + 2,
