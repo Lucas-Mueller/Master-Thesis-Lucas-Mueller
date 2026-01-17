@@ -993,8 +993,13 @@ def plot_transition_heatmaps(
     format_principle_label: FormatLabelFunc,
     title_suffix: str,
     title: Optional[str] = None,
+    xlabel_rotation: float = 45,
 ) -> None:
-    """Plot heatmaps for principle transitions between waves."""
+    """Plot heatmaps for principle transitions between waves.
+    
+    Args:
+        xlabel_rotation: Rotation angle in degrees for x-axis tick labels (default: 45).
+    """
     if transition_df.empty:
         return
 
@@ -1040,7 +1045,7 @@ def plot_transition_heatmaps(
             for j, col_label in enumerate(matrix.columns):
                 count = matrix.iloc[i, j]
                 pct = matrix_pct.iloc[i, j]
-                text = f"{int(count)}\\n({pct:.0f}%)" if count > 0 and not np.isnan(pct) else ""
+                text = f"{int(count)}\n({pct:.0f}\\%)" if count > 0 and not np.isnan(pct) else ""
                 weight = "bold" if i == j and count > 0 else "normal"
                 color = "white" if count > matrix.values.max() * 0.6 else colors["dark_gray"]
                 ax.text(
@@ -1063,8 +1068,8 @@ def plot_transition_heatmaps(
         ax.set_ylabel("From Principle" if ax == axes[0] else "", fontsize=font_sizes["tick_label"])
         ax.set_xticklabels(
             ax.get_xticklabels(),
-            rotation=45,
-            ha="right",
+            rotation=xlabel_rotation,
+            ha="right" if xlabel_rotation > 0 else "center",
             fontsize=font_sizes["annotation"],
         )
         ax.set_yticklabels(ax.get_yticklabels(), rotation=0, fontsize=font_sizes["annotation"])
@@ -1207,8 +1212,13 @@ def plot_long_term_margin(
     format_principle_label: FormatLabelFunc,
     title_suffix: str = "",
     title: Optional[str] = None,
+    xlabel_rotation: float = 45,
 ) -> None:
-    """Plot counts heatmap with margin totals for long-term stability."""
+    """Plot counts heatmap with margin totals for long-term stability.
+    
+    Args:
+        xlabel_rotation: Rotation angle in degrees for x-axis tick labels (default: 45).
+    """
     if transition_df.empty:
         return
 
@@ -1251,8 +1261,8 @@ def plot_long_term_margin(
     ax.set_ylabel("Initial Preference", fontsize=font_sizes["axis_label"], labelpad=8)
     ax.set_xticklabels(
         principle_display_order,
-        rotation=45,
-        ha="right",
+        rotation=xlabel_rotation,
+        ha="right" if xlabel_rotation > 0 else "center",
         fontsize=font_sizes["annotation"],
     )
     ax.set_yticklabels(
@@ -1466,8 +1476,13 @@ def plot_long_term_counts_grid(
     wspace: float = 0.12,
     cbar_space: float = 0.02,
     right_margin: float = 0.92,
+    xlabel_rotation: float = 45,
 ) -> None:
-    """Render counts-only stability heatmaps for multiple cohorts."""
+    """Render counts-only stability heatmaps for multiple cohorts.
+    
+    Args:
+        xlabel_rotation: Rotation angle in degrees for x-axis tick labels (default: 45).
+    """
     colors = colors or COLORS
     font_sizes = font_sizes or FONT_SIZES
     fig_sizes = fig_sizes or FIG_SIZES
@@ -1589,8 +1604,8 @@ def plot_long_term_counts_grid(
             )
         ax.set_xticklabels(
             principle_display_order,
-            rotation=45,
-            ha="right",
+            rotation=xlabel_rotation,
+            ha="right" if xlabel_rotation > 0 else "center",
             fontsize=font_sizes["annotation"],
         )
         if colorbar_mode == "per-axis" and show_cbar:
